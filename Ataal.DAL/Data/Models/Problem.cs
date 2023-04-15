@@ -27,7 +27,9 @@ namespace Ataal.DAL.Data.Models
         public int Section_ID { get; set; }
         public Section Section { get; set; }
 
-       
+        public int? AcceptedOfferID { get; set; }
+
+       public ICollection<Offer>? Offers { get; set; }
 
         [ForeignKey("Technical")]
         public int? Technical_ID { get; set; }            

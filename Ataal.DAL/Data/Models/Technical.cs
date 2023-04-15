@@ -33,6 +33,10 @@ namespace Ataal.DAL.Data.Models
         [Required]
         public string Brief { get; set; }
 
+        
+
+        public Offer? offer { get; set; }
+
        
         [StringLength(100, ErrorMessage = "Address cannot exceed 100 characters")]
         public string? Address { get; set; }
