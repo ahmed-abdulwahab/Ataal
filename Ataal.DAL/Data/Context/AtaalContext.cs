@@ -20,7 +20,7 @@ namespace Ataal.DAL.Data.Context
 
         public DbSet<KeyWords> KeyWords => Set<KeyWords>();
         public DbSet<Problem> Problems => Set<Problem>();
-
+        public DbSet<Offer>Offers=> Set<Offer>();
         public DbSet<Report> Reports => Set<Report>();
         public DbSet<Review> Reviews => Set<Review>();
         public DbSet<Section> Sections => Set<Section>();
