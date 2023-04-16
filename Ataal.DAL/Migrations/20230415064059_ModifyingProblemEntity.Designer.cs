@@ -4,6 +4,7 @@ using Ataal.DAL.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ataal.DAL.Migrations
 {
     [DbContext(typeof(AtaalContext))]
-    partial class AtaalContextModelSnapshot : ModelSnapshot
+    [Migration("20230415064059_ModifyingProblemEntity")]
+    partial class ModifyingProblemEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -178,17 +181,17 @@ namespace Ataal.DAL.Migrations
                     b.Property<int>("KeyWord_ID")
                         .HasColumnType("int");
 
-                    b.Property<string>("PhotoPath1")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Photo1")
+                        .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("PhotoPath2")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Photo2")
+                        .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("PhotoPath3")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Photo3")
+                        .HasColumnType("varbinary(max)");
 
-                    b.Property<string>("PhotoPath4")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Photo4")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Problem_Title")
                         .IsRequired()

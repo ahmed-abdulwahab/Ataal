@@ -20,6 +20,10 @@ namespace Ataal.DAL.Data.Models
         [Required]
         [StringLength(300, ErrorMessage = "Description cannot exceed 300 characters")]
         public string Description { get; set; }
+        public string? PhotoPath1 { get; set; }
+        public string? PhotoPath2 { get; set; }
+        public string? PhotoPath3 { get; set; }
+        public string? PhotoPath4 { get; set; }
 
         public bool Solved { get; set; } = false;
 
@@ -42,8 +46,5 @@ namespace Ataal.DAL.Data.Models
         [ForeignKey("KeyWord")]
         public int KeyWord_ID { get; set; }
         public KeyWords? KeyWord { get; set; }
-
-        public ICollection<Problems_Photo>? Problems_photos { get; set; }
-       
     }
 }

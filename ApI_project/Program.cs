@@ -1,7 +1,9 @@
 using Ataal.BL;
+using Ataal.BL.Managers.Customer;
 using Ataal.DAL.Data;
 using Ataal.DAL.Data.Context;
 using Ataal.DAL.Data.Identity;
+using Ataal.DAL.Repos.Customer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -88,6 +90,15 @@ namespace ApI_project
 
             #endregion
 
+            #region Repos
+            builder.Services.AddScoped<ICustomerRepo, CustomerRepo>();
+            
+            #endregion
+
+            #region Managers
+            builder.Services.AddScoped<ICustomerManager, CustomerManager>();
+            #endregion
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -100,7 +111,7 @@ namespace ApI_project
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
+            app.UseStaticFiles();
 
             app.MapControllers();
             using (var scope = app.Services.CreateScope())

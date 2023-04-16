@@ -37,11 +37,11 @@ namespace Ataal.Controllers
         {
 
             var user = await _userManager.FindByNameAsync(credentials.UserName);
-            if (user == null)   { return NotFound(); }
+            if (user == null) { return NotFound(); }
 
             var isAuthenitcated = await _userManager.CheckPasswordAsync(user, credentials.Password);
-            if (!isAuthenitcated) { return Unauthorized(); } 
-            
+            if (!isAuthenitcated) { return Unauthorized(); }
+
 
             var claimsList = await _userManager.GetClaimsAsync(user);
 
@@ -83,7 +83,7 @@ namespace Ataal.Controllers
 
 
             var result = await _userManager.CreateAsync(UserToAdd, registerDto.Password);
-           
+
             if (!result.Succeeded)
             {
                 return BadRequest(result.Errors);
@@ -131,7 +131,7 @@ namespace Ataal.Controllers
             };
 
             //Add Technical To DB
-            
+
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, UserToAdd.Id),
@@ -143,40 +143,40 @@ namespace Ataal.Controllers
             return NoContent();
         }
 
-        [HttpPost]
-        [Route("CustomerRegister")]
-        public async Task<ActionResult> CustomerRegister(RegisterDto registerDto)
-        {
-            var UserToAdd = new AppUser
-            {
-                UserName = registerDto.UserName,
-                Email = registerDto.Email,
-            };
+        //[HttpPost]
+        //[Route("CustomerRegister")]
+        //public async Task<ActionResult> CustomerRegister(RegisterDto registerDto)
+        //{
+        //    var UserToAdd = new AppUser
+        //    {
+        //        UserName = registerDto.UserName,
+        //        Email = registerDto.Email,
+        //    };
 
-            var result = await _userManager.CreateAsync(UserToAdd, registerDto.Password);
-            if (!result.Succeeded)
-            {
-                return BadRequest(result.Errors);
-            }
+        //    var result = await _userManager.CreateAsync(UserToAdd, registerDto.Password);
+        //    if (!result.Succeeded)
+        //    {
+        //        return BadRequest(result.Errors);
+        //    }
 
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, UserToAdd.Id),
-                new Claim(ClaimTypes.Role, Constants.Roles.Customer)
-            };
+        //    var claims = new List<Claim>
+        //    {
+        //        new Claim(ClaimTypes.NameIdentifier, UserToAdd.Id),
+        //        new Claim(ClaimTypes.Role, Constants.Roles.Customer)
+        //    };
 
-            var customer = new Customer
-            {
-                AppUserId = UserToAdd.Id,
-            };
+        //    var customer = new Customer
+        //    {
+        //        AppUserId = UserToAdd.Id,
+        //    };
 
-            //Add Customer To DB
+        //    //Add Customer To DB
 
 
-            await _userManager.AddClaimsAsync(UserToAdd, claims);
+        //    await _userManager.AddClaimsAsync(UserToAdd, claims);
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
     }
 }
