@@ -16,6 +16,11 @@ namespace Ataal.DAL.Repos.Customer
         public int AddTechnicalRate(Rate rate);
         public int ModifyingTchnicalRate(int TechnicalID);//int Technical Repository
         public Technical? GetTechnicalById(int TechnicalId);
+
+        public int AddTechnicalReview(Review Review);
+        public int? DeleteReview(int ReviewId);
+
+        public int? UpdateReview(int id, string Desc);
         public int SaveChanges();
     }
 }
