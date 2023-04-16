@@ -4,6 +4,7 @@ using Ataal.DAL.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ataal.DAL.Migrations
 {
     [DbContext(typeof(AtaalContext))]
-    partial class AtaalContextModelSnapshot : ModelSnapshot
+    [Migration("20230416144824_AddingRateEntity")]
+    partial class AddingRateEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -270,7 +273,7 @@ namespace Ataal.DAL.Migrations
 
                     b.HasIndex("Technical_ID");
 
-                    b.ToTable("Rates");
+                    b.ToTable("Rate");
                 });
 
             modelBuilder.Entity("Ataal.DAL.Data.Models.Report", b =>
@@ -353,8 +356,8 @@ namespace Ataal.DAL.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<string>("Photo")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Photo")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Section_Name")
                         .IsRequired()
@@ -393,7 +396,7 @@ namespace Ataal.DAL.Migrations
                     b.Property<byte[]>("Photo")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<int?>("Rate")
+                    b.Property<int>("Rate")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

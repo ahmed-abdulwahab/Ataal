@@ -1,7 +1,10 @@
 ﻿using Ataal.BL.DTO.Customer;
+using Ataal.BL.DTO.Rate;
+using Ataal.BL.DTO.Review;
 using Ataal.DAL.Data.Context;
 using Ataal.DAL.Data.Models;
 using Ataal.DAL.Repos.Customer;
+using Ataal.DAL.Repos.Reviews;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -16,12 +19,13 @@ namespace Ataal.BL.Managers.Customer
     public class CustomerManager : ICustomerManager
     {
         private readonly ICustomerRepo _customerRepo;
-
+        private readonly IReviewRepo _reviewRepo;
         private readonly IWebHostEnvironment _env;
 
-        public CustomerManager(ICustomerRepo customerRepo, IWebHostEnvironment env)
+        public CustomerManager(ICustomerRepo customerRepo,IReviewRepo reviewRepo, IWebHostEnvironment env)
         {
             _customerRepo = customerRepo;
+            _reviewRepo = reviewRepo;
             _env = env;
         }
         public async Task<int?> ReturnAddedProblemID(CustomerAddProblemDto CustDto)
@@ -96,6 +100,59 @@ namespace Ataal.BL.Managers.Customer
                 File.Delete(path);
             }
         }
+        public Technical gettechnical(int techincalid)
+        {
+            return _customerRepo.GetTechnicalById(techincalid);
+        }
+
+        public int CustomerAddingRate(RateCreationDto rateCreationDto)
+        {
+            var Rate = new Rate
+            {
+                
+                Customer_ID = rateCreationDto.CustomerId,
+                Technical_ID = rateCreationDto.TechnicalId,
+                Rate_Value = rateCreationDto.RateValue
+            };
+            
+            return _customerRepo.AddTechnicalRate(Rate);
+        }
+        public int AddingTechnicalReview(ReviewCreationDto ReviewDto)
+        {
+
+            var NewReview = new Review
+            {
+                Customer_ID = ReviewDto.Customer_Id,
+                Technical_ID = ReviewDto.Technical_Id,
+                Description = ReviewDto.Description,
+                date = DateTime.Now
+                
+
+            };
+            return _customerRepo.AddTechnicalReview(NewReview);
+        }
+        public int ModifyingTechnical_Rate(int TechnicalId)
+        {
+            return _customerRepo.ModifyingTchnicalRate(TechnicalId);
+        }
+        public bool DeleteReview(int ReviewId)
+        {
+         var Deleted=  _customerRepo.DeleteReview(ReviewId);
+            if (Deleted == null || Deleted == 0)
+            {
+                return false;
+            }
+            return true;
+        }
+        public int? UpdateReview(ReviewUpdatedDto ReviewUpdated)
+        {
+
+
+            return _customerRepo.UpdateReview(ReviewUpdated.id, ReviewUpdated.Descriotion);
+        }
+        
+
+
     }
 }
 
