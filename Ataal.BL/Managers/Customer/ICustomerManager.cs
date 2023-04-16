@@ -1,5 +1,6 @@
 ﻿using Ataal.BL.DTO.Customer;
 using Ataal.BL.DTO.Rate;
+using Ataal.BL.DTO.Review;
 using Ataal.DAL.Data.Models;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -19,6 +20,9 @@ namespace Ataal.BL.Managers.Customer
 
         public int CustomerAddingRate(RateCreationDto rateCreationDto);
         public Technical gettechnical(int techincalid);
+        public int AddingTechnicalReview(ReviewCreationDto ReviewDto);
         public bool DeleteProblemWithImagesByProblemID(int ProblemID);
+        public int? UpdateReview(ReviewUpdatedDto ReviewUpdated);
+        public bool DeleteReview(int ReviewId);
     }
 }

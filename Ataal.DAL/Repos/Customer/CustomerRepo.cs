@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Ataal.DAL.Repos.Customer
 {
@@ -85,6 +86,34 @@ namespace Ataal.DAL.Repos.Customer
             return 0;
             
         }
+        public int AddTechnicalReview(Review Review)
+        {
+            _ataalContext.Reviews.Add(Review);
+            return SaveChanges();
+        }
+        public int? DeleteReview(int ReviewId)
+        {
+            var review = _ataalContext.Set<Review>().FirstOrDefault(r => r.ID == ReviewId);
+            if (review == null) { return null; }
+            _ataalContext.Set<Review>().Remove(review);
+            return SaveChanges();
+
+
+        }
+
+        public int? UpdateReview(int id,string Desc)
+        {
+            var Updatedreview = _ataalContext.Set<Review>().FirstOrDefault(r => r.ID == id);
+            if (Updatedreview == null) { return null; }
+
+            Updatedreview.Description = Desc;
+             Updatedreview.date = DateTime.Now;
+            return SaveChanges();
+
+
+        }
+
+
         public int SaveChanges()
         {
             return _ataalContext.SaveChanges();
