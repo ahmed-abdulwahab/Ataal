@@ -1,9 +1,11 @@
 using Ataal.BL;
 using Ataal.BL.Managers.Customer;
+using Ataal.BL.Managers.problem;
 using Ataal.DAL.Data;
 using Ataal.DAL.Data.Context;
 using Ataal.DAL.Data.Identity;
 using Ataal.DAL.Repos.Customer;
+using Ataal.DAL.Repos.problem;
 using Ataal.DAL.Repos.Reviews;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -94,11 +96,15 @@ namespace ApI_project
             #region Repos
             builder.Services.AddScoped<ICustomerRepo, CustomerRepo>();
             builder.Services.AddScoped<IReviewRepo, ReviewRepo>();
+            builder.Services.AddScoped<IProblemRepo, ProblemRepo>();
+
 
             #endregion
 
             #region Managers
             builder.Services.AddScoped<ICustomerManager, CustomerManager>();
+            builder.Services.AddScoped<IProblemManager, ProblemManager>();
+
             #endregion
 
             var app = builder.Build();
