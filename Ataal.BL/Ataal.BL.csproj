@@ -15,4 +15,8 @@
     <ProjectReference Include="..\Ataal.DAL\Ataal.DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTO\ProblemSolved\" />
+  </ItemGroup>
+
 </Project>

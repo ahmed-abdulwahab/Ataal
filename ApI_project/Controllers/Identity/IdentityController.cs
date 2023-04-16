@@ -1,18 +1,16 @@
 ﻿using Ataal.BL;
-using Ataal.BL.DTO.Identity;
+using Ataal.BL.DtO.Identity;
 using Ataal.DAL.Data.Context;
 using Ataal.DAL.Data.Identity;
 using Ataal.DAL.Data.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Ataal.Controllers
+namespace Ataal.Controllers.Identity
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -33,15 +31,15 @@ namespace Ataal.Controllers
 
         [HttpPost]
         [Route("Login")]
-        public async Task<ActionResult<TokenDto>> Login_Clean(LoginDto credentials)
+        public async Task<ActionResult<tokenDto>> Login_Clean(LoginDto credentials)
         {
 
             var user = await _userManager.FindByNameAsync(credentials.UserName);
-            if (user == null)   { return NotFound(); }
+            if (user == null) { return NotFound(); }
 
             var isAuthenitcated = await _userManager.CheckPasswordAsync(user, credentials.Password);
-            if (!isAuthenitcated) { return Unauthorized(); } 
-            
+            if (!isAuthenitcated) { return Unauthorized(); }
+
 
             var claimsList = await _userManager.GetClaimsAsync(user);
 
@@ -66,7 +64,7 @@ namespace Ataal.Controllers
             var tokenString = tokenHandler.WriteToken(token);
 
 
-            return new TokenDto(tokenString, expiry);
+            return new tokenDto(tokenString, expiry);
         }
 
 
@@ -83,7 +81,7 @@ namespace Ataal.Controllers
 
 
             var result = await _userManager.CreateAsync(UserToAdd, registerDto.Password);
-           
+
             if (!result.Succeeded)
             {
                 return BadRequest(result.Errors);
@@ -125,17 +123,18 @@ namespace Ataal.Controllers
                 return BadRequest(result.Errors);
             }
 
-            var customer = new Technical
+            var customer = new DAL.Data.Models.Technical
             {
                 AppUserId = UserToAdd.Id,
             };
+            customer.AppUser = UserToAdd;
+            context.Technicals.Add(customer);
+            context.SaveChanges();
 
-            //Add Technical To DB
-            
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, UserToAdd.Id),
-                new Claim(ClaimTypes.Role, Constants.Roles.Technical)
+                new Claim(ClaimTypes.Role, Constants.Roles.technical)
             };
 
             await _userManager.AddClaimsAsync(UserToAdd, claims);

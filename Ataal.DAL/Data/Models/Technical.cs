@@ -15,8 +15,15 @@ namespace Ataal.DAL.Data.Models
         [Key]
         public int Id { get; set; }
 
-        [Phone]
-        public string Phone { get; set; }
+        [Required]
+        [StringLength(20, ErrorMessage = "Frist Name cannot exceed 20 characters")]
+
+        public string Frist_Name { get; set; } = string.Empty;
+
+        [Required]
+        [StringLength(20, ErrorMessage = "Last Name cannot exceed 20 characters")]
+
+        public string Last_Name { get; set; } = string.Empty;
 
 
         [ForeignKey("AppUser")]
@@ -28,18 +35,19 @@ namespace Ataal.DAL.Data.Models
 
 
         [Required]
-        public int Rate { get; set; }
+        public int Rate { get; set; } = 0;
 
-        [Required]
-        public string Brief { get; set; }
+        public string? Brief { get; set; }
 
         
 
         public Offer? offer { get; set; }
 
-       
+
         [StringLength(100, ErrorMessage = "Address cannot exceed 100 characters")]
-        public string? Address { get; set; }
+
+        [Required]
+        public string Address { get; set; } = string.Empty;
 
         [Required]
         public ICollection<Section> Sections { get; set; }  // the sections which choosed by him to see its problems
@@ -48,7 +56,7 @@ namespace Ataal.DAL.Data.Models
         public ICollection<Review>? Reviews { get; set; } // reviews from customers for him
 
         public ICollection<Report>? Reports { get; set; }// Reports from customers for him
-
+             
         public ICollection<Customer>? Blocked_Customers_Id { get; set; } //customers  who blocked by technical
      
     }
