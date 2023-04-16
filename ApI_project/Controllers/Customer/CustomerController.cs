@@ -1,4 +1,5 @@
 ﻿using Ataal.BL.DTO.Customer;
+using Ataal.BL.DTO.Rate;
 using Ataal.BL.Managers.Customer;
 using Ataal.DAL.Data.Models;
 using Ataal.DAL.Repos.Customer;
@@ -37,6 +38,36 @@ namespace Ataal.Controllers.Customer
                 return Ok();
             }
             return NotFound();
+        }
+
+        [HttpPost]
+        [Route("rate")]
+        public IActionResult CustomerAddRate(RateCreationDto rateDto)
+        {
+             
+            var Value= _customerManager.CustomerAddingRate(rateDto);
+            if(Value==0)
+            {
+                return BadRequest();
+            }
+            var test= _customerManager.ModifyingTechnical_Rate(rateDto.TechnicalId);
+            if(test==0)
+            {
+                return BadRequest();
+            }
+            return Ok(Value);
+        }
+        [HttpGet]
+        public IActionResult gettechnicalbyid(int technicalid)
+        {
+
+            var technical= _customerManager.gettechnical(technicalid);
+            if (technical != null)
+            {
+                return Ok();
+
+            }
+            return BadRequest();
         }
         
 

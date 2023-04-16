@@ -1,4 +1,5 @@
 ﻿using Ataal.BL.DTO.Customer;
+using Ataal.BL.DTO.Rate;
 using Ataal.DAL.Data.Context;
 using Ataal.DAL.Data.Models;
 using Ataal.DAL.Repos.Customer;
@@ -96,6 +97,28 @@ namespace Ataal.BL.Managers.Customer
                 File.Delete(path);
             }
         }
+        public Technical gettechnical(int techincalid)
+        {
+            return _customerRepo.GetTechnicalById(techincalid);
+        }
+
+        public int CustomerAddingRate(RateCreationDto rateCreationDto)
+        {
+            var Rate = new Rate
+            {
+                
+                Customer_ID = rateCreationDto.CustomerId,
+                Technical_ID = rateCreationDto.TechnicalId,
+                Rate_Value = rateCreationDto.RateValue
+            };
+            
+            return _customerRepo.AddTechnicalRate(Rate);
+        }
+        public int ModifyingTechnical_Rate(int TechnicalId)
+        {
+            return _customerRepo.ModifyingTchnicalRate(TechnicalId);
+        }
+
     }
 }
 
