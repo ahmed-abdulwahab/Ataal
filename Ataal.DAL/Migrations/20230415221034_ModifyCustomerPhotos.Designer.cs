@@ -4,6 +4,7 @@ using Ataal.DAL.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ataal.DAL.Migrations
 {
     [DbContext(typeof(AtaalContext))]
-    partial class AtaalContextModelSnapshot : ModelSnapshot
+    [Migration("20230415221034_ModifyCustomerPhotos")]
+    partial class ModifyCustomerPhotos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -159,33 +162,6 @@ namespace Ataal.DAL.Migrations
                     b.ToTable("KeyWords");
                 });
 
-            modelBuilder.Entity("Ataal.DAL.Data.Models.Offer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<double>("OfferSalary")
-                        .HasColumnType("float");
-
-                    b.Property<int>("problemId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("technicalId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("problemId");
-
-                    b.HasIndex("technicalId")
-                        .IsUnique();
-
-                    b.ToTable("Offers");
-                });
-
             modelBuilder.Entity("Ataal.DAL.Data.Models.Problem", b =>
                 {
                     b.Property<int>("Problem_ID")
@@ -193,9 +169,6 @@ namespace Ataal.DAL.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Problem_ID"));
-
-                    b.Property<int?>("AcceptedOfferID")
-                        .HasColumnType("int");
 
                     b.Property<int>("Customer_ID")
                         .HasColumnType("int");
@@ -574,25 +547,6 @@ namespace Ataal.DAL.Migrations
                     b.Navigation("Section");
                 });
 
-            modelBuilder.Entity("Ataal.DAL.Data.Models.Offer", b =>
-                {
-                    b.HasOne("Ataal.DAL.Data.Models.Problem", "problem")
-                        .WithMany("Offers")
-                        .HasForeignKey("problemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Ataal.DAL.Data.Models.Technical", "technical")
-                        .WithOne("offer")
-                        .HasForeignKey("Ataal.DAL.Data.Models.Offer", "technicalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("problem");
-
-                    b.Navigation("technical");
-                });
-
             modelBuilder.Entity("Ataal.DAL.Data.Models.Problem", b =>
                 {
                     b.HasOne("Ataal.DAL.Data.Models.Customer", "Customer")
@@ -779,16 +733,6 @@ namespace Ataal.DAL.Migrations
                     b.Navigation("Problems");
                 });
 
-
-
-            modelBuilder.Entity("Ataal.DAL.Data.Models.Problem", b =>
-                {
-                    b.Navigation("Offers");
-
-                    
-                });
-
-
             modelBuilder.Entity("Ataal.DAL.Data.Models.Section", b =>
                 {
                     b.Navigation("KeyWords");
@@ -803,8 +747,6 @@ namespace Ataal.DAL.Migrations
                     b.Navigation("Reports");
 
                     b.Navigation("Reviews");
-
-                    b.Navigation("offer");
                 });
 #pragma warning restore 612, 618
         }

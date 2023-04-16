@@ -15,9 +15,9 @@ namespace Ataal.DAL.Data.Models
             public int Section_ID { get; set; }
 
             [Required]
-            [StringLength(20, ErrorMessage = "Section_Name cannot exceed 20 characters")]   
+            [StringLength(50, ErrorMessage = "Section_Name cannot exceed 20 characters")]   
             public string Section_Name { get; set; }
-            [StringLength(200, ErrorMessage = "Description cannot exceed 200 characters")]
+            [StringLength(500, ErrorMessage = "Description cannot exceed 200 characters")]
             public string Description { get; set; }
 
             public byte[]? Photo { get; set; }
