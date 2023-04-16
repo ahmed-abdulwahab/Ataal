@@ -4,6 +4,7 @@ using Ataal.DAL.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ataal.DAL.Migrations
 {
     [DbContext(typeof(AtaalContext))]
-    partial class AtaalContextModelSnapshot : ModelSnapshot
+    [Migration("20230415034004_Adding_Offer_EntityWithItsRelations")]
+    partial class Adding_Offer_EntityWithItsRelations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -208,18 +211,6 @@ namespace Ataal.DAL.Migrations
                     b.Property<int>("KeyWord_ID")
                         .HasColumnType("int");
 
-                    b.Property<string>("PhotoPath1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhotoPath2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhotoPath3")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhotoPath4")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Problem_Title")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -245,6 +236,28 @@ namespace Ataal.DAL.Migrations
                     b.HasIndex("Technical_ID");
 
                     b.ToTable("Problems");
+                });
+
+            modelBuilder.Entity("Ataal.DAL.Data.Models.Problems_Photo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<byte[]>("Photo")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<int>("Problem_ID")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Problem_ID");
+
+                    b.ToTable("Problems_Photo");
                 });
 
             modelBuilder.Entity("Ataal.DAL.Data.Models.Report", b =>
@@ -324,16 +337,16 @@ namespace Ataal.DAL.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<byte[]>("Photo")
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Section_Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Section_ID");
 
@@ -626,6 +639,17 @@ namespace Ataal.DAL.Migrations
                     b.Navigation("Technical");
                 });
 
+            modelBuilder.Entity("Ataal.DAL.Data.Models.Problems_Photo", b =>
+                {
+                    b.HasOne("Ataal.DAL.Data.Models.Problem", "Problem")
+                        .WithMany("Problems_photos")
+                        .HasForeignKey("Problem_ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Problem");
+                });
+
             modelBuilder.Entity("Ataal.DAL.Data.Models.Report", b =>
                 {
                     b.HasOne("Ataal.DAL.Data.Models.Review", "Review")
@@ -779,15 +803,12 @@ namespace Ataal.DAL.Migrations
                     b.Navigation("Problems");
                 });
 
-
-
             modelBuilder.Entity("Ataal.DAL.Data.Models.Problem", b =>
                 {
                     b.Navigation("Offers");
 
-                    
+                    b.Navigation("Problems_photos");
                 });
-
 
             modelBuilder.Entity("Ataal.DAL.Data.Models.Section", b =>
                 {
