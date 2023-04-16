@@ -1,9 +1,11 @@
 using Ataal.BL;
 using Ataal.BL.Managers.Customer;
+using Ataal.BL.Managers.Section;
 using Ataal.DAL.Data;
 using Ataal.DAL.Data.Context;
 using Ataal.DAL.Data.Identity;
 using Ataal.DAL.Repos.Customer;
+using Ataal.DAL.Repos.Section;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -92,11 +94,13 @@ namespace ApI_project
 
             #region Repos
             builder.Services.AddScoped<ICustomerRepo, CustomerRepo>();
+            builder.Services.AddScoped<ISectionRepo, SectionRepo>();
             
             #endregion
 
             #region Managers
             builder.Services.AddScoped<ICustomerManager, CustomerManager>();
+            builder.Services.AddScoped<ISectionManger, SectionManger>();
             #endregion
 
             var app = builder.Build();
