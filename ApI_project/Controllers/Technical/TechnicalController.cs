@@ -1,4 +1,5 @@
 ﻿using Ataal.BL.DtO.technical;
+using Ataal.BL.DTO.Technical;
 using Ataal.BL.Mangers.technical;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,26 +11,30 @@ namespace Ataal.Controllers.Technical
     [ApiController]
     public class TechnicalController : ControllerBase
     {
-        private readonly ItechnicalManger itechnicalManger;
+        private readonly ItechnicalManger ITechnicalManger;
 
         public TechnicalController(ItechnicalManger itechnicalManger)
         {
-            this.itechnicalManger = itechnicalManger;
+            this.ITechnicalManger = itechnicalManger;
         }
         // GET: api/<TechnicalController>
-        //[HttpGet]
-        //public IEnumerable<TechnicalDTO> Get()
-        //{
+        [HttpGet]
+        public ActionResult<List<Technical_Name_Photo_Address_Rate>> GetAllTehnicals()
+        {
+            var AllTechnicals = ITechnicalManger.GetAllTechnicals();
 
-        //    return ();
-            
-        //}
+            if (AllTechnicals == null) { return NotFound(); }
+
+
+            return AllTechnicals;
+
+        }
 
         // GET api/<TechnicalController>/5
         [HttpGet("{id}")]
-        public ActionResult<technicalDtO> Get(int id)
+        public ActionResult<DetailedTechnicalDTO> Get(int id)
         {
-            var technical = itechnicalManger.GetTechnical_Profile(id);
+            var technical = ITechnicalManger.GetTechnical_Profile(id);
             if(technical == null) 
             {
                 return NotFound();
@@ -38,22 +43,27 @@ namespace Ataal.Controllers.Technical
             return technical;
         }
 
-        // POST api/<TechnicalController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
         // PUT api/<TechnicalController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("update/{id}")]
+        public ActionResult Put(int id, TechnicalUpdateDto technical)
         {
+            var technicalUpdated = ITechnicalManger.updateTechnical(id, technical);
+
+            if (technicalUpdated == -1) return NotFound();
+
+            return NoContent();
         }
 
         // DELETE api/<TechnicalController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("Delete/{id}")]
+        public ActionResult Delete(int id)
         {
+            var technical = ITechnicalManger.deleteTechnical(id);
+
+            if(technical == -1) { return NotFound(); }
+
+            return Ok();
+
         }
     }
 }

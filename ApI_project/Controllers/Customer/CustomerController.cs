@@ -2,7 +2,7 @@
 using Ataal.BL.DTO.Rate;
 using Ataal.BL.Managers.Customer;
 using Ataal.DAL.Data.Models;
-using Ataal.DAL.Repos.Customer;
+using Ataal.DAL.Data.Repos.Customer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

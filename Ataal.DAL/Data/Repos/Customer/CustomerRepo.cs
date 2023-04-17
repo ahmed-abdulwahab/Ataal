@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ataal.DAL.Repos.Customer
+namespace Ataal.DAL.Data.Repos.Customer
 {
-    public class CustomerRepo:ICustomerRepo
+    public class CustomerRepo : ICustomerRepo
     {
         private readonly AtaalContext _ataalContext;
         public CustomerRepo(AtaalContext ataalContext)
@@ -23,6 +23,7 @@ namespace Ataal.DAL.Repos.Customer
             SaveChanges();
             return problem.Problem_ID;
         }
+
         public Problem? GetProblemByID(int ProblemID)
         {
             var problem = _ataalContext.Set<Problem>().FirstOrDefault(P => P.Problem_ID == ProblemID);
@@ -36,7 +37,7 @@ namespace Ataal.DAL.Repos.Customer
         {
             var problem = GetProblemByID(ProblemID);
 
-            if(problem!=null)
+            if (problem != null)
             {
                 _ataalContext.Set<Problem>().Remove(problem);
                 return SaveChanges();
@@ -58,17 +59,17 @@ namespace Ataal.DAL.Repos.Customer
         }
         public Technical? GetTechnicalById(int TechnicalId)
         {
-            return _ataalContext.Technicals.FirstOrDefault(t=>t.Id== TechnicalId);
+            return _ataalContext.Technicals.FirstOrDefault(t => t.Id == TechnicalId);
         }
         public int ModifyingTchnicalRate(int TechnicalID)
         {
             var Technical = GetTechnicalById(TechnicalID);
-            if(Technical !=null)
+            if (Technical != null)
             {
-                if(Technical.CustomersRate!=null)
+                if (Technical.CustomersRate != null)
                 {
                     var average = Technical.CustomersRate.Select(r => r.Rate_Value).Average();
-                    if(average%10>0.5)
+                    if (average % 10 > 0.5)
                     {
                         Technical.Rate = (int)++average;
                     }
@@ -77,18 +78,31 @@ namespace Ataal.DAL.Repos.Customer
                         Technical.Rate = (int)average;
                     }
 
-                    
+
                     return SaveChanges();
-                }           
-               
+                }
+
             }
             return 0;
-            
+
         }
         public int SaveChanges()
         {
             return _ataalContext.SaveChanges();
         }
 
+        public Models.Customer CreateCustomer(Models.Customer customer)
+        {
+            try
+            {
+                _ataalContext.Customers.Add(customer);
+                _ataalContext.SaveChanges();
+                return customer;
+            }
+            catch
+            {
+                return null!;
+            }
+        }
     }
 }

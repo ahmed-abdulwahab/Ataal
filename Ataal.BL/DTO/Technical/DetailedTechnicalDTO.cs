@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Ataal.BL.DtO.technical
 {
-    public record technicalDtO
+    public record DetailedTechnicalDTO
         (
             int id,
             string name,

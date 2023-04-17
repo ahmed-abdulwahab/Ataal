@@ -1,4 +1,5 @@
 ﻿using Ataal.DAL.Data.Models;
+using Ataal.DAL.Data.Repos.Customer;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ataal.DAL.Repos.Customer
+namespace Ataal.DAL.Data.Repos
 {
     public interface ICustomerRepo
     {
@@ -16,6 +17,9 @@ namespace Ataal.DAL.Repos.Customer
         public int AddTechnicalRate(Rate rate);
         public int ModifyingTchnicalRate(int TechnicalID);//int Technical Repository
         public Technical? GetTechnicalById(int TechnicalId);
+
+        public Models.Customer CreateCustomer(Models.Customer customer);
+
         public int SaveChanges();
     }
 }

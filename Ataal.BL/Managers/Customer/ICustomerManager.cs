@@ -1,4 +1,5 @@
 ﻿using Ataal.BL.DTO.Customer;
+using Ataal.BL.DTO.Identity;
 using Ataal.BL.DTO.Rate;
 using Ataal.DAL.Data.Models;
 using Microsoft.AspNetCore.Http;
@@ -20,5 +21,8 @@ namespace Ataal.BL.Managers.Customer
         public int CustomerAddingRate(RateCreationDto rateCreationDto);
         public Technical gettechnical(int techincalid);
         public bool DeleteProblemWithImagesByProblemID(int ProblemID);
+
+        public Task<RegisterUserDto> CreateCustomer(RegisterUserDto customer);
+
     }
 }

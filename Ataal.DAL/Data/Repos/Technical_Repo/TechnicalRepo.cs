@@ -1,5 +1,7 @@
 ﻿using Ataal.DAL.Data.Context;
+using Ataal.DAL.Data.Identity;
 using Ataal.DAL.Data.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,33 +14,37 @@ namespace Ataal.DAL.Data.Repos.Technical_Repo
     public class TechnicalRepo : ITechnicalRepo
     {
         private readonly AtaalContext ataalContext;
+        private readonly UserManager<AppUser> userManager;
 
-        public TechnicalRepo(AtaalContext _AtaalContext)
+        public TechnicalRepo(AtaalContext _AtaalContext, UserManager<AppUser> _userManager)
         {
             ataalContext = _AtaalContext;
+            userManager = _userManager;
         }
-        public Technical deleteTechnical(int id)
+        public async Task<Technical> deleteTechnical(int id)
         {
+            // Technical technical;
+            // AppUser appUser;
 
-            var technical =  ataalContext.Set<Technical>()?.FirstOrDefault(T => T.Id == id);
+
+            var technical = ataalContext.Technicals.Include("AppUser")
+                    .FirstOrDefault(t => t.Id == id);
 
             if (technical == null)
             {
                 return null!;
             }
 
-            try
-            {
-                ataalContext.Set<Technical>().Remove(technical);
-                ataalContext.SaveChanges();
-                return technical;
-            }
-            catch
-            {
-                return null!;
-            }
-        }
 
+
+            if (technical.AppUser == null) { return null!; }
+            ataalContext.Technicals.Remove(technical);
+            ataalContext.SaveChanges();
+            await userManager.DeleteAsync(technical.AppUser);
+            //await ataalContext.SaveChangesAsync();
+
+            return technical;
+        }
         public List<Technical> getAllTechnical()                     ///check the null after build the controller
         {
             return ataalContext.Set<Technical>().ToList();
@@ -74,7 +80,7 @@ namespace Ataal.DAL.Data.Repos.Technical_Repo
             }
         }
 
-        public Technical Createtechnical(Technical technical)
+        public Technical CreateTechnical(Technical technical)
         {
             try
             {

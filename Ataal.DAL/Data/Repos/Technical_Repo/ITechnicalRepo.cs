@@ -1,4 +1,5 @@
-﻿using Ataal.DAL.Data.Models;
+﻿using Ataal.DAL.Data.Identity;
+using Ataal.DAL.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,9 @@ namespace Ataal.DAL.Data.Repos.Technical_Repo
     {
         public List<Technical> getAllTechnical();
         public Technical getTechnicalByID(int id);
-        public Technical deleteTechnical(int id);
+        public Task<Technical> deleteTechnical(int id);
         public Technical updateTechnical(int id, Technical technical);
-        public Technical Createtechnical(Technical technical);
+        public Technical CreateTechnical(Technical technical);
 
     }
 }

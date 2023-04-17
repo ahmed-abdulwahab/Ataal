@@ -1,10 +1,15 @@
 ﻿using Ataal.BL.DTO.Customer;
+using Ataal.BL.DTO.Identity;
 using Ataal.BL.DTO.Rate;
 using Ataal.DAL.Data.Context;
+using Ataal.DAL.Data.Identity;
 using Ataal.DAL.Data.Models;
-using Ataal.DAL.Repos.Customer;
+using Ataal.DAL.Data.Repos;
+using Ataal.DAL.Data.Repos.Customer;
+using Ataal.DAL.Data.Repos.Technical_Repo;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,11 +24,13 @@ namespace Ataal.BL.Managers.Customer
         private readonly ICustomerRepo _customerRepo;
 
         private readonly IWebHostEnvironment _env;
+        private readonly UserManager<AppUser> userManager;
 
-        public CustomerManager(ICustomerRepo customerRepo, IWebHostEnvironment env)
+        public CustomerManager(ICustomerRepo customerRepo, IWebHostEnvironment env, UserManager<AppUser> userManager)
         {
             _customerRepo = customerRepo;
             _env = env;
+            this.userManager = userManager;
         }
         public async Task<int?> ReturnAddedProblemID(CustomerAddProblemDto CustDto)
         {
@@ -119,6 +126,25 @@ namespace Ataal.BL.Managers.Customer
             return _customerRepo.ModifyingTchnicalRate(TechnicalId);
         }
 
+        public async Task<RegisterUserDto> CreateCustomer(RegisterUserDto customer)
+        {
+            var AppUser = await userManager.FindByIdAsync(customer.AppUser.Id);
+
+            var Customer = new DAL.Data.Models.Customer()
+            {
+                Frist_Name = customer.firstName,
+                Last_Name = customer.lastName,
+                Address = customer.Address,
+                AppUser = AppUser!,
+                AppUserId = customer.AppUserId
+            };
+
+            var result =  _customerRepo.CreateCustomer(Customer);
+
+            if (result == null) return null;
+
+            return customer;
+        }
     }
 }
 

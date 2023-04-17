@@ -54,6 +54,7 @@ namespace Ataal.DAL.Data.Models
 
         public ICollection<Problem>? Problems_Solved { get; set; } // the problems which solved by him
         public ICollection<Review>? Reviews { get; set; } // reviews from customers for him
+        public ICollection<Rate>? CustomersRate { get; set; }
 
         public ICollection<Report>? Reports { get; set; }// Reports from customers for him
              

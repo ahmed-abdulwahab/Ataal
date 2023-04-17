@@ -13,7 +13,7 @@ namespace Ataal.DAL.Data.Identity
     {
         [RegularExpression("^01[0125][0-9]{8}$")]
         [Required]
-        public override string? PhoneNumber { get; set; }
+        public override string? PhoneNumber { get; set; } 
 
         public Admin? Admin { get; set; }
         public Technical? Technical { get; set; }

@@ -6,6 +6,6 @@ public static class Constants
     {
         public const string Admin = "Admin";
         public const string Customer = "Customer";
-        public const string technical = "technical";
+        public const string Technical = "Technical";
     }
 }
