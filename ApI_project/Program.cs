@@ -5,7 +5,7 @@ using Ataal.BL.Managers.problem;
 using Ataal.DAL.Data;
 using Ataal.DAL.Data.Context;
 using Ataal.DAL.Data.Identity;
-using Ataal.DAL.Repos.Customer;
+using Ataal.DAL.Repos.customer;
 using Ataal.DAL.Repos.Section;
 using Ataal.DAL.Repos.problem;
 using Ataal.DAL.Repos.Reviews;

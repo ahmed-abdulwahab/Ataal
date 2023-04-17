@@ -26,5 +26,12 @@ namespace Ataal.BL.Managers.Customer
         public bool DeleteProblemWithImagesByProblemID(int ProblemID);
         public int? UpdateReview(ReviewUpdatedDto ReviewUpdated);
         public bool DeleteReview(int ReviewId);
+
+        public bool BlockTechnical(BlockAndUnblockTechnicalDto BDto);
+        public bool UnBlockTechnical(BlockAndUnblockTechnicalDto BDto);
+
+        public bool BlockCustomer(BlockAndUnblockTechnicalDto BDto);
+        public bool UnBlockCustomer(BlockAndUnblockTechnicalDto BDto);
+
     }
 }
