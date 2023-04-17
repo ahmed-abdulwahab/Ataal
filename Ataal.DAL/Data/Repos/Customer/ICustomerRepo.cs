@@ -19,6 +19,12 @@ namespace Ataal.DAL.Data.Repos
         public Technical? GetTechnicalById(int TechnicalId);
 
         public Models.Customer CreateCustomer(Models.Customer customer);
+        public int? UpdateReview(int id, string Desc);
+        public int? DeleteReview(int ReviewId);
+        public int AddTechnicalReview(Review Review);
+        public int? UpdateCustomerProblem(Problem problem);
+
+
 
         public int SaveChanges();
     }

@@ -1,12 +1,15 @@
 ﻿using Ataal.BL.DTO.Customer;
+using Ataal.BL.DTO.Identity;
 using Ataal.BL.DTO.Rate;
 using Ataal.BL.DTO.Review;
 using Ataal.DAL.Data.Context;
+using Ataal.DAL.Data.Identity;
 using Ataal.DAL.Data.Models;
-using Ataal.DAL.Repos.Customer;
+using Ataal.DAL.Data.Repos;
 using Ataal.DAL.Repos.Reviews;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,15 +21,19 @@ namespace Ataal.BL.Managers.Customer
 {
     public class CustomerManager : ICustomerManager
     {
-        private readonly ICustomerRepo _customerRepo;
         private readonly IReviewRepo _reviewRepo;
+        private readonly UserManager<AppUser> userManager;
         private readonly IWebHostEnvironment _env;
+        private readonly ICustomerRepo customerRepo;
 
-        public CustomerManager(ICustomerRepo customerRepo,IReviewRepo reviewRepo, IWebHostEnvironment env)
+        public CustomerManager(IReviewRepo reviewRepo, 
+            UserManager<AppUser> userManager,
+            IWebHostEnvironment env, ICustomerRepo customerRepo)
         {
-            _customerRepo = customerRepo;
             _reviewRepo = reviewRepo;
+            this.userManager = userManager;
             _env = env;
+            this.customerRepo = customerRepo;
         }
         public async Task<int?> ReturnAddedProblemID(CustomerAddProblemDto CustDto)
         {
@@ -44,7 +51,7 @@ namespace Ataal.BL.Managers.Customer
                     PhotoPath3 = await ReturnImagePath(CustDto.File3),
                     PhotoPath4 = await ReturnImagePath(CustDto.File4),
                 };
-               return _customerRepo.AddCustomerProblem(problem);
+               return customerRepo.AddCustomerProblem(problem);
             }
             return null;
             
@@ -78,7 +85,7 @@ namespace Ataal.BL.Managers.Customer
                     PhotoPath3 = await ReturnImagePath(CustDto.File3),
                     PhotoPath4 = await ReturnImagePath(CustDto.File4),
                 };
-                return _customerRepo.UpdateCustomerProblem(Newproblem);
+                return customerRepo.UpdateCustomerProblem(Newproblem);
             }
             return null;
 
@@ -105,7 +112,7 @@ namespace Ataal.BL.Managers.Customer
         }
         public Problem? ReturnProblemByID(int ProblemID)
         {
-            var problem= _customerRepo.GetProblemByID(ProblemID);
+            var problem= customerRepo.GetProblemByID(ProblemID);
             if(problem!=null)
             {
                 return problem;
@@ -124,11 +131,12 @@ namespace Ataal.BL.Managers.Customer
                 DeleteFile(problem.PhotoPath3 ?? "");
                 DeleteFile(problem.PhotoPath4 ?? "");
 
-                _customerRepo.DeleteProblem(ProblemID);
+                customerRepo.DeleteProblem(ProblemID);
                 return true;
             }
             return false;
         }
+
         public void DeleteFile(string fileName)
         {
             var path = Path.Combine("wwwroot", fileName);
@@ -139,7 +147,7 @@ namespace Ataal.BL.Managers.Customer
         }
         public Technical gettechnical(int techincalid)
         {
-            return _customerRepo.GetTechnicalById(techincalid);
+            return customerRepo.GetTechnicalById(techincalid);
         }
 
         public int CustomerAddingRate(RateCreationDto rateCreationDto)
@@ -152,7 +160,7 @@ namespace Ataal.BL.Managers.Customer
                 Rate_Value = rateCreationDto.RateValue
             };
             
-            return _customerRepo.AddTechnicalRate(Rate);
+            return customerRepo.AddTechnicalRate(Rate);
         }
         public int AddingTechnicalReview(ReviewCreationDto ReviewDto)
         {
@@ -166,15 +174,15 @@ namespace Ataal.BL.Managers.Customer
                 
 
             };
-            return _customerRepo.AddTechnicalReview(NewReview);
+            return customerRepo.AddTechnicalReview(NewReview);
         }
         public int ModifyingTechnical_Rate(int TechnicalId)
         {
-            return _customerRepo.ModifyingTchnicalRate(TechnicalId);
+            return customerRepo.ModifyingTchnicalRate(TechnicalId);
         }
         public bool DeleteReview(int ReviewId)
         {
-         var Deleted=  _customerRepo.DeleteReview(ReviewId);
+         var Deleted= customerRepo.DeleteReview(ReviewId);
             if (Deleted == null || Deleted == 0)
             {
                 return false;
@@ -185,9 +193,28 @@ namespace Ataal.BL.Managers.Customer
         {
 
 
-            return _customerRepo.UpdateReview(ReviewUpdated.id, ReviewUpdated.Descriotion);
+            return customerRepo.UpdateReview(ReviewUpdated.id, ReviewUpdated.Descriotion);
         }
-        
+
+        public async Task<RegisterUserDto> CreateCustomer(RegisterUserDto customer)
+        {
+            var AppUser = await userManager.FindByIdAsync(customer.AppUser.Id);
+
+            var Customer = new DAL.Data.Models.Customer()
+            {
+                Frist_Name = customer.firstName,
+                Last_Name = customer.lastName,
+                Address = customer.Address,
+                AppUser = AppUser!,
+                AppUserId = customer.AppUserId
+            };
+
+            var result = customerRepo.CreateCustomer(Customer);
+
+            if (result == null) return null;
+
+            return customer;
+        }
 
 
     }
