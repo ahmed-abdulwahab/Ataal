@@ -15,13 +15,13 @@ namespace Ataal.Controllers.Section
             sectionManger = _sectionManger;
         }
 
-		[HttpGet]
-		[Route("All Section With Details")]
-		public IActionResult GetAllSectioninDetails()
-		{ 
-		  var AllSection = sectionManger.getAllSSsectionWithDeatailsDtos();
-			return Ok(AllSection);
-		}
+		//[HttpGet]
+		//[Route("All Section With Details")]
+		//public IActionResult GetAllSectioninDetails()
+		//{ 
+		//  var AllSection = sectionManger.getAllSSsectionWithDeatailsDtos();
+		//	return Ok(AllSection);
+		//}
 
 		[HttpGet]
 		[Route("All Section Without Details")]

@@ -38,7 +38,15 @@ namespace Ataal.DAL.Repos.Customer
         public int? UpdateCustomerProblem(Problem problem)
         {
           var UpdatedProblem=  GetProblemByID(problem.Problem_ID);
-            UpdatedProblem.Problem_Title=
+            UpdatedProblem.Problem_Title = problem.Problem_Title;
+            UpdatedProblem.Description = problem.Description;
+            UpdatedProblem.Section_ID = problem.Section_ID;
+            UpdatedProblem.KeyWord_ID=problem.KeyWord_ID;
+            UpdatedProblem.PhotoPath1 = problem.PhotoPath1;
+            UpdatedProblem.PhotoPath2 = problem.PhotoPath2;
+            UpdatedProblem.PhotoPath3 = problem.PhotoPath3;
+            UpdatedProblem.PhotoPath4 = problem.PhotoPath4;
+
             SaveChanges();
             return problem.Problem_ID;
         }

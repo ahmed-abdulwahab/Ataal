@@ -31,7 +31,8 @@ namespace Ataal.Controllers.Customer
             return Ok(customerID);
         }
 
-
+        [HttpPost]
+        [Route("update_Problem")]
         public IActionResult UpdatingingProblem([FromForm] updatedProblemDto CustDto)
         {
             var Affected = _customerManager.UpdatedProblem(CustDto);
