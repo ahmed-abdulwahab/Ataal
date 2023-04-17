@@ -49,6 +49,43 @@ namespace Ataal.BL.Managers.Customer
             return null;
             
         }
+        public async Task<int?> UpdatedProblem( updatedProblemDto CustDto)
+
+        {
+            var problem = ReturnProblemByID(CustDto.Problem_id);
+
+            if (problem != null)
+            {
+                DeleteFile(problem.PhotoPath1 ?? "");
+                DeleteFile(problem.PhotoPath2 ?? "");
+                DeleteFile(problem.PhotoPath3 ?? "");
+                DeleteFile(problem.PhotoPath4 ?? "");
+
+               
+            }
+            if (CustDto != null)
+            {
+                var Newproblem = new Problem
+                {
+                    Problem_ID= CustDto.Problem_id,
+                    Problem_Title = CustDto.Title,
+                    Description = CustDto.Description,
+                    Section_ID = CustDto.Section_ID,
+                
+                    KeyWord_ID = CustDto.KyeWord_ID,
+                    PhotoPath1 = await ReturnImagePath(CustDto.File1),
+                    PhotoPath2 = await ReturnImagePath(CustDto.File2),//Ask why is there null reference warning                                                 
+                    PhotoPath3 = await ReturnImagePath(CustDto.File3),
+                    PhotoPath4 = await ReturnImagePath(CustDto.File4),
+                };
+                return _customerRepo.UpdateCustomerProblem(Newproblem);
+            }
+            return null;
+
+        }
+
+
+
         public async Task<string?> ReturnImagePath(IFormFile File)
         {
             if (File != null)

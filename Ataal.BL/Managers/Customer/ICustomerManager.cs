@@ -15,6 +15,8 @@ namespace Ataal.BL.Managers.Customer
     {
         public  Task<int?> ReturnAddedProblemID(CustomerAddProblemDto CustDto);
         public Task<string?>? ReturnImagePath(IFormFile File);
+
+        public  Task<int?> UpdatedProblem(updatedProblemDto CustDto);
         public Problem? ReturnProblemByID(int ProblemID);
         public int ModifyingTechnical_Rate(int TechnicalId);
 

@@ -13,6 +13,7 @@ namespace Ataal.DAL.Repos.Customer
 	public interface ICustomerRepo
     {
         public int? AddCustomerProblem(Problem problem);
+        public int? UpdateCustomerProblem(Problem problem);
         public Problem? GetProblemByID(int ProblemID);
         public int DeleteProblem(int ProblemID);
         public int AddTechnicalRate(Rate rate);

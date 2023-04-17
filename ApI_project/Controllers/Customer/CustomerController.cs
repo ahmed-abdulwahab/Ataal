@@ -30,6 +30,24 @@ namespace Ataal.Controllers.Customer
             }
             return Ok(customerID);
         }
+
+
+        public IActionResult UpdatingingProblem([FromForm] updatedProblemDto CustDto)
+        {
+            var Affected = _customerManager.UpdatedProblem(CustDto);
+            if (Affected == null) // check if it = 0
+            {
+                return BadRequest();
+            }
+
+            return Ok("updated");
+        }
+
+
+
+
+
+       
         [HttpDelete]
         public IActionResult DeletingProblem(int problemID)
         {
