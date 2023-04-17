@@ -32,9 +32,11 @@ namespace Ataal.Controllers.Customer
         }
 
         [HttpPost]
-        [Route("update_Problem")]
-        public IActionResult UpdatingingProblem([FromForm] updatedProblemDto CustDto)
+        [Route("update_Problem/{id}")]
+        public IActionResult UpdatingingProblem(int ProblemId,[FromForm] updatedProblemDto CustDto)
         {
+            if (ProblemId != CustDto.Problem_id)
+                return BadRequest();
             var Affected = _customerManager.UpdatedProblem(CustDto);
             if (Affected == null) // check if it = 0
             {
