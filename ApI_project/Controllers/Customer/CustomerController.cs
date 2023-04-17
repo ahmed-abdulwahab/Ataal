@@ -1,5 +1,6 @@
 ﻿using Ataal.BL.DTO.Customer;
 using Ataal.BL.DTO.Rate;
+using Ataal.BL.DTO.Review;
 using Ataal.BL.Managers.Customer;
 using Ataal.DAL.Data.Models;
 using Ataal.DAL.Data.Repos.Customer;
@@ -29,6 +30,27 @@ namespace Ataal.Controllers.Customer
             }
             return Ok(customerID);
         }
+
+        [HttpPost]
+        [Route("update_Problem/{id}")]
+        public IActionResult UpdatingingProblem(int ProblemId,[FromForm] updatedProblemDto CustDto)
+        {
+            if (ProblemId != CustDto.Problem_id)
+                return BadRequest();
+            var Affected = _customerManager.UpdatedProblem(CustDto);
+            if (Affected == null) // check if it = 0
+            {
+                return BadRequest();
+            }
+
+            return Ok("updated");
+        }
+
+
+
+
+
+       
         [HttpDelete]
         public IActionResult DeletingProblem(int problemID)
         {
@@ -69,7 +91,46 @@ namespace Ataal.Controllers.Customer
             }
             return BadRequest();
         }
-        
+
+        [HttpPost]
+        [Route("Review")]
+        public IActionResult AddingTechnicalReview(ReviewCreationDto ReviewDto)
+        {
+          var Affected = _customerManager.AddingTechnicalReview(ReviewDto);
+            if (Affected == 0)
+            {
+                return BadRequest();
+            }
+            return Ok();
+            // I want to return created
+        }
+        [HttpDelete]
+        [Route("Review")]
+        public IActionResult DeleteReview(int Review_Id)
+        {
+            var flag = _customerManager.DeleteReview(Review_Id);
+            if (flag != false)
+            {
+                return Ok();
+            }
+            return NotFound();
+        }
+
+        [HttpPost]
+        [Route("Review/{id}")]
+        public IActionResult UpdateReview ( int id,ReviewUpdatedDto ReviewUpdated)
+        {
+            if(id!= ReviewUpdated.id) return BadRequest();
+            var Affected = _customerManager.UpdateReview(ReviewUpdated);
+            if (Affected == 0|| Affected==null)
+            {
+                return BadRequest();
+            }
+            return Ok();
+           
+        }
+
+
 
     }
 }

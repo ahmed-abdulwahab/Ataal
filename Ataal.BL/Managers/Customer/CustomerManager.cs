@@ -1,15 +1,12 @@
 ﻿using Ataal.BL.DTO.Customer;
-using Ataal.BL.DTO.Identity;
 using Ataal.BL.DTO.Rate;
+using Ataal.BL.DTO.Review;
 using Ataal.DAL.Data.Context;
-using Ataal.DAL.Data.Identity;
 using Ataal.DAL.Data.Models;
-using Ataal.DAL.Data.Repos;
-using Ataal.DAL.Data.Repos.Customer;
-using Ataal.DAL.Data.Repos.Technical_Repo;
+using Ataal.DAL.Repos.Customer;
+using Ataal.DAL.Repos.Reviews;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -22,15 +19,14 @@ namespace Ataal.BL.Managers.Customer
     public class CustomerManager : ICustomerManager
     {
         private readonly ICustomerRepo _customerRepo;
-
+        private readonly IReviewRepo _reviewRepo;
         private readonly IWebHostEnvironment _env;
-        private readonly UserManager<AppUser> userManager;
 
-        public CustomerManager(ICustomerRepo customerRepo, IWebHostEnvironment env, UserManager<AppUser> userManager)
+        public CustomerManager(ICustomerRepo customerRepo,IReviewRepo reviewRepo, IWebHostEnvironment env)
         {
             _customerRepo = customerRepo;
+            _reviewRepo = reviewRepo;
             _env = env;
-            this.userManager = userManager;
         }
         public async Task<int?> ReturnAddedProblemID(CustomerAddProblemDto CustDto)
         {
@@ -53,6 +49,43 @@ namespace Ataal.BL.Managers.Customer
             return null;
             
         }
+        public async Task<int?> UpdatedProblem( updatedProblemDto CustDto)
+
+        {
+            var problem = ReturnProblemByID(CustDto.Problem_id);
+
+            if (problem != null)
+            {
+                DeleteFile(problem.PhotoPath1 ?? "");
+                DeleteFile(problem.PhotoPath2 ?? "");
+                DeleteFile(problem.PhotoPath3 ?? "");
+                DeleteFile(problem.PhotoPath4 ?? "");
+
+               
+            }
+            if (CustDto != null)
+            {
+                var Newproblem = new Problem
+                {
+                    Problem_ID= CustDto.Problem_id,
+                    Problem_Title = CustDto.Title,
+                    Description = CustDto.Description,
+                    Section_ID = CustDto.Section_ID,
+                
+                    KeyWord_ID = CustDto.KyeWord_ID,
+                    PhotoPath1 = await ReturnImagePath(CustDto.File1),
+                    PhotoPath2 = await ReturnImagePath(CustDto.File2),//Ask why is there null reference warning                                                 
+                    PhotoPath3 = await ReturnImagePath(CustDto.File3),
+                    PhotoPath4 = await ReturnImagePath(CustDto.File4),
+                };
+                return _customerRepo.UpdateCustomerProblem(Newproblem);
+            }
+            return null;
+
+        }
+
+
+
         public async Task<string?> ReturnImagePath(IFormFile File)
         {
             if (File != null)
@@ -121,30 +154,42 @@ namespace Ataal.BL.Managers.Customer
             
             return _customerRepo.AddTechnicalRate(Rate);
         }
+        public int AddingTechnicalReview(ReviewCreationDto ReviewDto)
+        {
+
+            var NewReview = new Review
+            {
+                Customer_ID = ReviewDto.Customer_Id,
+                Technical_ID = ReviewDto.Technical_Id,
+                Description = ReviewDto.Description,
+                date = DateTime.Now
+                
+
+            };
+            return _customerRepo.AddTechnicalReview(NewReview);
+        }
         public int ModifyingTechnical_Rate(int TechnicalId)
         {
             return _customerRepo.ModifyingTchnicalRate(TechnicalId);
         }
-
-        public async Task<RegisterUserDto> CreateCustomer(RegisterUserDto customer)
+        public bool DeleteReview(int ReviewId)
         {
-            var AppUser = await userManager.FindByIdAsync(customer.AppUser.Id);
-
-            var Customer = new DAL.Data.Models.Customer()
+         var Deleted=  _customerRepo.DeleteReview(ReviewId);
+            if (Deleted == null || Deleted == 0)
             {
-                Frist_Name = customer.firstName,
-                Last_Name = customer.lastName,
-                Address = customer.Address,
-                AppUser = AppUser!,
-                AppUserId = customer.AppUserId
-            };
-
-            var result =  _customerRepo.CreateCustomer(Customer);
-
-            if (result == null) return null;
-
-            return customer;
+                return false;
+            }
+            return true;
         }
+        public int? UpdateReview(ReviewUpdatedDto ReviewUpdated)
+        {
+
+
+            return _customerRepo.UpdateReview(ReviewUpdated.id, ReviewUpdated.Descriotion);
+        }
+        
+
+
     }
 }
 

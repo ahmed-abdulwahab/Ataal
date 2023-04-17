@@ -4,6 +4,7 @@ using Ataal.DAL.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ataal.DAL.Migrations
 {
     [DbContext(typeof(AtaalContext))]
-    partial class AtaalContextModelSnapshot : ModelSnapshot
+    [Migration("20230416222227_UpdateSectionClass")]
+    partial class UpdateSectionClass
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,7 +62,6 @@ namespace Ataal.DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
@@ -123,14 +125,6 @@ namespace Ataal.DAL.Migrations
                     b.Property<string>("AppUserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Frist_Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Last_Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
@@ -256,32 +250,6 @@ namespace Ataal.DAL.Migrations
                     b.ToTable("Problems");
                 });
 
-            modelBuilder.Entity("Ataal.DAL.Data.Models.Rate", b =>
-                {
-                    b.Property<int>("RateId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RateId"));
-
-                    b.Property<int>("Customer_ID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Rate_Value")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Technical_ID")
-                        .HasColumnType("int");
-
-                    b.HasKey("RateId");
-
-                    b.HasIndex("Customer_ID");
-
-                    b.HasIndex("Technical_ID");
-
-                    b.ToTable("Rates");
-                });
-
             modelBuilder.Entity("Ataal.DAL.Data.Models.Report", b =>
                 {
                     b.Property<int>("Id")
@@ -384,7 +352,6 @@ namespace Ataal.DAL.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -393,17 +360,12 @@ namespace Ataal.DAL.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Brief")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Frist_Name")
+                    b.Property<string>("Phone")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("Last_Name")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("Photo")
                         .HasColumnType("varbinary(max)");
@@ -667,25 +629,6 @@ namespace Ataal.DAL.Migrations
                     b.Navigation("Technical");
                 });
 
-            modelBuilder.Entity("Ataal.DAL.Data.Models.Rate", b =>
-                {
-                    b.HasOne("Ataal.DAL.Data.Models.Customer", "Customer")
-                        .WithMany("Rates")
-                        .HasForeignKey("Customer_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Ataal.DAL.Data.Models.Technical", "Technical")
-                        .WithMany("CustomersRate")
-                        .HasForeignKey("Technical_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("Technical");
-                });
-
             modelBuilder.Entity("Ataal.DAL.Data.Models.Report", b =>
                 {
                     b.HasOne("Ataal.DAL.Data.Models.Review", "Review")
@@ -831,8 +774,6 @@ namespace Ataal.DAL.Migrations
                 {
                     b.Navigation("Problems");
 
-                    b.Navigation("Rates");
-
                     b.Navigation("Reviews");
                 });
 
@@ -855,8 +796,6 @@ namespace Ataal.DAL.Migrations
 
             modelBuilder.Entity("Ataal.DAL.Data.Models.Technical", b =>
                 {
-                    b.Navigation("CustomersRate");
-
                     b.Navigation("Problems_Solved");
 
                     b.Navigation("Reports");

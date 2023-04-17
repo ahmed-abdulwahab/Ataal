@@ -9,7 +9,7 @@ namespace Ataal.BL.DTO.Customer
 {
     public record CustomerAddProblemDto(string Title
                                        ,string Description
-                                       , int Section_ID
+                                       ,int Section_ID
                                        ,int Customer_ID
                                        ,int KyeWord_ID
                                        ,IFormFile? File1
