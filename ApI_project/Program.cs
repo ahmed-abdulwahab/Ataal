@@ -1,10 +1,9 @@
 using Ataal.BL;
-using Ataal.BL.Mangers.technical;
-using Ataal.BL.Mangers.Technical;
+using Ataal.BL.Managers.Customer;
 using Ataal.DAL.Data;
 using Ataal.DAL.Data.Context;
 using Ataal.DAL.Data.Identity;
-using Ataal.DAL.Data.Repos.Technical_Repo;
+using Ataal.DAL.Repos.Customer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -26,14 +25,12 @@ namespace ApI_project
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddScoped<ITechnicalRepo,TechnicalRepo>();
-            builder.Services.AddScoped<ItechnicalManger,TechnicalManger>();
-
             #region DB
             var connectionString = builder.Configuration.GetConnectionString("connection");
             builder.Services.AddDbContext<AtaalContext>(options
                 => options.UseSqlServer(connectionString));
             #endregion
+
 
             #region Identity Managers
 
@@ -87,10 +84,19 @@ namespace ApI_project
                 options.AddPolicy(Constants.Roles.Customer, policy => policy
                     .RequireClaim(ClaimTypes.Role, Constants.Roles.Customer));
 
-                options.AddPolicy(Constants.Roles.technical, policy => policy
-                    .RequireClaim(ClaimTypes.Role, Constants.Roles.technical));
+                options.AddPolicy(Constants.Roles.Technical, policy => policy
+                    .RequireClaim(ClaimTypes.Role, Constants.Roles.Technical));
             });
 
+            #endregion
+
+            #region Repos
+            builder.Services.AddScoped<ICustomerRepo, CustomerRepo>();
+            
+            #endregion
+
+            #region Managers
+            builder.Services.AddScoped<ICustomerManager, CustomerManager>();
             #endregion
 
             var app = builder.Build();
@@ -105,15 +111,15 @@ namespace ApI_project
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
+            app.UseStaticFiles();
 
             app.MapControllers();
-            //using (var scope = app.Services.CreateScope())
-            //{
-            //    var services = scope.ServiceProvider;
-            //    var context = services.GetRequiredService<AtaalContext>();
-            //    SeedClass.Initialize(context);
-            //}
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var context = services.GetRequiredService<AtaalContext>();
+                SeedClass.Initialize(context);
+            }
 
             app.Run();
         }

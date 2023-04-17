@@ -17,7 +17,7 @@ namespace Ataal.DAL.Data.Context
     public class AtaalContext : IdentityDbContext<AppUser>
     {
 
-
+        public DbSet<Rate> Rates => Set<Rate>();
         public DbSet<KeyWords> KeyWords => Set<KeyWords>();
         public DbSet<Problem> Problems => Set<Problem>();
         public DbSet<Offer>Offers=> Set<Offer>();

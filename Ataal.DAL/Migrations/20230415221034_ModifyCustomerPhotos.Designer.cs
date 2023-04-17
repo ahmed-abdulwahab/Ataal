@@ -4,6 +4,7 @@ using Ataal.DAL.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ataal.DAL.Migrations
 {
     [DbContext(typeof(AtaalContext))]
-    partial class AtaalContextModelSnapshot : ModelSnapshot
+    [Migration("20230415221034_ModifyCustomerPhotos")]
+    partial class ModifyCustomerPhotos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -123,14 +126,6 @@ namespace Ataal.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Frist_Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Last_Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
@@ -167,33 +162,6 @@ namespace Ataal.DAL.Migrations
                     b.ToTable("KeyWords");
                 });
 
-            modelBuilder.Entity("Ataal.DAL.Data.Models.Offer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<double>("OfferSalary")
-                        .HasColumnType("float");
-
-                    b.Property<int>("problemId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("technicalId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("problemId");
-
-                    b.HasIndex("technicalId")
-                        .IsUnique();
-
-                    b.ToTable("Offers");
-                });
-
             modelBuilder.Entity("Ataal.DAL.Data.Models.Problem", b =>
                 {
                     b.Property<int>("Problem_ID")
@@ -201,9 +169,6 @@ namespace Ataal.DAL.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Problem_ID"));
-
-                    b.Property<int?>("AcceptedOfferID")
-                        .HasColumnType("int");
 
                     b.Property<int>("Customer_ID")
                         .HasColumnType("int");
@@ -253,32 +218,6 @@ namespace Ataal.DAL.Migrations
                     b.HasIndex("Technical_ID");
 
                     b.ToTable("Problems");
-                });
-
-            modelBuilder.Entity("Ataal.DAL.Data.Models.Rate", b =>
-                {
-                    b.Property<int>("RateId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RateId"));
-
-                    b.Property<int>("Customer_ID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Rate_Value")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Technical_ID")
-                        .HasColumnType("int");
-
-                    b.HasKey("RateId");
-
-                    b.HasIndex("Customer_ID");
-
-                    b.HasIndex("Technical_ID");
-
-                    b.ToTable("Rates");
                 });
 
             modelBuilder.Entity("Ataal.DAL.Data.Models.Report", b =>
@@ -383,7 +322,6 @@ namespace Ataal.DAL.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -392,17 +330,8 @@ namespace Ataal.DAL.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Brief")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Frist_Name")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("Last_Name")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Phone")
                         .IsRequired()
@@ -411,7 +340,7 @@ namespace Ataal.DAL.Migrations
                     b.Property<byte[]>("Photo")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<int?>("Rate")
+                    b.Property<int>("Rate")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -618,25 +547,6 @@ namespace Ataal.DAL.Migrations
                     b.Navigation("Section");
                 });
 
-            modelBuilder.Entity("Ataal.DAL.Data.Models.Offer", b =>
-                {
-                    b.HasOne("Ataal.DAL.Data.Models.Problem", "problem")
-                        .WithMany("Offers")
-                        .HasForeignKey("problemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Ataal.DAL.Data.Models.Technical", "technical")
-                        .WithOne("offer")
-                        .HasForeignKey("Ataal.DAL.Data.Models.Offer", "technicalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("problem");
-
-                    b.Navigation("technical");
-                });
-
             modelBuilder.Entity("Ataal.DAL.Data.Models.Problem", b =>
                 {
                     b.HasOne("Ataal.DAL.Data.Models.Customer", "Customer")
@@ -666,25 +576,6 @@ namespace Ataal.DAL.Migrations
                     b.Navigation("KeyWord");
 
                     b.Navigation("Section");
-
-                    b.Navigation("Technical");
-                });
-
-            modelBuilder.Entity("Ataal.DAL.Data.Models.Rate", b =>
-                {
-                    b.HasOne("Ataal.DAL.Data.Models.Customer", "Customer")
-                        .WithMany("Rates")
-                        .HasForeignKey("Customer_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Ataal.DAL.Data.Models.Technical", "Technical")
-                        .WithMany("CustomersRate")
-                        .HasForeignKey("Technical_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
 
                     b.Navigation("Technical");
                 });
@@ -834,19 +725,12 @@ namespace Ataal.DAL.Migrations
                 {
                     b.Navigation("Problems");
 
-                    b.Navigation("Rates");
-
                     b.Navigation("Reviews");
                 });
 
             modelBuilder.Entity("Ataal.DAL.Data.Models.KeyWords", b =>
                 {
                     b.Navigation("Problems");
-                });
-
-            modelBuilder.Entity("Ataal.DAL.Data.Models.Problem", b =>
-                {
-                    b.Navigation("Offers");
                 });
 
             modelBuilder.Entity("Ataal.DAL.Data.Models.Section", b =>
@@ -858,15 +742,11 @@ namespace Ataal.DAL.Migrations
 
             modelBuilder.Entity("Ataal.DAL.Data.Models.Technical", b =>
                 {
-                    b.Navigation("CustomersRate");
-
                     b.Navigation("Problems_Solved");
 
                     b.Navigation("Reports");
 
                     b.Navigation("Reviews");
-
-                    b.Navigation("offer");
                 });
 #pragma warning restore 612, 618
         }

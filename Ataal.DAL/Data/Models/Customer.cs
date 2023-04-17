@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Ataal.DAL.Data.Models
 {
-      public class Customer
+    public class Customer
     {
         [Key]
         public int Id { get; set; }
@@ -25,9 +25,6 @@ namespace Ataal.DAL.Data.Models
 
         [Phone]
         public string? Phone { get; set; }
-
-
-
         public byte[]? Photo { get; set; }
 
         [StringLength(100, ErrorMessage = "Address cannot exceed 100 characters")]
@@ -35,9 +32,8 @@ namespace Ataal.DAL.Data.Models
 
         public ICollection<Technical>? Blocked_Technicals_Id { get; set; }  //technicals who blocked by customer
 
+        public ICollection<Rate>? Rates { get; set; }
+
         public ICollection<Problem>? Problems { get; set; } // users problems
-
-      
-
     }
 }
