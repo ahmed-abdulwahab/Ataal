@@ -32,8 +32,7 @@ namespace Ataal.DAL.Repos.problem
                 return null;
             return _ataalContext.Set<Problem>().Include(p=>p.KeyWord).Where(P => P.Section_ID == SectionId).Skip(3 * (pageNumber - 1)).Take(3).ToList();
 
-            //return _ataalContext.Set<Problem>().Where(P =>Technical.Sections
-            //                                   .Contains(P.Section)).ToList();
+            
         }
     }
 }
