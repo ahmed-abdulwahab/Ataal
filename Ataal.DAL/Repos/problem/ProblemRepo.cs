@@ -19,7 +19,7 @@ namespace Ataal.DAL.Repos.problem
         public List<Problem>? GetAllProblems(int TechnicalID)
         {
             var Technical = _ataalContext.Technicals.
-                    Include(t => t.Sections)
+                    Include(t => t.Sections).Include(c=>c.Blocked_Customers_Id)
                     .FirstOrDefault(T => T.Id == TechnicalID);
 
             if (Technical != null && Technical.Blocked_Customers_Id != null)
@@ -32,9 +32,9 @@ namespace Ataal.DAL.Repos.problem
                 return null;
             return _ataalContext.Set<Problem>().Include(p=>p.KeyWord).Where(P => Technical.Sections
                                                .Contains(P.Section)).ToList();
-
-            //return _ataalContext.Set<Problem>().Where(P =>Technical.Sections
-            //                                   .Contains(P.Section)).ToList();
         }
+
+
+
     }
 }

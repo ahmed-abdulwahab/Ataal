@@ -8,10 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace Ataal.DAL.Repos.Customer
+namespace Ataal.DAL.Repos.customer
 {
 	public interface ICustomerRepo
     {
+        public Customer? GetCustomerWithBlockedList(int CustomerId);
+        public Technical? GetTechnicalWithBlockedList(int TechnicalId);
         public int? AddCustomerProblem(Problem problem);
         public int? UpdateCustomerProblem(Problem problem);
         public Problem? GetProblemByID(int ProblemID);
@@ -24,6 +26,15 @@ namespace Ataal.DAL.Repos.Customer
         public int? DeleteReview(int ReviewId);
 
         public int? UpdateReview(int id, string Desc);
+
+        public int? BlockTechnical(Customer customer, Technical technical);
+
+        public int? UnBlockTechnical(Customer customer, Technical technical);
+
+        public int? BlockCustomer(Customer customer, Technical technical);
+
+        public int? UnBlockCustomer(Customer customer, Technical technical);
+
         public int SaveChanges();
     }
 }
