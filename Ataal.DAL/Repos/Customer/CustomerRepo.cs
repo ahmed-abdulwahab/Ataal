@@ -33,6 +33,19 @@ namespace Ataal.DAL.Repos.Customer
             }
             return null;
         }
+
+       
+        public int? UpdateCustomerProblem(Problem problem)
+        {
+          var UpdatedProblem=  GetProblemByID(problem.Problem_ID);
+            UpdatedProblem.Problem_Title=
+            SaveChanges();
+            return problem.Problem_ID;
+        }
+      
+
+
+
         public int DeleteProblem(int ProblemID)
         {
             var problem = GetProblemByID(ProblemID);
