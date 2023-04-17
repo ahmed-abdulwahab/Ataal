@@ -1,4 +1,5 @@
-﻿using Ataal.BL.Managers.problem;
+﻿using Ataal.BL.DTO.problem;
+using Ataal.BL.Managers.problem;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,10 +14,11 @@ namespace Ataal.Controllers.problem
         {
             _problemManager= problemManager;
         }
-        [HttpGet]
-        public IActionResult GetAllProblems(int TechnicalID)
+
+        [HttpPost]
+        public IActionResult GetAllProblems(GetProblemsPaging GetProblemsPaging)
         {
-            var problems=_problemManager.GetProblemsForTechnical(TechnicalID);
+            var problems=_problemManager.GetProblemsForTechnical(GetProblemsPaging);
             if (problems == null)
                 return BadRequest();
             else

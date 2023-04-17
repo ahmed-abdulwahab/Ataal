@@ -16,7 +16,7 @@ namespace Ataal.DAL.Repos.problem
         {
             _ataalContext = ataalContext;
         }
-        public List<Problem>? GetAllProblems(int TechnicalID)
+        public List<Problem>? GetAllProblems(int TechnicalID,int SectionId,int pageNumber)
         {
             var Technical = _ataalContext.Technicals.
                     Include(t => t.Sections)
@@ -26,12 +26,11 @@ namespace Ataal.DAL.Repos.problem
             {
                 var TechIDs = Technical.Blocked_Customers_Id.Select(C => C.Id).ToList();
                 return _ataalContext.Set<Problem>().Include(p=>p.KeyWord).Where(P => !TechIDs.Contains(P.Customer_ID)
-                                                            && Technical.Sections.Contains(P.Section)).ToList();
+                                                            && P.Section_ID== SectionId).Skip(3*(pageNumber-1)).Take(3).ToList();
             }
             else if (Technical == null)
                 return null;
-            return _ataalContext.Set<Problem>().Include(p=>p.KeyWord).Where(P => Technical.Sections
-                                               .Contains(P.Section)).ToList();
+            return _ataalContext.Set<Problem>().Include(p=>p.KeyWord).Where(P => P.Section_ID == SectionId).Skip(3 * (pageNumber - 1)).Take(3).ToList();
 
             //return _ataalContext.Set<Problem>().Where(P =>Technical.Sections
             //                                   .Contains(P.Section)).ToList();

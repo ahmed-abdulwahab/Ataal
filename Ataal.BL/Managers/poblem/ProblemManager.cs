@@ -1,6 +1,7 @@
 ﻿using Ataal.BL.DTO.problem;
 using Ataal.DAL.Data.Models;
 using Ataal.DAL.Repos.problem;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +17,11 @@ namespace Ataal.BL.Managers.problem
         {
             _problemRepo= problemRepo;
         }
-        public List<ProblemReturnDto>? GetProblemsForTechnical(int TechnicalID)
+      
+        public List<ProblemReturnDto>? GetProblemsForTechnical(GetProblemsPaging GetProblemsPaging)
         {
 
-            var ProblemList = _problemRepo.GetAllProblems(TechnicalID);
+            var ProblemList = _problemRepo.GetAllProblems(GetProblemsPaging.TechnicalId, GetProblemsPaging.SectonId, GetProblemsPaging.PageNumber);
             if(ProblemList!=null)
             {
               var problems= ProblemList.Select(P =>
