@@ -9,7 +9,7 @@ namespace Ataal.DAL.Repos.problem
 {
     public interface IProblemRepo
     {
-        public List<Problem>? GetAllProblems(int TechnicalID);
+        public List<Problem>? GetAllProblems(int TechnicalID, int SectionId, int pageNumber);
 
     }
 }
