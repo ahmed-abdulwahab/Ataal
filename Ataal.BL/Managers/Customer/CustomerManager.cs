@@ -42,7 +42,7 @@ namespace Ataal.BL.Managers.Customer
                     PhotoPath1 = await ReturnImagePath(CustDto.File1),
                     PhotoPath2 = await ReturnImagePath(CustDto.File2),//Ask why is there null reference warning                                                 
                     PhotoPath3 = await ReturnImagePath(CustDto.File3),
-                    PhotoPath4 = await ReturnImagePath(CustDto.File4),
+                    PhotoPath4 = await ReturnImagePath(CustDto.File4), 
                 };
                return _customerRepo.AddCustomerProblem(problem);
             }
