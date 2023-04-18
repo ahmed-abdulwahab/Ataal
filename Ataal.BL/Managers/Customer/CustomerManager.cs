@@ -192,14 +192,14 @@ namespace Ataal.BL.Managers.Customer
         }
         public bool BlockTechnical(BlockAndUnblockTechnicalAndCustomersDto BDto)
         {
-            var Technical =_customerRepo.GetTechnicalById(BDto.TechnicalId);
-            var CustomerWithBlockedList = _customerRepo.GetCustomerWithBlockedList(BDto.CustomerId);
+            var Technical =customerRepo.GetTechnicalById(BDto.TechnicalId);
+            var CustomerWithBlockedList = customerRepo.GetCustomerWithBlockedList(BDto.CustomerId);
             if (CustomerWithBlockedList != null &&
                 CustomerWithBlockedList.Blocked_Technicals_Id != null &&
                 CustomerWithBlockedList.Blocked_Technicals_Id.Count == 0
                 && Technical != null)
             {
-                _customerRepo.BlockTechnical(CustomerWithBlockedList, Technical);
+                customerRepo.BlockTechnical(CustomerWithBlockedList, Technical);
                 return true;
             }
             else if (CustomerWithBlockedList != null && CustomerWithBlockedList.Blocked_Technicals_Id != null && Technical != null)
@@ -216,14 +216,14 @@ namespace Ataal.BL.Managers.Customer
         
         public bool UnBlockTechnical(BlockAndUnblockTechnicalAndCustomersDto BDto)
         {
-            var Technical = _customerRepo.GetTechnicalById(BDto.TechnicalId);
-            var CustomerWithBlockedList = _customerRepo.GetCustomerWithBlockedList(BDto.CustomerId);
+            var Technical = customerRepo.GetTechnicalById(BDto.TechnicalId);
+            var CustomerWithBlockedList = customerRepo.GetCustomerWithBlockedList(BDto.CustomerId);
             
              if (CustomerWithBlockedList != null && CustomerWithBlockedList.Blocked_Technicals_Id != null && Technical != null)
             {
                 if (CustomerWithBlockedList.Blocked_Technicals_Id.Contains(Technical))
                 {
-                    var value = _customerRepo.UnBlockTechnical(CustomerWithBlockedList, Technical);
+                    var value = customerRepo.UnBlockTechnical(CustomerWithBlockedList, Technical);
                     if (value > 0)
                         return true;
                     else
@@ -235,14 +235,14 @@ namespace Ataal.BL.Managers.Customer
         }
         public bool BlockCustomer(BlockAndUnblockTechnicalAndCustomersDto BDto)
         {
-            var customer = _customerRepo.GetCustomerWithBlockedList(BDto.CustomerId);
-            var TechnicalWithBlockedList = _customerRepo.GetTechnicalWithBlockedList(BDto.TechnicalId);
+            var customer = customerRepo.GetCustomerWithBlockedList(BDto.CustomerId);
+            var TechnicalWithBlockedList = customerRepo.GetTechnicalWithBlockedList(BDto.TechnicalId);
             if (TechnicalWithBlockedList != null &&
                 TechnicalWithBlockedList.Blocked_Customers_Id != null &&
                 TechnicalWithBlockedList.Blocked_Customers_Id.Count == 0
                 && customer != null)
             {
-                _customerRepo.BlockCustomer(customer, TechnicalWithBlockedList);
+                customerRepo.BlockCustomer(customer, TechnicalWithBlockedList);
                 return true;
             }
             else if (TechnicalWithBlockedList != null && TechnicalWithBlockedList.Blocked_Customers_Id != null && customer != null)
@@ -259,14 +259,14 @@ namespace Ataal.BL.Managers.Customer
 
         public bool UnBlockCustomer(BlockAndUnblockTechnicalAndCustomersDto BDto)
         {
-            var customer = _customerRepo.GetCustomerWithBlockedList(BDto.CustomerId);
-            var TechnicalWithBlockedList = _customerRepo.GetTechnicalById(BDto.TechnicalId);
+            var customer = customerRepo.GetCustomerWithBlockedList(BDto.CustomerId);
+            var TechnicalWithBlockedList = customerRepo.GetTechnicalById(BDto.TechnicalId);
 
             if (TechnicalWithBlockedList != null && TechnicalWithBlockedList.Blocked_Customers_Id != null && customer != null)
             {
                 if (TechnicalWithBlockedList.Blocked_Customers_Id.Contains(customer))
                 {
-                    var value = _customerRepo.UnBlockCustomer(customer, TechnicalWithBlockedList);
+                    var value = customerRepo.UnBlockCustomer(customer, TechnicalWithBlockedList);
                     if (value > 0)
                         return true;
                     else

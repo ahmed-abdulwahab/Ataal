@@ -14,12 +14,12 @@
 //		{
 //			if (!context.Sections.Any())
 //			{
-//				context.Sections.Add(new Section{ Section_ID = 1 , Section_Name = "Car sectoin",Description = "A Sectoin specialized in repairing and diagnosing all car malfunctions , complete team specializing in repairing and detecting malfunction served by a distinguished and experienced work for more than 20 years", Photo = null });
-//				context.Sections.Add(new Section{ Section_ID = 2 , Section_Name = "Plumber section", Description = "A Sectoin specialized in repairing and diagnosing all car malfunctions , complete team specializing in repairing and detecting malfunction served by a distinguished and experienced work for more than 20 years", Photo = null });
-//				context.Sections.Add(new Section{ Section_ID = 3 , Section_Name = "Electrical devices section", Description = "A Section specialized in plumbing work. There is a full team specialized in repairing, detecting faults, and establishing plumbing work. More than 20 years of experience.", Photo = null });
-//				context.Sections.Add(new Section{ Section_ID = 4 , Section_Name = "electric section", Description = "A Section specialized in repairing and detecting electrical faults, including installation, maintenance and lighting of the entire house , complete team specializing in repairing and detecting malfunction served by a distinguished and experienced work for more than 20 years" });
-//				context.Sections.Add(new Section{ Section_ID = 5 , Section_Name = "Carpentry department", Description = "A Section specializing in disclosure of cracks and lack of furniture A complete team working on your comfort more than 20 years", Photo = null });
-//				context.Sections.Add(new Section{ Section_ID = 6 , Section_Name = "Blacksmithing Section", Description = "A Section specializing in detecting and repairing malfunctions related to the mourning of the formation and welding of metals is a , complete team specializing in repairing and detecting malfunction served by a distinguished and experienced work for more than 20 years", Photo = null });
+//				context.Sections.Add(new Section { Section_ID = 1, Section_Name = "Car sectoin", Description = "A Sectoin specialized in repairing and diagnosing all car malfunctions , complete team specializing in repairing and detecting malfunction served by a distinguished and experienced work for more than 20 years", Photo = null });
+//				context.Sections.Add(new Section { Section_ID = 2, Section_Name = "Plumber section", Description = "A Sectoin specialized in repairing and diagnosing all car malfunctions , complete team specializing in repairing and detecting malfunction served by a distinguished and experienced work for more than 20 years", Photo = null });
+//				context.Sections.Add(new Section { Section_ID = 3, Section_Name = "Electrical devices section", Description = "A Section specialized in plumbing work. There is a full team specialized in repairing, detecting faults, and establishing plumbing work. More than 20 years of experience.", Photo = null });
+//				context.Sections.Add(new Section { Section_ID = 4, Section_Name = "electric section", Description = "A Section specialized in repairing and detecting electrical faults, including installation, maintenance and lighting of the entire house , complete team specializing in repairing and detecting malfunction served by a distinguished and experienced work for more than 20 years" });
+//				context.Sections.Add(new Section { Section_ID = 5, Section_Name = "Carpentry department", Description = "A Section specializing in disclosure of cracks and lack of furniture A complete team working on your comfort more than 20 years", Photo = null });
+//				context.Sections.Add(new Section { Section_ID = 6, Section_Name = "Blacksmithing Section", Description = "A Section specializing in detecting and repairing malfunctions related to the mourning of the formation and welding of metals is a , complete team specializing in repairing and detecting malfunction served by a distinguished and experienced work for more than 20 years", Photo = null });
 //				context.SaveChanges();
 //			}
 
@@ -55,7 +55,7 @@
 //				context.KeyWords.Add(new KeyWords { KeyWord_ID = 23, KeyWord_Name = "Heating elements", Section_ID = 3 });
 //				context.KeyWords.Add(new KeyWords { KeyWord_ID = 24, KeyWord_Name = "Motors", Section_ID = 3 });
 //				context.KeyWords.Add(new KeyWords { KeyWord_ID = 25, KeyWord_Name = "Sensors", Section_ID = 3 });
-				
+
 
 //				context.KeyWords.Add(new KeyWords { KeyWord_ID = 26, KeyWord_Name = "Electrical panel", Section_ID = 4 });
 //				context.KeyWords.Add(new KeyWords { KeyWord_ID = 27, KeyWord_Name = "Wiring ", Section_ID = 4 });
@@ -72,14 +72,14 @@
 //				context.KeyWords.Add(new KeyWords { KeyWord_ID = 36, KeyWord_Name = "windows", Section_ID = 5 });
 //				context.KeyWords.Add(new KeyWords { KeyWord_ID = 37, KeyWord_Name = "Cabinets ", Section_ID = 5 });
 //				context.KeyWords.Add(new KeyWords { KeyWord_ID = 38, KeyWord_Name = "furniture", Section_ID = 5 });
-			
+
 
 //				context.KeyWords.Add(new KeyWords { KeyWord_ID = 39, KeyWord_Name = "Forge ", Section_ID = 6 });
 //				context.KeyWords.Add(new KeyWords { KeyWord_ID = 40, KeyWord_Name = "Anvil ", Section_ID = 6 });
 //				context.KeyWords.Add(new KeyWords { KeyWord_ID = 41, KeyWord_Name = "Hammers", Section_ID = 6 });
 //				context.KeyWords.Add(new KeyWords { KeyWord_ID = 42, KeyWord_Name = "tongs", Section_ID = 6 });
 //				context.KeyWords.Add(new KeyWords { KeyWord_ID = 43, KeyWord_Name = "Metal stock", Section_ID = 6 });
-	
+
 
 //				context.SaveChanges();
 //			}
