@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Ataal.DAL.Data.Context;
 using Ataal.DAL.Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ataal.DAL.Repos.Section
 {
@@ -18,8 +19,7 @@ namespace Ataal.DAL.Repos.Section
         public int AddNewSection(Data.Models.Section section)
 		{
 			ataalContext.Sections.Add(section);
-			SaveChanges();
-			return section.Section_ID;
+			return SaveChanges();
 		}
 
 		public int DeleteSection(int id)
@@ -32,13 +32,27 @@ namespace Ataal.DAL.Repos.Section
 
 		public List<Data.Models.Section> GetAllSections()
 		{
-			return ataalContext.Set<Data.Models.Section>().ToList();
+			return ataalContext
+				.Set<Data.Models.Section>()
+				.Include(t=>t.Technicals)
+				.Include(k=>k.KeyWords)
+				.Include(p=>p.Problems).ToList();
 		}
 
 		public Data.Models.Section? GetSectionById(int id)
 		{
 			var Section = ataalContext.Sections.FirstOrDefault(s => s.Section_ID == id);
 			return Section;
+		}
+
+		public Data.Models.Section GetSectionByIdWithDetails(int id)
+		{
+			return ataalContext
+			.Set<Data.Models.Section>()
+			.Include(t => t.Technicals)
+			.Include(k => k.KeyWords)
+			.Include(p => p.Problems)
+			.FirstOrDefault(s=>s.Section_ID == id);
 		}
 
 		public int SaveChanges()

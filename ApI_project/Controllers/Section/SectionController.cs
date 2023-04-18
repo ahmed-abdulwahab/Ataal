@@ -15,16 +15,33 @@ namespace Ataal.Controllers.Section
             sectionManger = _sectionManger;
         }
 
-		//[HttpGet]
-		//[Route("All Section With Details")]
-		//public IActionResult GetAllSectioninDetails()
-		//{ 
-		//  var AllSection = sectionManger.getAllSSsectionWithDeatailsDtos();
-		//	return Ok(AllSection);
-		//}
+		[HttpGet]
+		[Route("AllSectionWithDetails")]
+		public IActionResult GetAllSectioninDetails()
+		{ 
+		  var AllSection = sectionManger.getAllSSsectionWithDeatailsDtos();
+			return Ok(AllSection);
+		}
+
+		[HttpDelete]
+		[Route("DeleteSection")]
+		public IActionResult DeleteSection(int id)
+		{
+			var SelectedSection = sectionManger.DeleteSection(id);
+			if (SelectedSection == null) return BadRequest();
+			return Ok(SelectedSection);
+		}
 
 		[HttpGet]
-		[Route("All Section Without Details")]
+		[Route("GetSectionWithDetails")]
+		public IActionResult GetSectionByIdWithDetails(int id)
+		{
+			var Section = sectionManger.GetSectionByIDinDetails(id);
+			return Ok(Section);
+		}
+
+		[HttpGet]
+		[Route("AllSectionWithoutDetails")]
 		public IActionResult GetAllSection()
 		{
 			var AllSection = sectionManger.getAllSectionDtos();
@@ -32,7 +49,7 @@ namespace Ataal.Controllers.Section
 		}
 
 		[HttpGet]
-		[Route("Get Section By ID")]
+		[Route("GetSectionByID")]
 		public IActionResult GetByID(int id)
 		{
 			var SelectedSection = sectionManger.GetSectionByID(id);
@@ -41,8 +58,8 @@ namespace Ataal.Controllers.Section
 		}
 
 		[HttpPost]
-		[Route("Add New Section")]
-		public IActionResult AddNewSection(AddSectionDto NewSection)
+		[Route("AddSection")]
+		public IActionResult AddNewSection([FromForm]AddSectionDto NewSection)
 		{
 			var TargetSection = sectionManger.AddNewSection(NewSection);
 			if(TargetSection == null) return BadRequest(new { TargetSection = NewSection });
@@ -50,7 +67,7 @@ namespace Ataal.Controllers.Section
 		}
 
 		[HttpPut]
-		[Route("Update Section")]
+		[Route("UpdateSection")]
 		public IActionResult UpdateSection(SectionDto section , int id)
 		{
 			var TargetSection = sectionManger.UpdateSectionById(section ,id);

@@ -112,16 +112,17 @@ namespace ApI_project
 
             builder.Services.AddScoped<IReviewRepo, ReviewRepo>();
             builder.Services.AddScoped<IProblemRepo, ProblemRepo>();
+			#endregion
 
             builder.Services.AddScoped<IRecommendationRepo, RecommendationRepo>();
 
+
+			#region Manager
+			builder.Services.AddScoped<ISectionManger, SectionManger>();
            
 
-
-            #endregion
-
-            #region Managers
             builder.Services.AddScoped<ICustomerManager, CustomerManager>();
+
 
             builder.Services.AddScoped<ISectionManger, SectionManger>();
 
@@ -131,11 +132,12 @@ namespace ApI_project
 
             builder.Services.AddScoped<IRecommendationManager, RecommendationManager>();
 
-
-
-
-
             #endregion
+
+
+
+
+
 
             var app = builder.Build();
 
