@@ -121,9 +121,6 @@ namespace ApI_project
 			builder.Services.AddScoped<ISectionManger, SectionManger>();
            
 
-
-            #endregion
-
             builder.Services.AddScoped<ICustomerManager, CustomerManager>();
 
 
@@ -135,11 +132,12 @@ namespace ApI_project
 
             builder.Services.AddScoped<IRecommendationManager, RecommendationManager>();
 
-
-
-
-
             #endregion
+
+
+
+
+
 
             var app = builder.Build();
 

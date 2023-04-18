@@ -62,7 +62,6 @@ namespace Ataal.BL.Managers.Section
 																															  title: p.Problem_Title,
 																															  Description: p.Description)).ToList(),
 													 SectionTecnicalReadDtos: t.Technicals?.Select(t => new SectionTecnicalReadDto(Id: t.Id,
-																															      Phone: t.Phone,
 																															      Rate: t.Rate,
 																															      Brief: t.Brief)).ToList(),
 													 SectionKeyWordReadDtos: t.KeyWords?.Select(k => new SectionKeyWordReadDto(Id: k.KeyWord_ID,
@@ -70,6 +69,27 @@ namespace Ataal.BL.Managers.Section
 																			   ));
 			return SectionDto.ToList();
 		}
+	//public List<SectionDetailsDto> getAllSSsectionWithDeatailsDtos()
+		//{
+		//	var SectionFromDB = sectionRepo.GetAllSections();
+
+		//	var SectionDto = SectionFromDB
+		//		.Select(t => new SectionDetailsDto(id: t.Section_ID,
+		//											 Name: t.Section_Name,
+		//											 Description: t.Description,
+		//											 SectionProblemReadDtos: t.Problems.Select(p => new SectionProblemReadDto(id: p.Problem_ID,
+		//																													 title: p.Problem_Title,
+		//																													 Description: p.Description)).ToList(),
+		//											 SectionTecnicalReadDtos: t.Technicals.Select(t => new SectionTecnicalReadDto(Id: t.Id,
+		//																													   Phone: t.Phone,
+		//																													   Rate: t.Rate,
+		//																													   Brief: t.Brief)).ToList(),
+		//											 SectionKeyWordReadDtos: t.KeyWords.Select(k => new SectionKeyWordReadDto(Id: k.KeyWord_ID,
+		//																													   Name: k.KeyWord_Name)).ToList()
+		//																	   ));
+		//	return SectionDto.ToList();
+		//}
+
 
 		public SectionDto GetSectionByID(int id)
 		{
