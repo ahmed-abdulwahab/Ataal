@@ -12,7 +12,7 @@ namespace Ataal.BL.Managers.Section
 {
 	public interface ISectionManger
 	{
-		public List<SectionDetailsDto> getAllSSsectionWithDeatailsDtos();
+		//public List<SectionDetailsDto> getAllSSsectionWithDeatailsDtos();
 		public List<SectionDto> getAllSectionDtos();
 		public SectionDto GetSectionByID(int id);
 		public SectionDetailsDto GetSectionByIDinDetails(int id);

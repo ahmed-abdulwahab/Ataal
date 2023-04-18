@@ -10,6 +10,11 @@ namespace Ataal.BL.Managers.problem
 {
     public interface IProblemManager
     {
-        public List<ProblemReturnDto>? GetProblemsForTechnical(int TechnicalID);
+        public List<ProblemReturnDto>? GetProblemsForTechnical(GetProblemsPagingDto GetProblemsPaging);
+        public int ProblemIsSolved(int ProblemId);
+        public ProblemReturnDto? GetProblemById(int ProblemId);
+
+        public int CustomerAcceptedOffer(CustomerAcceptedProblemOfferDto CAPDto);
     }
+
 }

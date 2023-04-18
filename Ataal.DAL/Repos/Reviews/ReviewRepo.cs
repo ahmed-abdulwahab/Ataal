@@ -18,7 +18,6 @@ namespace Ataal.DAL.Repos.Reviews
         public Review? GetReviewById(int ReviewId)
         {
           return  _ataalContext.Reviews.FirstOrDefault(r=>r.ID== ReviewId);
-
         }
     
 

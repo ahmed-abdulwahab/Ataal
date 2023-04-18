@@ -2,10 +2,14 @@ using Ataal.BL;
 using Ataal.BL.Managers.Customer;
 using Ataal.BL.Managers.Section;
 using Ataal.BL.Managers.problem;
-using Ataal.DAL.Data;
 using Ataal.DAL.Data.Context;
 using Ataal.DAL.Data.Identity;
-using Ataal.DAL.Repos.Customer;
+using Ataal.BL.Managers.Identity;
+using Ataal.BL.Mangers.technical;
+using Ataal.BL.Mangers.Technical;
+
+using Ataal.DAL.Data.Repos;
+using Ataal.DAL.Data.Repos.Technical_Repo;
 using Ataal.DAL.Repos.Section;
 using Ataal.DAL.Repos.problem;
 using Ataal.DAL.Repos.Reviews;
@@ -14,6 +18,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
+using Ataal.DAL.Repos.customer;
+using Ataal.DAL.Data;
+using Ataal.DAL.Repos.recommendation;
+using Ataal.BL.Managers.recommendation;
 
 namespace ApI_project
 {
@@ -99,21 +107,37 @@ namespace ApI_project
             builder.Services.AddScoped<ICustomerRepo, CustomerRepo>();
 
             builder.Services.AddScoped<ISectionRepo, SectionRepo>();
-            
+            builder.Services.AddScoped<ITechnicalRepo, TechnicalRepo>();
+
 
             builder.Services.AddScoped<IReviewRepo, ReviewRepo>();
             builder.Services.AddScoped<IProblemRepo, ProblemRepo>();
 			#endregion
 
+            builder.Services.AddScoped<IRecommendationRepo, RecommendationRepo>();
 
 
 			#region Manager
 			builder.Services.AddScoped<ISectionManger, SectionManger>();
+           
+
+
+            #endregion
 
             builder.Services.AddScoped<ICustomerManager, CustomerManager>();
 
 
             builder.Services.AddScoped<ISectionManger, SectionManger>();
+
+            builder.Services.AddScoped<IProblemManager, ProblemManager>();
+            builder.Services.AddScoped<ItechnicalManger, TechnicalManger>();
+            builder.Services.AddScoped<IIdentityManger, IdentityManager>();
+
+            builder.Services.AddScoped<IRecommendationManager, RecommendationManager>();
+
+
+
+
 
             #endregion
 
@@ -132,12 +156,12 @@ namespace ApI_project
             app.UseStaticFiles();
 
             app.MapControllers();
-            using (var scope = app.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
-                var context = services.GetRequiredService<AtaalContext>();
-                SeedClass.Initialize(context);
-            }
+            //using (var scope = app.Services.CreateScope())
+            //{
+            //    var services = scope.ServiceProvider;
+            //    var context = services.GetRequiredService<AtaalContext>();
+            //    SeedClass.Initialize(context);
+            //}
 
             app.Run();
         }

@@ -3,7 +3,7 @@ using Ataal.BL.DTO.Rate;
 using Ataal.BL.DTO.Review;
 using Ataal.BL.Managers.Customer;
 using Ataal.DAL.Data.Models;
-using Ataal.DAL.Repos.Customer;
+using Ataal.DAL.Repos.customer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,6 +30,27 @@ namespace Ataal.Controllers.Customer
             }
             return Ok(customerID);
         }
+
+        [HttpPost]
+        [Route("update_Problem/{id}")]
+        public IActionResult UpdatingingProblem(int ProblemId,[FromForm] updatedProblemDto CustDto)
+        {
+            if (ProblemId != CustDto.Problem_id)
+                return BadRequest();
+            var Affected = _customerManager.UpdatedProblem(CustDto);
+            if (Affected == null) // check if it = 0
+            {
+                return BadRequest();
+            }
+
+            return Ok("updated");
+        }
+
+
+
+
+
+       
         [HttpDelete]
         public IActionResult DeletingProblem(int problemID)
         {
@@ -108,8 +129,47 @@ namespace Ataal.Controllers.Customer
             return Ok();
            
         }
+        [HttpPost]
+        [Route("BlockTechnical")]
+        public IActionResult BlockTechnical(BlockAndUnblockTechnicalAndCustomersDto BDto)
+        {
+            var Value = _customerManager.BlockTechnical(BDto);
+            if (Value == true)
+                return Ok(BDto.TechnicalId);
+            else
+               return NotFound();
+        }
+        [HttpPost]
+        [Route("UnBlockTechnical")]
+        public IActionResult UnBlockTechnical(BlockAndUnblockTechnicalAndCustomersDto BDto)
+        {
+            var Value = _customerManager.UnBlockTechnical(BDto);
+            if (Value == true)
+                return Ok(BDto.TechnicalId);
+            else
+                return NotFound();
+        }
 
-
+        [HttpPost]
+        [Route("BlockCustomer")]
+        public IActionResult BlockCustomer(BlockAndUnblockTechnicalAndCustomersDto BDto)
+        {
+            var Value = _customerManager.BlockCustomer(BDto);
+            if (Value == true)
+                return Ok(BDto.CustomerId);
+            else
+                return NotFound();
+        }
+        [HttpPost]
+        [Route("UnBlockCustomer")]
+        public IActionResult UnBlockCustomer(BlockAndUnblockTechnicalAndCustomersDto BDto)
+        {
+            var Value = _customerManager.UnBlockCustomer(BDto);
+            if (Value == true)
+                return Ok(BDto.CustomerId);
+            else
+                return NotFound();
+        }
 
     }
 }
