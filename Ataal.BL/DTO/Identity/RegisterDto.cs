@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Ataal.BL.DTO.Identity
+namespace Ataal.BL.DtO.Identity
 {
-    public record RegisterDto(string UserName,
+    public record RegisterDto(
         string Email,
-        string Password);
+        string Password,
+        string phone,
+        string firstName,
+        string lastName,
+        string Address,
+        string userName
+        );
 }

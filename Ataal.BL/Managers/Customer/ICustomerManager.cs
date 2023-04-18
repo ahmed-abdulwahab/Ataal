@@ -1,4 +1,5 @@
 ﻿using Ataal.BL.DTO.Customer;
+using Ataal.BL.DTO.Identity;
 using Ataal.BL.DTO.Rate;
 using Ataal.BL.DTO.Review;
 using Ataal.DAL.Data.Models;
@@ -33,5 +34,8 @@ namespace Ataal.BL.Managers.Customer
         public bool BlockCustomer(BlockAndUnblockTechnicalAndCustomersDto BDto);
         public bool UnBlockCustomer(BlockAndUnblockTechnicalAndCustomersDto BDto);
 
+        public Task<RegisterUserDto> CreateCustomer(RegisterUserDto customer);
+
     }
+
 }
