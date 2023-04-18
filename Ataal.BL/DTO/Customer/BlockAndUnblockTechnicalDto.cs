@@ -6,6 +6,6 @@ using System.Threading.Tasks;
 
 namespace Ataal.BL.DTO.Customer
 {
-    public record BlockAndUnblockTechnicalDto(int CustomerId,int TechnicalId);
+    public record BlockAndUnblockTechnicalAndCustomersDto(int CustomerId,int TechnicalId);
     
 }

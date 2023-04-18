@@ -23,5 +23,29 @@ namespace Ataal.Controllers.problem
             else
                 return Ok(problems);
         }
+        [HttpGet]
+        [Route("{ProblemId}")]
+        public IActionResult GetProblemById(int ProblemId)
+        {
+            var problemDto=_problemManager.GetProblemById(ProblemId);
+            if(problemDto!=null)
+            {
+                return Ok(problemDto);
+            }
+            return NotFound();
+        }
+        [HttpPut]
+        [Route("ProblemIsSolved/{ProblemId}")]
+        public IActionResult ProblemIsSolved(int ProblemId)
+        {
+            var value=_problemManager.ProblemIsSolved(ProblemId);
+            if (value > 0)
+                return Ok("Solved");
+            else if (value == -1)
+                return Ok("Already_Solved");
+            
+            return NotFound();
+        }
+
     }
 }
