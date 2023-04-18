@@ -103,22 +103,18 @@ namespace ApI_project
 
             builder.Services.AddScoped<IReviewRepo, ReviewRepo>();
             builder.Services.AddScoped<IProblemRepo, ProblemRepo>();
+			#endregion
 
 
-=========
-            builder.Services.AddScoped<ISectionRepo, SectionRepo>();
-            
->>>>>>>>> Temporary merge branch 2
-            #endregion
 
-
-            builder.Services.AddScoped<ISectionManger, SectionManger>();
+			#region Manager
+			builder.Services.AddScoped<ISectionManger, SectionManger>();
 
             builder.Services.AddScoped<ICustomerManager, CustomerManager>();
-<<<<<<<<< Temporary merge branch 1
+
 
             builder.Services.AddScoped<ISectionManger, SectionManger>();
->>>>>>>>> Temporary merge branch 2
+
             #endregion
 
             var app = builder.Build();
