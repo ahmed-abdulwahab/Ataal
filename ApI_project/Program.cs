@@ -143,12 +143,12 @@ namespace ApI_project
             app.UseStaticFiles();
 
             app.MapControllers();
-            //using (var scope = app.Services.CreateScope())
-            //{
-            //    var services = scope.ServiceProvider;
-            //    var context = services.GetRequiredService<AtaalContext>();
-            //    SeedClass.Initialize(context);
-            //}
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var context = services.GetRequiredService<AtaalContext>();
+                SeedClass.Initialize(context);
+            }
 
             app.Run();
         }

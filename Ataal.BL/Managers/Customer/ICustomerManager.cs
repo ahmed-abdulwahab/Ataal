@@ -27,6 +27,13 @@ namespace Ataal.BL.Managers.Customer
         public bool DeleteProblemWithImagesByProblemID(int ProblemID);
         public int? UpdateReview(ReviewUpdatedDto ReviewUpdated);
         public bool DeleteReview(int ReviewId);
+
+        public bool BlockTechnical(BlockAndUnblockTechnicalAndCustomersDto BDto);
+        public bool UnBlockTechnical(BlockAndUnblockTechnicalAndCustomersDto BDto);
+
+        public bool BlockCustomer(BlockAndUnblockTechnicalAndCustomersDto BDto);
+        public bool UnBlockCustomer(BlockAndUnblockTechnicalAndCustomersDto BDto);
+
         public Task<RegisterUserDto> CreateCustomer(RegisterUserDto customer);
 
     }

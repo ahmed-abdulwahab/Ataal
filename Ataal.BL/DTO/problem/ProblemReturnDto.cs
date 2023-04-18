@@ -9,6 +9,7 @@ namespace Ataal.BL.DTO.problem
     public record ProblemReturnDto(
         string Title,
         string Description,
+        bool IsSolved,
         string? Key_Word,
         string? PhotoPath1,
         string? PhotoPath2,

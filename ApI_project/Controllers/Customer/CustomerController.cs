@@ -4,6 +4,7 @@ using Ataal.BL.DTO.Review;
 using Ataal.BL.Managers.Customer;
 using Ataal.DAL.Data.Models;
 using Ataal.DAL.Data.Repos.Customer;
+using Ataal.DAL.Repos.customer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -129,8 +130,47 @@ namespace Ataal.Controllers.Customer
             return Ok();
            
         }
+        [HttpPost]
+        [Route("BlockTechnical")]
+        public IActionResult BlockTechnical(BlockAndUnblockTechnicalAndCustomersDto BDto)
+        {
+            var Value = _customerManager.BlockTechnical(BDto);
+            if (Value == true)
+                return Ok(BDto.TechnicalId);
+            else
+               return NotFound();
+        }
+        [HttpPost]
+        [Route("UnBlockTechnical")]
+        public IActionResult UnBlockTechnical(BlockAndUnblockTechnicalAndCustomersDto BDto)
+        {
+            var Value = _customerManager.UnBlockTechnical(BDto);
+            if (Value == true)
+                return Ok(BDto.TechnicalId);
+            else
+                return NotFound();
+        }
 
-
+        [HttpPost]
+        [Route("BlockCustomer")]
+        public IActionResult BlockCustomer(BlockAndUnblockTechnicalAndCustomersDto BDto)
+        {
+            var Value = _customerManager.BlockCustomer(BDto);
+            if (Value == true)
+                return Ok(BDto.CustomerId);
+            else
+                return NotFound();
+        }
+        [HttpPost]
+        [Route("UnBlockCustomer")]
+        public IActionResult UnBlockCustomer(BlockAndUnblockTechnicalAndCustomersDto BDto)
+        {
+            var Value = _customerManager.UnBlockCustomer(BDto);
+            if (Value == true)
+                return Ok(BDto.CustomerId);
+            else
+                return NotFound();
+        }
 
     }
 }

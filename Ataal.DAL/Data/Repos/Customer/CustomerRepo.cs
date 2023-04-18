@@ -1,6 +1,7 @@
 ﻿using Ataal.DAL.Data.Context;
 using Ataal.DAL.Data.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace Ataal.DAL.Data.Repos.Customer
+namespace Ataal.DAL.Repos.customer
 {
     public class CustomerRepo : ICustomerRepo
     {
@@ -52,7 +53,20 @@ namespace Ataal.DAL.Data.Repos.Customer
             return problem.Problem_ID;
         }
       
+        public Customer? GetCustomerWithBlockedList(int CustomerId)
+        {
+            return _ataalContext.Customers.
+                        Include(C => C.Blocked_Technicals_Id).
+                        FirstOrDefault(c => c.Id == CustomerId);
+            
+        }
+        public Technical? GetTechnicalWithBlockedList(int TechnicalId)
+        {
+            return _ataalContext.Technicals.
+                        Include(C => C.Blocked_Customers_Id).
+                        FirstOrDefault(c => c.Id == TechnicalId);
 
+        }
 
 
         public int DeleteProblem(int ProblemID)
@@ -122,6 +136,7 @@ namespace Ataal.DAL.Data.Repos.Customer
 
 
         }
+       
 
         public int? UpdateReview(int id,string Desc)
         {
@@ -133,6 +148,60 @@ namespace Ataal.DAL.Data.Repos.Customer
             return SaveChanges();
 
 
+        }
+        public int? BlockTechnical(Customer customer,Technical technical)
+        {
+
+
+            //var CustomerWithBlockedList = GetCustomerWithBlockedList(CustomerId);
+            if (customer.Blocked_Technicals_Id != null)
+            {
+                customer.Blocked_Technicals_Id.Add(technical);
+                return SaveChanges();
+            }
+
+
+            //}
+
+            return 0;
+        }
+
+        public int? UnBlockTechnical(Customer customer, Technical technical)
+        {
+            if (customer.Blocked_Technicals_Id != null)
+            {
+                customer.Blocked_Technicals_Id.Remove(technical);
+                return SaveChanges();
+            }
+
+            return 0;
+        }
+        public int? BlockCustomer(Customer customer, Technical technical)
+        {
+
+
+            //var CustomerWithBlockedList = GetCustomerWithBlockedList(CustomerId);
+            if (technical.Blocked_Customers_Id != null)
+            {
+                technical.Blocked_Customers_Id.Add(customer);
+                return SaveChanges();
+            }
+
+
+            //}
+
+            return 0;
+        }
+
+        public int? UnBlockCustomer(Customer customer, Technical technical)
+        {
+            if (technical.Blocked_Customers_Id != null)
+            {
+                technical.Blocked_Customers_Id.Remove(customer);
+                return SaveChanges();
+            }
+
+            return 0;
         }
 
 

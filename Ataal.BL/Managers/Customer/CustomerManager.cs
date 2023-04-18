@@ -6,6 +6,7 @@ using Ataal.DAL.Data.Context;
 using Ataal.DAL.Data.Identity;
 using Ataal.DAL.Data.Models;
 using Ataal.DAL.Data.Repos;
+using Ataal.DAL.Repos.customer;
 using Ataal.DAL.Repos.Reviews;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -188,6 +189,92 @@ namespace Ataal.BL.Managers.Customer
                 return false;
             }
             return true;
+        }
+        public bool BlockTechnical(BlockAndUnblockTechnicalAndCustomersDto BDto)
+        {
+            var Technical =_customerRepo.GetTechnicalById(BDto.TechnicalId);
+            var CustomerWithBlockedList = _customerRepo.GetCustomerWithBlockedList(BDto.CustomerId);
+            if (CustomerWithBlockedList != null &&
+                CustomerWithBlockedList.Blocked_Technicals_Id != null &&
+                CustomerWithBlockedList.Blocked_Technicals_Id.Count == 0
+                && Technical != null)
+            {
+                _customerRepo.BlockTechnical(CustomerWithBlockedList, Technical);
+                return true;
+            }
+            else if (CustomerWithBlockedList != null && CustomerWithBlockedList.Blocked_Technicals_Id != null && Technical != null)
+            {
+                if (!CustomerWithBlockedList.Blocked_Technicals_Id.Contains(Technical))
+                {
+                    CustomerWithBlockedList.Blocked_Technicals_Id.Add(Technical);
+                    return true;
+                }
+                
+            }
+            return false;
+        }
+        
+        public bool UnBlockTechnical(BlockAndUnblockTechnicalAndCustomersDto BDto)
+        {
+            var Technical = _customerRepo.GetTechnicalById(BDto.TechnicalId);
+            var CustomerWithBlockedList = _customerRepo.GetCustomerWithBlockedList(BDto.CustomerId);
+            
+             if (CustomerWithBlockedList != null && CustomerWithBlockedList.Blocked_Technicals_Id != null && Technical != null)
+            {
+                if (CustomerWithBlockedList.Blocked_Technicals_Id.Contains(Technical))
+                {
+                    var value = _customerRepo.UnBlockTechnical(CustomerWithBlockedList, Technical);
+                    if (value > 0)
+                        return true;
+                    else
+                        return false;
+                }
+
+            }
+            return false;
+        }
+        public bool BlockCustomer(BlockAndUnblockTechnicalAndCustomersDto BDto)
+        {
+            var customer = _customerRepo.GetCustomerWithBlockedList(BDto.CustomerId);
+            var TechnicalWithBlockedList = _customerRepo.GetTechnicalWithBlockedList(BDto.TechnicalId);
+            if (TechnicalWithBlockedList != null &&
+                TechnicalWithBlockedList.Blocked_Customers_Id != null &&
+                TechnicalWithBlockedList.Blocked_Customers_Id.Count == 0
+                && customer != null)
+            {
+                _customerRepo.BlockCustomer(customer, TechnicalWithBlockedList);
+                return true;
+            }
+            else if (TechnicalWithBlockedList != null && TechnicalWithBlockedList.Blocked_Customers_Id != null && customer != null)
+            {
+                if (!TechnicalWithBlockedList.Blocked_Customers_Id.Contains(customer))
+                {
+                    TechnicalWithBlockedList.Blocked_Customers_Id.Add(customer);
+                    return true;
+                }
+
+            }
+            return false;
+        }
+
+        public bool UnBlockCustomer(BlockAndUnblockTechnicalAndCustomersDto BDto)
+        {
+            var customer = _customerRepo.GetCustomerWithBlockedList(BDto.CustomerId);
+            var TechnicalWithBlockedList = _customerRepo.GetTechnicalById(BDto.TechnicalId);
+
+            if (TechnicalWithBlockedList != null && TechnicalWithBlockedList.Blocked_Customers_Id != null && customer != null)
+            {
+                if (TechnicalWithBlockedList.Blocked_Customers_Id.Contains(customer))
+                {
+                    var value = _customerRepo.UnBlockCustomer(customer, TechnicalWithBlockedList);
+                    if (value > 0)
+                        return true;
+                    else
+                        return false;
+                }
+
+            }
+            return false;
         }
         public int? UpdateReview(ReviewUpdatedDto ReviewUpdated)
         {
