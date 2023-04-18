@@ -27,11 +27,11 @@ namespace Ataal.BL.Managers.Customer
         public int? UpdateReview(ReviewUpdatedDto ReviewUpdated);
         public bool DeleteReview(int ReviewId);
 
-        public bool BlockTechnical(BlockAndUnblockTechnicalDto BDto);
-        public bool UnBlockTechnical(BlockAndUnblockTechnicalDto BDto);
+        public bool BlockTechnical(BlockAndUnblockTechnicalAndCustomersDto BDto);
+        public bool UnBlockTechnical(BlockAndUnblockTechnicalAndCustomersDto BDto);
 
-        public bool BlockCustomer(BlockAndUnblockTechnicalDto BDto);
-        public bool UnBlockCustomer(BlockAndUnblockTechnicalDto BDto);
+        public bool BlockCustomer(BlockAndUnblockTechnicalAndCustomersDto BDto);
+        public bool UnBlockCustomer(BlockAndUnblockTechnicalAndCustomersDto BDto);
 
     }
 }

@@ -131,7 +131,7 @@ namespace Ataal.Controllers.Customer
         }
         [HttpPost]
         [Route("BlockTechnical")]
-        public IActionResult BlockTechnical(BlockAndUnblockTechnicalDto BDto)
+        public IActionResult BlockTechnical(BlockAndUnblockTechnicalAndCustomersDto BDto)
         {
             var Value = _customerManager.BlockTechnical(BDto);
             if (Value == true)
@@ -141,7 +141,7 @@ namespace Ataal.Controllers.Customer
         }
         [HttpPost]
         [Route("UnBlockTechnical")]
-        public IActionResult UnBlockTechnical(BlockAndUnblockTechnicalDto BDto)
+        public IActionResult UnBlockTechnical(BlockAndUnblockTechnicalAndCustomersDto BDto)
         {
             var Value = _customerManager.UnBlockTechnical(BDto);
             if (Value == true)
@@ -152,9 +152,19 @@ namespace Ataal.Controllers.Customer
 
         [HttpPost]
         [Route("BlockCustomer")]
-        public IActionResult BlockCustomer(BlockAndUnblockTechnicalDto BDto)
+        public IActionResult BlockCustomer(BlockAndUnblockTechnicalAndCustomersDto BDto)
         {
             var Value = _customerManager.BlockCustomer(BDto);
+            if (Value == true)
+                return Ok(BDto.CustomerId);
+            else
+                return NotFound();
+        }
+        [HttpPost]
+        [Route("UnBlockCustomer")]
+        public IActionResult UnBlockCustomer(BlockAndUnblockTechnicalAndCustomersDto BDto)
+        {
+            var Value = _customerManager.UnBlockCustomer(BDto);
             if (Value == true)
                 return Ok(BDto.CustomerId);
             else
