@@ -20,6 +20,8 @@ using System.Security.Claims;
 using System.Text;
 using Ataal.DAL.Repos.customer;
 using Ataal.DAL.Data;
+using Ataal.DAL.Repos.recommendation;
+using Ataal.BL.Managers.recommendation;
 
 namespace ApI_project
 {
@@ -111,6 +113,9 @@ namespace ApI_project
             builder.Services.AddScoped<IReviewRepo, ReviewRepo>();
             builder.Services.AddScoped<IProblemRepo, ProblemRepo>();
 
+            builder.Services.AddScoped<IRecommendationRepo, RecommendationRepo>();
+
+           
 
 
             #endregion
@@ -123,6 +128,9 @@ namespace ApI_project
             builder.Services.AddScoped<IProblemManager, ProblemManager>();
             builder.Services.AddScoped<ItechnicalManger, TechnicalManger>();
             builder.Services.AddScoped<IIdentityManger, IdentityManager>();
+
+            builder.Services.AddScoped<IRecommendationManager, RecommendationManager>();
+
 
 
 

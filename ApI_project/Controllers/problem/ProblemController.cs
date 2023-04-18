@@ -46,6 +46,16 @@ namespace Ataal.Controllers.problem
             
             return NotFound();
         }
+        [HttpPost]
+        [Route("CustomerAcceptOffer")]
+        public IActionResult CustomerAcceptOffer(CustomerAcceptedProblemOfferDto CAPDto)
+        {
+            var Value = _problemManager.CustomerAcceptedOffer(CAPDto);
+            if(Value>0)
+                return Ok();
+            else
+                return BadRequest();
+        }
 
     }
 }

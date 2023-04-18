@@ -19,6 +19,12 @@ namespace Ataal.DAL.Repos.customer
             _ataalContext = ataalContext;
         }
 
+
+        public Customer? GetNormalCustomerById(int CustomerId)
+        {
+            return _ataalContext.Customers.Find(CustomerId);
+        }
+
         public int? AddCustomerProblem(Problem problem)
         {
             _ataalContext.Set<Problem>().Add(problem);

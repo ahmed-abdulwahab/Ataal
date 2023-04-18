@@ -1,5 +1,6 @@
 ﻿using Ataal.BL.DTO.problem;
 using Ataal.DAL.Data.Models;
+using Ataal.DAL.Data.Repos.Technical_Repo;
 using Ataal.DAL.Repos.problem;
 using System;
 using System.Collections.Generic;
@@ -12,9 +13,11 @@ namespace Ataal.BL.Managers.problem
     public class ProblemManager: IProblemManager
     {
         private readonly IProblemRepo _problemRepo;
-        public ProblemManager(IProblemRepo problemRepo)
+        private readonly ITechnicalRepo _technicalRepo;
+        public ProblemManager(IProblemRepo problemRepo, ITechnicalRepo technicalRepo)
         {
             _problemRepo= problemRepo;
+            _technicalRepo= technicalRepo;
         }
         public List<ProblemReturnDto>? GetProblemsForTechnical(GetProblemsPagingDto GetProblemsPaging)
         {
@@ -54,6 +57,17 @@ namespace Ataal.BL.Managers.problem
                 );
             return ProblemReturnDto;
            
+        }
+
+        public int CustomerAcceptedOffer(CustomerAcceptedProblemOfferDto CAPDto)
+        {
+            var technical = _technicalRepo.getNormalTechnicalById(CAPDto.TechnicalId);
+            if (technical != null)
+            {
+                technical.NotificationCounter=technical.NotificationCounter+1;
+                return _problemRepo.CustomerAcceptedProblem_Offer(CAPDto.TechnicalId, CAPDto.ProblemId);
+            }
+            return 0;
         }
 
         public int ProblemIsSolved(int ProblemId)
