@@ -9,7 +9,6 @@ using Ataal.BL.Mangers.technical;
 using Ataal.BL.Mangers.Technical;
 
 using Ataal.DAL.Data.Repos;
-using Ataal.DAL.Data.Repos.Customer;
 using Ataal.DAL.Data.Repos.Technical_Repo;
 using Ataal.DAL.Repos.Section;
 using Ataal.DAL.Repos.problem;
@@ -19,6 +18,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
+using Ataal.DAL.Repos.customer;
+using Ataal.DAL.Data;
 
 namespace ApI_project
 {
@@ -143,12 +144,12 @@ namespace ApI_project
             app.UseStaticFiles();
 
             app.MapControllers();
-            using (var scope = app.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
-                var context = services.GetRequiredService<AtaalContext>();
-                SeedClass.Initialize(context);
-            }
+            //using (var scope = app.Services.CreateScope())
+            //{
+            //    var services = scope.ServiceProvider;
+            //    var context = services.GetRequiredService<AtaalContext>();
+            //    SeedClass.Initialize(context);
+            //}
 
             app.Run();
         }

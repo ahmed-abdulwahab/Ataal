@@ -210,7 +210,7 @@ namespace Ataal.DAL.Repos.customer
             return _ataalContext.SaveChanges();
         }
 
-        public Models.Customer CreateCustomer(Models.Customer customer)
+        public Customer CreateCustomer(Customer customer)
         {
             try
             {
@@ -223,5 +223,7 @@ namespace Ataal.DAL.Repos.customer
                 return null!;
             }
         }
+
+
     }
 }
