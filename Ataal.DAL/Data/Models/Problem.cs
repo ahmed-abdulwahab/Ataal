@@ -33,12 +33,15 @@ namespace Ataal.DAL.Data.Models
 
         public int? AcceptedOfferID { get; set; }
 
+        public bool VIP { get; set; } = false;
+
        public ICollection<Offer>? Offers { get; set; }
 
         [ForeignKey("Technical")]
         public int? Technical_ID { get; set; }            
         public Technical? Technical { get; set; }
 
+        public ICollection<Recommendation>? Recommendations { get; set; }
 
         [ForeignKey("Customer")]
         public int Customer_ID { get; set; }

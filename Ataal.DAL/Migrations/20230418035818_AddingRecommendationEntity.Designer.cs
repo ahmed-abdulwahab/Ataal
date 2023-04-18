@@ -4,6 +4,7 @@ using Ataal.DAL.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ataal.DAL.Migrations
 {
     [DbContext(typeof(AtaalContext))]
-    partial class AtaalContextModelSnapshot : ModelSnapshot
+    [Migration("20230418035818_AddingRecommendationEntity")]
+    partial class AddingRecommendationEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -132,9 +135,6 @@ namespace Ataal.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("NotificationCounter")
-                        .HasColumnType("int");
-
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
@@ -246,9 +246,6 @@ namespace Ataal.DAL.Migrations
                     b.Property<int?>("Technical_ID")
                         .HasColumnType("int");
 
-                    b.Property<bool>("VIP")
-                        .HasColumnType("bit");
-
                     b.HasKey("Problem_ID");
 
                     b.HasIndex("Customer_ID");
@@ -299,9 +296,6 @@ namespace Ataal.DAL.Migrations
                     b.Property<int>("Customer_ID")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("Problem_ID")
                         .HasColumnType("int");
 
@@ -314,7 +308,7 @@ namespace Ataal.DAL.Migrations
 
                     b.HasIndex("Technical_ID");
 
-                    b.ToTable("Recommendations");
+                    b.ToTable("Recommendation");
                 });
 
             modelBuilder.Entity("Ataal.DAL.Data.Models.Report", b =>
@@ -439,9 +433,6 @@ namespace Ataal.DAL.Migrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
-
-                    b.Property<int>("NotificationCounter")
-                        .HasColumnType("int");
 
                     b.Property<byte[]>("Photo")
                         .HasColumnType("varbinary(max)");

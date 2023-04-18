@@ -54,6 +54,13 @@ namespace Ataal.DAL.Repos.problem
             }
             return 0;
         }
+
+        public int CustomerAcceptedProblem_Offer(int TechnicalId, int ProblemId)
+        {
+            var problem = _ataalContext.Problems.FirstOrDefault(p => p.Problem_ID == ProblemId);
+            problem.Technical_ID = TechnicalId;
+            return SaveChanges();
+        }
         public int SaveChanges()
         {
             return _ataalContext.SaveChanges();

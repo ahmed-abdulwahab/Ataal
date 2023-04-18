@@ -10,6 +10,7 @@ namespace Ataal.DAL.Repos.customer
 {
     public interface ICustomerRepo
     {
+        public Customer? GetNormalCustomerById(int CustomerId);
         public Customer? GetCustomerWithBlockedList(int CustomerId);
         public Technical? GetTechnicalWithBlockedList(int TechnicalId);
         public int? AddCustomerProblem(Problem problem);
