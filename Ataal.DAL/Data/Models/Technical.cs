@@ -16,7 +16,7 @@ namespace Ataal.DAL.Data.Models
         public int Id { get; set; }
 
         [Phone]
-        public string Phone { get; set; }
+        public string? Phone { get; set; }
 
 
         [ForeignKey("AppUser")]
@@ -24,14 +24,14 @@ namespace Ataal.DAL.Data.Models
         public AppUser AppUser { get; set; }
 
 
-        public byte []?  Photo { get; set; }         // it will be in the parent class 
+        public byte []?  Photo { get; set; }// it will be in the parent class 
 
 
-        [Required]
-        public int Rate { get; set; }
+        
+        public int? Rate { get; set; }
 
-        [Required]
-        public string Brief { get; set; }
+        
+        public string? Brief { get; set; }
 
         
 
@@ -48,7 +48,7 @@ namespace Ataal.DAL.Data.Models
         public ICollection<Review>? Reviews { get; set; } // reviews from customers for him
 
         public ICollection<Report>? Reports { get; set; }// Reports from customers for him
-
+        public ICollection<Rate>? CustomersRate { get; set; }
         public ICollection<Customer>? Blocked_Customers_Id { get; set; } //customers  who blocked by technical
      
     }
