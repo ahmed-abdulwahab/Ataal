@@ -10,8 +10,11 @@ using Ataal.DAL.Data.Identity;
 using Ataal.DAL.Data.Models;
 using Ataal.DAL.Data.Repos.Technical_Repo;
 using Microsoft.AspNetCore.Identity;
+using Ataal.BL.Managers.Customer;
 using System.Security;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using static Ataal.BL.Constants;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Ataal.BL.Mangers.Technical
 {
@@ -19,15 +22,19 @@ namespace Ataal.BL.Mangers.Technical
     {
         private readonly ITechnicalRepo technicalRepo;
         private readonly UserManager<AppUser> _userManager;
+        private readonly IWebHostEnvironment env;
 
 
-        public TechnicalManger(ITechnicalRepo technicalRepo,UserManager<AppUser> userManager)
+        public TechnicalManger(ITechnicalRepo technicalRepo,UserManager<AppUser> userManager
+            , IWebHostEnvironment env)
         {
+            this.env = env;
             _userManager = userManager;
             this.technicalRepo = technicalRepo;
         }
 
-        public DetailedTechnicalDTO GetTechnical_Profile(int id)
+
+        public async Task<DetailedTechnicalDTO> GetTechnical_Profile(int id)
         {
             var technical = technicalRepo.getTechnicalByID(id);
 
@@ -92,8 +99,9 @@ namespace Ataal.BL.Mangers.Technical
             return 1;
         }
 
-        public int updateTechnical(int id, TechnicalUpdateDto technical)
+        public async Task<int> updateTechnical(int id, TechnicalUpdateDto technical)
         {
+            DealWithImages.Initialize(env);
 
             var technicalToUpdate = technicalRepo.getTechnicalByID(id);
 
@@ -102,8 +110,8 @@ namespace Ataal.BL.Mangers.Technical
             technicalToUpdate.Frist_Name= technical.firstName ?? technicalToUpdate.Frist_Name;
 
             technicalToUpdate.Last_Name = technical.lastName ?? technicalToUpdate.Last_Name;
-            
-            technicalToUpdate.Photo = technical.photo ?? technicalToUpdate.Photo;
+
+            technicalToUpdate.Photo =  await DealWithImages.ReturnImagePath(technical.photo) ?? technicalToUpdate.Photo;
 
             technicalToUpdate.Address = technical.Address ?? technicalToUpdate.Address;
 
@@ -120,7 +128,7 @@ namespace Ataal.BL.Mangers.Technical
            
             if (result == null) return -1;
 
-            return 1;
+            return  1;
          }
 
         public async Task<RegisterUserDto> addTechnical(RegisterUserDto technical)

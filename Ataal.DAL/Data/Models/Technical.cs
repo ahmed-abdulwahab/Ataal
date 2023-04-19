@@ -31,7 +31,7 @@ namespace Ataal.DAL.Data.Models
         public AppUser AppUser { get; set; }
 
 
-        public byte []?  Photo { get; set; }         // it will be in the parent class 
+        public string?  Photo { get; set; }         // it will be in the parent class 
 
 
         [Required]

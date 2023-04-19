@@ -25,7 +25,7 @@ namespace Ataal.DAL.Data.Models
 
         [Phone]
         public string? Phone { get; set; }
-        public byte[]? Photo { get; set; }
+        public string? Photo { get; set; }
 
         [StringLength(100, ErrorMessage = "Address cannot exceed 100 characters")]
         public string? Address { get; set; }

@@ -12,11 +12,11 @@ namespace Ataal.BL.Mangers.technical
     public interface ItechnicalManger
     {
         public List<Technical_Name_Photo_Address_Rate> GetAllTechnicals();
-        public DetailedTechnicalDTO GetTechnical_Profile(int id);
+        public Task<DetailedTechnicalDTO> GetTechnical_Profile(int id);
 
         public int deleteTechnical(int id);
 
-        public int updateTechnical(int id, TechnicalUpdateDto technical);
+        public Task<int> updateTechnical(int id, TechnicalUpdateDto technical);
 
         public Task<RegisterUserDto> addTechnical(RegisterUserDto technical);
 

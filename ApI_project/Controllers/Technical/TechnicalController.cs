@@ -32,7 +32,7 @@ namespace Ataal.Controllers.Technical
 
         // GET api/<TechnicalController>/5
         [HttpGet("{id}")]
-        public ActionResult<DetailedTechnicalDTO> Get(int id)
+        public async Task<ActionResult<DetailedTechnicalDTO>> Get(int id)
         {
             var technical = ITechnicalManger.GetTechnical_Profile(id);
             if(technical == null) 
@@ -40,14 +40,14 @@ namespace Ataal.Controllers.Technical
                 return NotFound();
             }
 
-            return technical;
+            return await technical;
         }
 
         // PUT api/<TechnicalController>/5
         [HttpPut("update/{id}")]
-        public ActionResult Put(int id, TechnicalUpdateDto technical)
+        public async Task<ActionResult> Put(int id, [FromForm] TechnicalUpdateDto technical)
         {
-            var technicalUpdated = ITechnicalManger.updateTechnical(id, technical);
+            var technicalUpdated = await ITechnicalManger.updateTechnical(id, technical);
 
             if (technicalUpdated == -1) return NotFound();
 

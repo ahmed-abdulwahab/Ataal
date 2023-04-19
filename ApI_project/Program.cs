@@ -36,6 +36,8 @@ namespace ApI_project
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+
+
             #region DB
             var connectionString = builder.Configuration.GetConnectionString("connection");
             builder.Services.AddDbContext<AtaalContext>(options

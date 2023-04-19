@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Ataal.BL.Constants;
 
 namespace Ataal.BL.Managers.Customer
 {
@@ -24,7 +25,7 @@ namespace Ataal.BL.Managers.Customer
     {
         private readonly IReviewRepo _reviewRepo;
         private readonly UserManager<AppUser> userManager;
-        private readonly IWebHostEnvironment _env;
+        private readonly IWebHostEnvironment env;
         private readonly ICustomerRepo customerRepo;
 
         public CustomerManager(IReviewRepo reviewRepo, 
@@ -33,13 +34,15 @@ namespace Ataal.BL.Managers.Customer
         {
             _reviewRepo = reviewRepo;
             this.userManager = userManager;
-            _env = env;
+            this.env = env;
             this.customerRepo = customerRepo;
         }
         public async Task<int?> ReturnAddedProblemID(CustomerAddProblemDto CustDto)
         {
             if (CustDto != null)
             {
+                DealWithImages.Initialize(env);
+
                 var problem = new Problem
                 {
                     Problem_Title = CustDto.Title,
@@ -47,10 +50,10 @@ namespace Ataal.BL.Managers.Customer
                     Section_ID = CustDto.Section_ID,
                     Customer_ID = CustDto.Customer_ID,
                     KeyWord_ID = CustDto.KyeWord_ID,
-                    PhotoPath1 = await ReturnImagePath(CustDto.File1),
-                    PhotoPath2 = await ReturnImagePath(CustDto.File2),//Ask why is there null reference warning                                                 
-                    PhotoPath3 = await ReturnImagePath(CustDto.File3),
-                    PhotoPath4 = await ReturnImagePath(CustDto.File4),
+                    PhotoPath1 = await DealWithImages.ReturnImagePath(CustDto.File1),
+                    PhotoPath2 = await DealWithImages.ReturnImagePath(CustDto.File2),//Ask why is there null reference warning                                                 
+                    PhotoPath3 = await DealWithImages.ReturnImagePath(CustDto.File3),
+                    PhotoPath4 = await DealWithImages.ReturnImagePath(CustDto.File4),
                 };
                return customerRepo.AddCustomerProblem(problem);
             }
@@ -60,14 +63,16 @@ namespace Ataal.BL.Managers.Customer
         public async Task<int?> UpdatedProblem( updatedProblemDto CustDto)
 
         {
+            DealWithImages.Initialize(env);
+
             var problem = ReturnProblemByID(CustDto.Problem_id);
 
             if (problem != null)
             {
-                DeleteFile(problem.PhotoPath1 ?? "");
-                DeleteFile(problem.PhotoPath2 ?? "");
-                DeleteFile(problem.PhotoPath3 ?? "");
-                DeleteFile(problem.PhotoPath4 ?? "");
+                DealWithImages.DeleteFile(problem.PhotoPath1 ?? "");
+                DealWithImages.DeleteFile(problem.PhotoPath2 ?? "");
+                DealWithImages.DeleteFile(problem.PhotoPath3 ?? "");
+                DealWithImages.DeleteFile(problem.PhotoPath4 ?? "");
 
                
             }
@@ -81,10 +86,10 @@ namespace Ataal.BL.Managers.Customer
                     Section_ID = CustDto.Section_ID,
                 
                     KeyWord_ID = CustDto.KyeWord_ID,
-                    PhotoPath1 = await ReturnImagePath(CustDto.File1),
-                    PhotoPath2 = await ReturnImagePath(CustDto.File2),//Ask why is there null reference warning                                                 
-                    PhotoPath3 = await ReturnImagePath(CustDto.File3),
-                    PhotoPath4 = await ReturnImagePath(CustDto.File4),
+                    PhotoPath1 = await DealWithImages.ReturnImagePath(CustDto.File1),
+                    PhotoPath2 = await DealWithImages.ReturnImagePath(CustDto.File2),//Ask why is there null reference warning                                                 
+                    PhotoPath3 = await DealWithImages.ReturnImagePath(CustDto.File3),
+                    PhotoPath4 = await DealWithImages.ReturnImagePath(CustDto.File4),
                 };
                 return customerRepo.UpdateCustomerProblem(Newproblem);
             }
@@ -94,23 +99,7 @@ namespace Ataal.BL.Managers.Customer
 
 
 
-        public async Task<string?> ReturnImagePath(IFormFile File)
-        {
-            if (File != null)
-            {
-                var fileName = $"{Guid.NewGuid()}{Path.GetExtension(File.FileName)}";
-                var filePath = Path.Combine(_env.WebRootPath, fileName);
 
-                // Save the image to disk
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    await File.CopyToAsync(stream);
-                }
-                return fileName;
-            }
-            return null;
-            
-        }
         public Problem? ReturnProblemByID(int ProblemID)
         {
             var problem= customerRepo.GetProblemByID(ProblemID);
@@ -123,14 +112,16 @@ namespace Ataal.BL.Managers.Customer
         }
         public bool DeleteProblemWithImagesByProblemID(int ProblemID)
         {
+            DealWithImages.Initialize(env);
+
             var problem = ReturnProblemByID(ProblemID);
             
             if(problem != null)
             {
-                DeleteFile(problem.PhotoPath1 ?? "");
-                DeleteFile(problem.PhotoPath2 ?? "");
-                DeleteFile(problem.PhotoPath3 ?? "");
-                DeleteFile(problem.PhotoPath4 ?? "");
+                DealWithImages.DeleteFile(problem.PhotoPath1 ?? "");
+                DealWithImages.DeleteFile(problem.PhotoPath2 ?? "");
+                DealWithImages.DeleteFile(problem.PhotoPath3 ?? "");
+                DealWithImages.DeleteFile(problem.PhotoPath4 ?? "");
 
                 customerRepo.DeleteProblem(ProblemID);
                 return true;
@@ -138,14 +129,7 @@ namespace Ataal.BL.Managers.Customer
             return false;
         }
 
-        public void DeleteFile(string fileName)
-        {
-            var path = Path.Combine("wwwroot", fileName);
-            if (File.Exists(path))
-            {
-                File.Delete(path);
-            }
-        }
+
         public Technical gettechnical(int techincalid)
         {
             return customerRepo.GetTechnicalById(techincalid);
@@ -303,7 +287,31 @@ namespace Ataal.BL.Managers.Customer
             return customer;
         }
 
+        public ICollection<UnBlocked_BlockedCustomersDto> GetBlockedCustomers(int TechnicalId)
+        {
+            var AllBlockedCustomers = customerRepo.GetBlockedCustomers(TechnicalId);
 
+            if (AllBlockedCustomers == null) return null!;
+            
+            return AllBlockedCustomers.Select(c => new UnBlocked_BlockedCustomersDto(
+                    CustomerId: c.Id,
+                    Photo: c.Photo,
+                    Name: c.Frist_Name+" "+c.Last_Name
+                )).ToList();
+        }
+
+        public ICollection<UnBlocked_BlockedCustomersDto> GetUnBlockedCustomers(int TechnicalId)
+        {
+            var AllBlockedCustomers = customerRepo.GetUnBlockedCustomers(TechnicalId);
+
+            if (AllBlockedCustomers == null) return null!;
+
+            return AllBlockedCustomers.Select(c => new UnBlocked_BlockedCustomersDto(
+                    CustomerId: c.Id,
+                    Photo: c.Photo!,
+                    Name: c.Frist_Name + " " + c.Last_Name
+                )).ToList();
+        }
     }
 }
 

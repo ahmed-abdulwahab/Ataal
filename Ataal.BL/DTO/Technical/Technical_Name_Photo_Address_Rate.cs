@@ -9,7 +9,7 @@ namespace Ataal.BL.DTO.Technical
     public record Technical_Name_Photo_Address_Rate
     (   int Id,
         string Name,
-        byte[] Photo,
+        string? Photo,
         int Rate,
         string Address
     );

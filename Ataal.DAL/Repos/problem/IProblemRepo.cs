@@ -12,6 +12,8 @@ namespace Ataal.DAL.Repos.problem
         public Problem? GetProblemById(int ProblemId);
         public List<Problem>? GetAllProblems(int TechnicalID, int SectionId, int pageNumber);
         public int ProblemIsSolved(int ProblemId);
+
+        public List<Problem> GetAllSolvedProblems(int TechnicalId);
         public int SaveChanges();
 
     }

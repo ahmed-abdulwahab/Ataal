@@ -15,7 +15,6 @@ namespace Ataal.BL.Managers.Customer
     public interface ICustomerManager
     {
         public  Task<int?> ReturnAddedProblemID(CustomerAddProblemDto CustDto);
-        public Task<string?>? ReturnImagePath(IFormFile File);
 
         public  Task<int?> UpdatedProblem(updatedProblemDto CustDto);
         public Problem? ReturnProblemByID(int ProblemID);
@@ -35,6 +34,9 @@ namespace Ataal.BL.Managers.Customer
         public bool UnBlockCustomer(BlockAndUnblockTechnicalAndCustomersDto BDto);
 
         public Task<RegisterUserDto> CreateCustomer(RegisterUserDto customer);
+
+        public ICollection<UnBlocked_BlockedCustomersDto> GetBlockedCustomers(int TechnicalId);
+        public ICollection<UnBlocked_BlockedCustomersDto> GetUnBlockedCustomers(int TechnicalId);
 
     }
 
