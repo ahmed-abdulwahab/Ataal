@@ -20,6 +20,10 @@ namespace Ataal.DAL.Repos.recommendation
             _context.Recommendations.Add(recommendation);
             return SaveChanges();
         }
+        public List<Recommendation> GetAllRecommendations()
+        {
+            return _context.Recommendations.ToList();
+        }
         public int SaveChanges()
         {
            return _context.SaveChanges();

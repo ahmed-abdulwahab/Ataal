@@ -12,6 +12,7 @@ namespace Ataal.DAL.Repos.customer
     {
         public Customer? GetNormalCustomerById(int CustomerId);
         public Customer? GetCustomerWithBlockedList(int CustomerId);
+        public Customer? GetAllBlockedTechnicalFromCustomer(int CustomerId);
         public Technical? GetTechnicalWithBlockedList(int TechnicalId);
         public int? AddCustomerProblem(Problem problem);
         public Problem? GetProblemByID(int ProblemID);

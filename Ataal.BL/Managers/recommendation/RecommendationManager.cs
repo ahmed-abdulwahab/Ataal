@@ -29,8 +29,19 @@ namespace Ataal.BL.Managers.recommendation
         {
             var Technical = _technicalRepo.getNormalTechnicalById(Dto.TechnicalId);
             var Customer = _customerRepo.GetNormalCustomerById(Dto.CustomerId);
+            var Recommendations = _recommendationRepo.GetAllRecommendations();
+            foreach(var Reco in Recommendations)
+            {
+                if ((Reco.Customer_ID == Dto.CustomerId) && (Reco.Problem_ID == Dto.ProblemId))
+                    return -1;
+            }
+            //var RecommendationsCustomerIDs = Recommendations.Select(R => R.Customer_ID).ToList();
+            //var RecommendationsProblemIDs=Recommendations.Select(R=>R.Problem_ID).ToList();
+            //if (RecommendationsCustomerIDs.Contains(Dto.CustomerId) && RecommendationsProblemIDs.Contains(Dto.ProblemId))
+                //return 0;
             if (Technical == null || Customer == null)
                 return 0;
+            
             var Recommendation = new Recommendation
             {
                 Customer_ID = Dto.CustomerId,
@@ -41,6 +52,19 @@ namespace Ataal.BL.Managers.recommendation
             Technical.NotificationCounter = Technical.NotificationCounter + 1;
             Customer.NotificationCounter = Customer.NotificationCounter + 1;
             return _recommendationRepo.AddRecommendationForCustomer(Recommendation);
+        }
+        public List<ReturnRecommendationDto>? GetAllRecommendations()
+        {
+            var RecommendationsList = _recommendationRepo.GetAllRecommendations();
+            var Recommendations = RecommendationsList.Select(R =>
+                                new ReturnRecommendationDto(
+                                    DateTime: R.Date,
+                                    CustomerId: R.Customer_ID,
+                                    TechnicalId: R.Technical_ID,
+                                    ProblemId: R.Problem_ID)).ToList();
+            if (Recommendations == null)
+                return null;
+            return Recommendations;
         }
     }
 }

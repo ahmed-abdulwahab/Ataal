@@ -11,6 +11,7 @@ namespace Ataal.DAL.Repos.recommendation
     public interface IRecommendationRepo
     {
         public int AddRecommendationForCustomer(Recommendation recommendation);
+        public List<Recommendation> GetAllRecommendations();
         public int SaveChanges();
     }
 }

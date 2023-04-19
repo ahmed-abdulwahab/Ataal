@@ -22,6 +22,7 @@ using Ataal.DAL.Repos.customer;
 using Ataal.DAL.Data;
 using Ataal.DAL.Repos.recommendation;
 using Ataal.BL.Managers.recommendation;
+using Ataal.BL.Managers.review;
 
 namespace ApI_project
 {
@@ -112,13 +113,15 @@ namespace ApI_project
 
             builder.Services.AddScoped<IReviewRepo, ReviewRepo>();
             builder.Services.AddScoped<IProblemRepo, ProblemRepo>();
-			#endregion
-
             builder.Services.AddScoped<IRecommendationRepo, RecommendationRepo>();
+            builder.Services.AddScoped<IReviewRepo, ReviewRepo>();
+            #endregion
 
 
-			#region Manager
-			builder.Services.AddScoped<ISectionManger, SectionManger>();
+
+
+            #region Manager
+            builder.Services.AddScoped<ISectionManger, SectionManger>();
            
 
             builder.Services.AddScoped<ICustomerManager, CustomerManager>();
@@ -129,8 +132,9 @@ namespace ApI_project
             builder.Services.AddScoped<IProblemManager, ProblemManager>();
             builder.Services.AddScoped<ItechnicalManger, TechnicalManger>();
             builder.Services.AddScoped<IIdentityManger, IdentityManager>();
-
             builder.Services.AddScoped<IRecommendationManager, RecommendationManager>();
+            builder.Services.AddScoped<IReviewManager, ReviewManager>();
+
 
             #endregion
 

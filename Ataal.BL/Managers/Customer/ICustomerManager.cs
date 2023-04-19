@@ -2,6 +2,8 @@
 using Ataal.BL.DTO.Identity;
 using Ataal.BL.DTO.Rate;
 using Ataal.BL.DTO.Review;
+using Ataal.BL.DTO.Technical;
+using Ataal.BL.Managers.Technical;
 using Ataal.DAL.Data.Models;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -16,13 +18,13 @@ namespace Ataal.BL.Managers.Customer
     {
         public  Task<int?> ReturnAddedProblemID(CustomerAddProblemDto CustDto);
         public Task<string?>? ReturnImagePath(IFormFile File);
-
+        public CustomerWithTechnicalsBlockedListDto? GetAllBlockedTechnicals(int CustomerId);
         public  Task<int?> UpdatedProblem(updatedProblemDto CustDto);
         public Problem? ReturnProblemByID(int ProblemID);
         public int ModifyingTechnical_Rate(int TechnicalId);
 
         public int CustomerAddingRate(RateCreationDto rateCreationDto);
-        public Technical gettechnical(int techincalid);
+        public Ataal.DAL.Data.Models.Technical gettechnical(int techincalid);
         public int AddingTechnicalReview(ReviewCreationDto ReviewDto);
         public bool DeleteProblemWithImagesByProblemID(int ProblemID);
         public int? UpdateReview(ReviewUpdatedDto ReviewUpdated);
