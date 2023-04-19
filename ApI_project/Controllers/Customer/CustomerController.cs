@@ -170,6 +170,15 @@ namespace Ataal.Controllers.Customer
             else
                 return NotFound();
         }
+        [HttpGet]
+        [Route("GetAllBlockedTechnicals/{CustomerId}")]
+        public IActionResult GetAllBlockedTechnicals(int CustomerId)
+        {
+            var TechList = _customerManager.GetAllBlockedTechnicals(CustomerId);
+            if (TechList == null)
+                return NotFound();
+            return Ok(TechList.BlockListDtos);
+        }
 
     }
 }

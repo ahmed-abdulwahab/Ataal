@@ -2,6 +2,7 @@
 using Ataal.DAL.Data.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,10 @@ namespace Ataal.DAL.Repos.customer
         {
             return _ataalContext.Customers.Find(CustomerId);
         }
+        public Customer? GetCustomerWithBlockedListById(int CustomerId)
+        {
+            return _ataalContext.Customers.Include(c=>c.Blocked_Technicals_Id).FirstOrDefault(C=>C.Id==CustomerId);
+        }
 
         public int? AddCustomerProblem(Problem problem)
         {
@@ -32,6 +37,14 @@ namespace Ataal.DAL.Repos.customer
             return problem.Problem_ID;
         }
 
+
+        public Customer? GetAllBlockedTechnicalFromCustomer(int CustomerId)
+        {
+            var Customer= GetCustomerWithBlockedList(CustomerId);
+             if(Customer!=null && Customer.Blocked_Technicals_Id!=null)
+                return Customer;
+            return null;
+        }
         public Problem? GetProblemByID(int ProblemID)
         {
             var problem = _ataalContext.Set<Problem>().FirstOrDefault(P => P.Problem_ID == ProblemID);

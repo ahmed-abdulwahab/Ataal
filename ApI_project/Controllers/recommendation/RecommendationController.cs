@@ -20,9 +20,20 @@ namespace Ataal.Controllers.recommendation
         public IActionResult AddingRecommendation(AddRecommendationDto Dto)
         {
             var Recommendation=_recommendationManager.AddRecommendation(Dto);
+            if (Recommendation == -1)
+                return BadRequest("Cannot_Make_Another_One");
             if (Recommendation == 0)
                 return BadRequest();
             return Ok();
+        }
+        [HttpGet]
+        [Route("GetAllRecommendations")]
+        public IActionResult GetAllRecommendations()
+        {
+            var Recommendations=_recommendationManager.GetAllRecommendations();
+            if (Recommendations == null)
+                return NotFound();
+            return Ok(Recommendations);
         }
     }
 }

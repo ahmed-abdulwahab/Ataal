@@ -10,5 +10,6 @@ namespace Ataal.BL.Managers.recommendation
     public interface IRecommendationManager
     {
         public int AddRecommendation(AddRecommendationDto Dto);
+        public List<ReturnRecommendationDto>? GetAllRecommendations();
     }
 }

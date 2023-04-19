@@ -1,7 +1,10 @@
 ﻿using Ataal.BL.DTO.Customer;
+using Ataal.DAL.Data.Models;
 using Ataal.BL.DTO.Identity;
 using Ataal.BL.DTO.Rate;
 using Ataal.BL.DTO.Review;
+using Ataal.BL.DTO.Technical;
+using Ataal.BL.Managers.Technical;
 using Ataal.DAL.Data.Context;
 using Ataal.DAL.Data.Identity;
 using Ataal.DAL.Data.Models;
@@ -146,9 +149,31 @@ namespace Ataal.BL.Managers.Customer
                 File.Delete(path);
             }
         }
-        public Technical gettechnical(int techincalid)
+        public Ataal.DAL.Data.Models.Technical gettechnical(int techincalid)
         {
             return customerRepo.GetTechnicalById(techincalid);
+        }
+
+
+        public CustomerWithTechnicalsBlockedListDto? GetAllBlockedTechnicals(int CustomerId)
+        {
+            var BlockedList=customerRepo.GetAllBlockedTechnicalFromCustomer(CustomerId);
+            var BlockedTechnicals = new CustomerWithTechnicalsBlockedListDto(
+                BlockListDtos: BlockedList.Blocked_Technicals_Id.Select(technical =>
+                                new ReturnTechnicalForBlockListDto(
+                                    id: technical.Id,
+                                    name: technical.Frist_Name + " " + technical.Last_Name,
+                                    
+                                    Photo: technical.Photo,
+                                    Rate: technical.Rate,
+                                    Brief: technical.Brief,
+                                    Address: technical.Address
+                                    )).ToList()
+                ) ;
+                
+            if (BlockedTechnicals == null)
+                return null;
+            return BlockedTechnicals;
         }
 
         public int CustomerAddingRate(RateCreationDto rateCreationDto)
@@ -172,7 +197,6 @@ namespace Ataal.BL.Managers.Customer
                 Technical_ID = ReviewDto.Technical_Id,
                 Description = ReviewDto.Description,
                 date = DateTime.Now
-                
 
             };
             return customerRepo.AddTechnicalReview(NewReview);
