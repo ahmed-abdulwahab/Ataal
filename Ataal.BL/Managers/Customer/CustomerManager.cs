@@ -197,7 +197,6 @@ namespace Ataal.BL.Managers.Customer
                 Technical_ID = ReviewDto.Technical_Id,
                 Description = ReviewDto.Description,
                 date = DateTime.Now
-                
 
             };
             return customerRepo.AddTechnicalReview(NewReview);
