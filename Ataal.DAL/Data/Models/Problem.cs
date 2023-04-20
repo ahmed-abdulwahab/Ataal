@@ -49,7 +49,7 @@ namespace Ataal.DAL.Data.Models
         public Customer Customer { get; set; }
 
         [ForeignKey("KeyWord")]
-        public int KeyWord_ID { get; set; }
+        public int? KeyWord_ID { get; set; }
         public KeyWords? KeyWord { get; set; }
     }
 }

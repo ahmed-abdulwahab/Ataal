@@ -54,7 +54,14 @@ namespace Ataal.DAL.Repos.problem
             }
             return 0;
         }
-
+        public int ProblemisVIP(int ProblemId)
+        {
+            var problem = GetProblemById(ProblemId);
+            if (problem == null)
+                return 0;
+            problem.VIP = true;
+            return SaveChanges();
+        }
         public int CustomerAcceptedProblem_Offer(int TechnicalId, int ProblemId)
         {
             var problem = _ataalContext.Problems.FirstOrDefault(p => p.Problem_ID == ProblemId);
