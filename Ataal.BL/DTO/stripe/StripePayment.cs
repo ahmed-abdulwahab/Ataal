@@ -12,7 +12,7 @@ namespace Ataal.BL.DTO.stripe
         string CardNumber,
         string ExpirationYear,
         string ExpirationMonth,
-        string Cvc,
-        long Amount);
+        string Cvc
+        );
 
 }

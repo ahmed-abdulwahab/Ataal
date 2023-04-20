@@ -62,7 +62,7 @@ namespace Stripe_Payments_Web_Api.Application
             // Set Customer options using
             CustomerCreateOptions customerOptions = new CustomerCreateOptions
             {
-                Name = customer2.Frist_Name,
+                Name = $"{customer2.Frist_Name} {customer2.Last_Name}",
                 Email = customer2.Email,
                 Source = stripeToken.Id
             };
@@ -76,7 +76,7 @@ namespace Stripe_Payments_Web_Api.Application
                 Customer = customertest.CreatedPayemntId,
                 Currency="USD",
                 ReceiptEmail= customertest.Email,
-                Amount = 1000
+                Amount = 2000
             };
 
             // Create the payment
