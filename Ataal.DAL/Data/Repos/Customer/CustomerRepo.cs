@@ -243,6 +243,15 @@ namespace Ataal.DAL.Repos.customer
             }
         }
 
+        public int assignCustomerPayemntId(int CustomerId, string PayemntId)
+        {
+            
+            var customer = GetNormalCustomerById(CustomerId);
+            if (customer == null)
+                return 0;
 
+            customer.CreatedPayemntId= PayemntId;
+            return _ataalContext.SaveChanges();
+        }
     }
 }

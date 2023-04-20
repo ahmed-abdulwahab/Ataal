@@ -20,7 +20,7 @@ namespace Ataal.DAL.Repos.customer
         public int AddTechnicalRate(Rate rate);
         public int ModifyingTchnicalRate(int TechnicalID);//int Technical Repository
         public Technical? GetTechnicalById(int TechnicalId);
-
+        public int assignCustomerPayemntId(int CustomerId,string PayemntId);
         public Customer CreateCustomer(Customer customer);
         public int? UpdateReview(int id, string Desc);
         public int? DeleteReview(int ReviewId);

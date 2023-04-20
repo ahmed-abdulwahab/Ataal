@@ -80,5 +80,13 @@ namespace Ataal.BL.Managers.problem
             }
             return 0;
         }
+        public int ProblemIsVIP(int ProblemId)
+        {
+            var problem = _problemRepo.GetProblemById(ProblemId);
+            if (problem == null)
+                return 0;
+          return _problemRepo.ProblemisVIP(ProblemId);
+            
+        }
     }
 }

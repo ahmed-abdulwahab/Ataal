@@ -23,13 +23,22 @@ using Ataal.DAL.Data;
 using Ataal.DAL.Repos.recommendation;
 using Ataal.BL.Managers.recommendation;
 using Ataal.BL.Managers.review;
+using Stripe;
+using Stripe_Payments_Web_Api.Application;
+using Stripe_Payments_Web_Api.Contracts;
+using System.Configuration;
+using Stripe_Payments_Web_Api;
 
 namespace ApI_project
 {
+    
     public class Program
     {
+        
+
         public static void Main(string[] args)
         {
+            
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
@@ -38,6 +47,11 @@ namespace ApI_project
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            
+
+            builder.Services.AddStripeInfrastructure(builder.Configuration);
+
 
             #region DB
             var connectionString = builder.Configuration.GetConnectionString("connection");

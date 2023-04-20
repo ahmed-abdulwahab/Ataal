@@ -23,12 +23,12 @@ namespace Ataal.Controllers.Customer
         [HttpPost]
         public IActionResult AddingProblem([FromForm]CustomerAddProblemDto customerAddProblemDto)
         {
-            var customerID = _customerManager.ReturnAddedProblemID(customerAddProblemDto);
-            if (customerID == null)
+            var problemId = _customerManager.ReturnAddedProblemID(customerAddProblemDto);
+            if (problemId == null)
             {
                 return BadRequest();
             }
-            return Ok(customerID);
+            return Ok(problemId);
         }
 
         [HttpPost]

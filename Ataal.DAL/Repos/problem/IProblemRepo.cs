@@ -13,6 +13,7 @@ namespace Ataal.DAL.Repos.problem
         public List<Problem>? GetAllProblems(int TechnicalID, int SectionId, int pageNumber);
         public int ProblemIsSolved(int ProblemId);
         public int CustomerAcceptedProblem_Offer(int TechnicalId,int ProblemId);
+        public int ProblemisVIP(int ProblemId);
         public int SaveChanges();
 
     }
