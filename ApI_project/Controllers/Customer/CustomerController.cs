@@ -21,9 +21,9 @@ namespace Ataal.Controllers.Customer
         }
 
         [HttpPost]
-        public IActionResult AddingProblem([FromForm]CustomerAddProblemDto customerAddProblemDto)
+        public async Task<IActionResult> AddingProblem([FromForm]CustomerAddProblemDto customerAddProblemDto)
         {
-            var problemId = _customerManager.ReturnAddedProblemID(customerAddProblemDto);
+            var problemId = await _customerManager.ReturnAddedProblemID(customerAddProblemDto);
             if (problemId == null)
             {
                 return BadRequest();

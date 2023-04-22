@@ -26,7 +26,7 @@ namespace Stripe_Payments_Web_Api.Controllers
             var createdCustomer = await _stripeService.AddStripePaymentAsync(stripePayment,
                 ct);
             if (createdCustomer == true)
-                return Ok();
+                return NoContent();
             else
                 return BadRequest();
         }
