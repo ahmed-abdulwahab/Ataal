@@ -28,7 +28,9 @@ namespace Ataal.BL.Managers.problem
                 var problems = ProblemList.Select(P =>
                               new ProblemReturnDto(Title: P.Problem_Title,
                                                     Description: P.Description,
+                                                    Date:P.dateTime,
                                                     IsSolved: P.Solved,
+                                                    IsVIP: P.VIP,
                                                     Key_Word: P.KeyWord?.KeyWord_Name,
                                                     PhotoPath1: P.PhotoPath1,
                                                     PhotoPath2: P.PhotoPath2,
@@ -39,6 +41,24 @@ namespace Ataal.BL.Managers.problem
             return null;
 
         }
+        public List<ReturnProblemsBySectionIdandPageNumberDto>? GetProblemsForTechnical(GetProblemForCustomersSectionsParametersDto Dto)
+        {
+            var ProblemList = _problemRepo.GetAllProblemsForCustomersSection(Dto.SectonId,Dto.PageNumber);
+            if (ProblemList != null)
+            {
+                var problems = ProblemList.Select(P =>
+                              new ReturnProblemsBySectionIdandPageNumberDto(Title: P.Problem_Title,
+                                                    Description: P.Description,
+                                                    Date:P.dateTime,
+                                                    Key_Word: P.KeyWord?.KeyWord_Name,
+                                                    PhotoPath1: P.PhotoPath1,
+                                                    PhotoPath2: P.PhotoPath2,
+                                                    PhotoPath3: P.PhotoPath3,
+                                                    PhotoPath4: P.PhotoPath4)).ToList();
+                return problems;
+            }
+            return null;
+        }
         public ProblemReturnDto? GetProblemById(int ProblemId)
         {
            var P= _problemRepo.GetProblemById(ProblemId);
@@ -48,7 +68,9 @@ namespace Ataal.BL.Managers.problem
                  (
                     Title: P.Problem_Title,
                                                     Description: P.Description,
+                                                    Date:P.dateTime,
                                                     IsSolved:P.Solved,
+                                                    IsVIP:P.VIP,
                                                     Key_Word: P.KeyWord?.KeyWord_Name,
                                                     PhotoPath1: P.PhotoPath1,
                                                     PhotoPath2: P.PhotoPath2,

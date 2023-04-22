@@ -46,6 +46,7 @@ namespace Ataal.BL.Managers.Customer
                 var problem = new Problem
                 {
                     Problem_Title = CustDto.Title,
+                    
                     Description = CustDto.Description,
                     Section_ID = CustDto.Section_ID,
                     Customer_ID = CustDto.Customer_ID,
@@ -94,8 +95,40 @@ namespace Ataal.BL.Managers.Customer
             return null;
 
         }
+        public async Task<int?> UpdateCustomerProfile(int CustomerId, UpdatedCustomerProfileDto Dto)
+        {
+            var customer =await customerRepo.UpdateCustomerProfile(CustomerId);
 
+            if (customer == null)
+            {
+                return 0;
+                throw new Exception("Customer not found");
+            }
 
+            if (Dto.PhotoFile != null)
+            {
+                var photoPath = await ReturnImagePath(Dto.PhotoFile);
+                customer.Photo = photoPath;
+            }
+            else if(Dto.PhotoFile==null)
+            {
+                customer.Photo = null;
+            }
+
+            customer.Frist_Name = Dto.FirstName;
+            customer.Last_Name = Dto.LastName;
+            customer.Address = Dto.Address;
+            customer.Phone = Dto.phone;
+            customer.Email = Dto.Email;
+
+            customer.Address = Dto.Address;
+
+            customerRepo.SaveChanges();
+            return 1;
+
+        }
+
+        
 
         public async Task<string?> ReturnImagePath(IFormFile File)
         {

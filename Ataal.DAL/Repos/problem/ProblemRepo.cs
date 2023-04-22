@@ -1,20 +1,24 @@
 ﻿using Ataal.DAL.Data.Context;
 using Ataal.DAL.Data.Models;
+using Ataal.DAL.Repos.Section;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Collections.Specialized.BitVector32;
 
 namespace Ataal.DAL.Repos.problem
 {
     public class ProblemRepo:IProblemRepo
     {
         private readonly AtaalContext _ataalContext;
-        public ProblemRepo(AtaalContext ataalContext)
+        private readonly ISectionRepo _sectionRepo;
+        public ProblemRepo(AtaalContext ataalContext, ISectionRepo sectionRepo)
         {
             _ataalContext = ataalContext;
+            _sectionRepo = sectionRepo;
         }
         public Problem? GetProblemById(int ProblemId)
         {
@@ -32,11 +36,30 @@ namespace Ataal.DAL.Repos.problem
                 return _ataalContext.Set<Problem>().Include(p => p.KeyWord).Where(P => !TechIDs.Contains(P.Customer_ID)
                                                             && P.Section_ID == SectionId
                                                             &&P.Solved==false
-                                                            ).Skip(3 * (pageNumber - 1)).Take(3).ToList();
+                                                            ).OrderByDescending(S=>S.VIP==true)
+                                                            .Skip(3 * (pageNumber - 1)).Take(3).ToList();
             }
             else if (Technical == null)
                 return null;
-            return _ataalContext.Set<Problem>().Include(p => p.KeyWord).Where(P => P.Section_ID == SectionId && P.Solved == false).Skip(3 * (pageNumber - 1)).Take(3).ToList();
+            return _ataalContext.Set<Problem>().Include(p => p.KeyWord)
+                                            .Where(P => P.Section_ID == SectionId && P.Solved == false)
+                                            .OrderByDescending(S => S.VIP == true)
+                                            .Skip(3 * (pageNumber - 1)).Take(3).ToList();
+        }
+        public List<Problem>? GetAllProblemsForCustomersSection(int SectionId, int pageNumber)
+        {
+            var section = _sectionRepo.GetSectionById(SectionId);
+            if (section == null)
+            {
+                return null;
+            }
+            return _ataalContext.Set<Problem>().Include(p => p.KeyWord).Where(P =>
+                                                           P.Section_ID == SectionId
+                                                           && P.Solved == false
+                                                           )
+                                                          .Skip(3 * (pageNumber - 1)).Take(3).ToList();
+
+
         }
 
         public int ProblemIsSolved(int ProblemId)

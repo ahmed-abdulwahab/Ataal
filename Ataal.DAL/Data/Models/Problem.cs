@@ -30,7 +30,7 @@ namespace Ataal.DAL.Data.Models
         [ForeignKey("Section")]
         public int Section_ID { get; set; }
         public Section Section { get; set; }
-
+        public DateTime dateTime { get; set; } = DateTime.Now;
         public int? AcceptedOfferID { get; set; }
 
         public bool VIP { get; set; } = false;

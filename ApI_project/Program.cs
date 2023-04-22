@@ -28,6 +28,8 @@ using Stripe_Payments_Web_Api.Application;
 using Stripe_Payments_Web_Api.Contracts;
 using System.Configuration;
 using Stripe_Payments_Web_Api;
+using Ataal.DAL.Repos.keywords;
+using Ataal.BL.Managers.keywords;
 
 namespace ApI_project
 {
@@ -140,6 +142,8 @@ namespace ApI_project
             builder.Services.AddScoped<IProblemRepo, ProblemRepo>();
             builder.Services.AddScoped<IRecommendationRepo, RecommendationRepo>();
             builder.Services.AddScoped<IReviewRepo, ReviewRepo>();
+            builder.Services.AddScoped<IKeywordsRepo, KeywordsRepo>();
+
             #endregion
 
 
@@ -158,7 +162,10 @@ namespace ApI_project
             builder.Services.AddScoped<ItechnicalManger, TechnicalManger>();
             builder.Services.AddScoped<IIdentityManger, IdentityManager>();
             builder.Services.AddScoped<IRecommendationManager, RecommendationManager>();
+            builder.Services.AddScoped<IReviewRepo, ReviewRepo>();
             builder.Services.AddScoped<IReviewManager, ReviewManager>();
+            builder.Services.AddScoped<IKeywordsManager, KeywordsManager>();
+
 
 
             #endregion

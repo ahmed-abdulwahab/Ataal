@@ -15,7 +15,7 @@ namespace Ataal.Controllers.problem
             _problemManager= problemManager;
         }
         [HttpPost]
-        public IActionResult GetAllProblems(GetProblemsPagingDto GetProblemsPaging)
+        public IActionResult GetAllProblems([FromBody]GetProblemsPagingDto GetProblemsPaging)
         {
             var problems = _problemManager.GetProblemsForTechnical(GetProblemsPaging);
             if (problems == null)

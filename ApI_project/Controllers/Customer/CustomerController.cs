@@ -47,10 +47,17 @@ namespace Ataal.Controllers.Customer
         }
 
 
+        [HttpPut("UpdateCustomerProfile/{id}")]
+        //[Route("UpdateCustomerProfile")]
+        public async Task<IActionResult> UpdateCustomerProfile(int id, [FromForm] UpdatedCustomerProfileDto dto)
+        {
+            await _customerManager.UpdateCustomerProfile(id, dto);
+
+            return Ok();
+        }
 
 
 
-       
         [HttpDelete]
         public IActionResult DeletingProblem(int problemID)
         {
