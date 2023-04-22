@@ -12,6 +12,8 @@ namespace Ataal.BL.Managers.problem
     {
         public int ProblemIsVIP(int ProblemId);
         public List<ProblemReturnDto>? GetProblemsForTechnical(GetProblemsPagingDto GetProblemsPaging);
+        public List<ReturnProblemsBySectionIdandPageNumberDto>? GetProblemsForTechnical(GetProblemForCustomersSectionsParametersDto Dto);
+
         public int ProblemIsSolved(int ProblemId);
         public ProblemReturnDto? GetProblemById(int ProblemId);
 

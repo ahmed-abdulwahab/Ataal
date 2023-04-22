@@ -45,6 +45,22 @@ namespace Ataal.DAL.Repos.customer
                 return Customer;
             return null;
         }
+
+
+        public async Task<Customer>? UpdateCustomerProfile(int CustomerId)
+        {
+            //var UpdatedCustomer = GetNormalCustomerById(customer.Id);
+            //UpdatedCustomer.Frist_Name = customer.Frist_Name;
+            //UpdatedCustomer.Last_Name = customer.Last_Name;
+            //UpdatedCustomer.Address = customer.Address;
+            //UpdatedCustomer.Email = customer.Email;
+            //UpdatedCustomer.Phone = customer.Phone;
+            //UpdatedCustomer.Photo = customer.Photo;
+            return await _ataalContext.Customers.FindAsync(CustomerId);
+            
+        }
+
+
         public Problem? GetProblemByID(int ProblemID)
         {
             var problem = _ataalContext.Set<Problem>().FirstOrDefault(P => P.Problem_ID == ProblemID);
