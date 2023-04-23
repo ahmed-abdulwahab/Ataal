@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ataal.BL.DTO.problem;
 
 namespace Ataal.BL.Managers.Customer
 {
@@ -60,6 +61,24 @@ namespace Ataal.BL.Managers.Customer
             }
             return null;
             
+        }
+        public List<ProblemReturnDto>? ReturnProblemsForCustomers(int CustomerId)
+        {
+            var Problemslist = customerRepo.GetAllProblemsForCustomer(CustomerId);
+            if (Problemslist == null)
+                return null;
+            var Problems = Problemslist.Select(P => new ProblemReturnDto(
+                                            Title: P.Problem_Title,
+                                                    Description: P.Description,
+                                                    Date: P.dateTime,
+                                                    IsSolved: P.Solved,
+                                                    IsVIP: P.VIP,
+                                                    Key_Word: P.KeyWord?.KeyWord_Name,
+                                                    PhotoPath1: P.PhotoPath1,
+                                                    PhotoPath2: P.PhotoPath2,
+                                                    PhotoPath3: P.PhotoPath3,
+                                                    PhotoPath4: P.PhotoPath4)).ToList();
+            return Problems;
         }
         public async Task<int?> UpdatedProblem( updatedProblemDto CustDto)
 

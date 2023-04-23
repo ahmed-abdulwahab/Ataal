@@ -14,6 +14,7 @@ namespace Ataal.BL.Mangers.technical
         public List<Technical_Name_Photo_Address_Rate> GetAllTechnicals();
         public DetailedTechnicalDTO GetTechnical_Profile(int id);
 
+        
         public int deleteTechnical(int id);
 
         public int updateTechnical(int id, TechnicalUpdateDto technical);

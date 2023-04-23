@@ -36,7 +36,12 @@ namespace Ataal.DAL.Repos.customer
             SaveChanges();
             return problem.Problem_ID;
         }
-
+        public List<Problem> GetAllProblemsForCustomer(int CustomerId)
+        {
+            return _ataalContext.Problems.
+                        Include(p=>p.KeyWord).
+                        Where(P=>P.Customer_ID==CustomerId).ToList();
+        }
 
         public Customer? GetAllBlockedTechnicalFromCustomer(int CustomerId)
         {
@@ -49,15 +54,7 @@ namespace Ataal.DAL.Repos.customer
 
         public async Task<Customer>? UpdateCustomerProfile(int CustomerId)
         {
-            //var UpdatedCustomer = GetNormalCustomerById(customer.Id);
-            //UpdatedCustomer.Frist_Name = customer.Frist_Name;
-            //UpdatedCustomer.Last_Name = customer.Last_Name;
-            //UpdatedCustomer.Address = customer.Address;
-            //UpdatedCustomer.Email = customer.Email;
-            //UpdatedCustomer.Phone = customer.Phone;
-            //UpdatedCustomer.Photo = customer.Photo;
             return await _ataalContext.Customers.FindAsync(CustomerId);
-            
         }
 
 

@@ -1,5 +1,6 @@
 ﻿using Ataal.BL.DTO.Customer;
 using Ataal.BL.DTO.Identity;
+using Ataal.BL.DTO.problem;
 using Ataal.BL.DTO.Rate;
 using Ataal.BL.DTO.Review;
 using Ataal.BL.DTO.Technical;
@@ -18,6 +19,7 @@ namespace Ataal.BL.Managers.Customer
     {
         public  Task<int?> ReturnAddedProblemID(CustomerAddProblemDto CustDto);
         public Task<string?>? ReturnImagePath(IFormFile File);
+        public List<ProblemReturnDto>? ReturnProblemsForCustomers(int CustomerId);
         public Task<int?> UpdateCustomerProfile(int CustomerId, UpdatedCustomerProfileDto Dto);
         public CustomerWithTechnicalsBlockedListDto? GetAllBlockedTechnicals(int CustomerId);
         public  Task<int?> UpdatedProblem(updatedProblemDto CustDto);

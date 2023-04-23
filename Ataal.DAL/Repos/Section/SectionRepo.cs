@@ -54,8 +54,14 @@ namespace Ataal.DAL.Repos.Section
 			.Include(p => p.Problems)
 			.FirstOrDefault(s=>s.Section_ID == id);
 		}
+        public List<Technical> GetAllTechnicalsForSectionIdSortedByRate(int sectionId)
+		{
+			var Technicals = ataalContext.Sections.Include(s => s.Technicals).ThenInclude(T => T.AppUser).
+				FirstOrDefault(S => S.Section_ID == sectionId).Technicals.ToList();
+			return Technicals.Where(t=>t.Rate>=2).OrderByDescending(T=>T.Rate).Take(5).ToList();
+		}
 
-		public int SaveChanges()
+        public int SaveChanges()
 		{
 			return ataalContext.SaveChanges();
 		}

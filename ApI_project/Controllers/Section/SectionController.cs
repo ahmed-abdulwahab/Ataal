@@ -56,8 +56,17 @@ namespace Ataal.Controllers.Section
 			if (SelectedSection == null) return BadRequest();
 			return Ok(SelectedSection);
 		}
+        [HttpGet]
+        [Route("GetAllTechnicalsForCustomerSectionsSideBar/{SectionId}")]
+        public IActionResult GetAllTechnicalsForCustomerSectionsSideBar(int SectionId)
+        {
+			var Technicals = sectionManger.GetTechnicalsForCustomersSectionSidebar(SectionId);
+			if (Technicals == null)
+				return NotFound();
+			return Ok(Technicals);
+        }
 
-		[HttpPost]
+        [HttpPost]
 		[Route("AddSection")]
 		public IActionResult AddNewSection([FromForm]AddSectionDto NewSection)
 		{

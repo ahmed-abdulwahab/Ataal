@@ -1,5 +1,6 @@
 ﻿using Ataal.BL.DTO.Customer;
 using Ataal.BL.DTO.Section;
+using Ataal.BL.DTO.Technical;
 using Ataal.DAL.Data.Models;
 using Microsoft.AspNetCore.Http;
 using System;
@@ -15,7 +16,9 @@ namespace Ataal.BL.Managers.Section
 		public List<SectionDetailsDto> getAllSSsectionWithDeatailsDtos();
 		public List<SectionDto> getAllSectionDtos();
 		public SectionDto GetSectionByID(int id);
-		public SectionDetailsDto GetSectionByIDinDetails(int id);
+		public List<ReturnTechnicalsForCustomersSectionsDto>? GetTechnicalsForCustomersSectionSidebar(int SectionId);
+
+        public SectionDetailsDto GetSectionByIDinDetails(int id);
 		public int UpdateSectionById(SectionDto sectionDto, int id);
 		public Task<int?> AddNewSection(AddSectionDto addSectionDto);
 		public Task<string?>? ReturnImagePath(IFormFile File);
