@@ -23,7 +23,8 @@ namespace Ataal.DAL.Repos.customer
 
         public Customer? GetNormalCustomerById(int CustomerId)
         {
-            return _ataalContext.Customers.Find(CustomerId);
+            return _ataalContext.Customers.Include(c => c.AppUser).FirstOrDefault(c => c.Id == CustomerId);
+             
         }
         public Customer? GetCustomerWithBlockedListById(int CustomerId)
         {

@@ -1,4 +1,5 @@
-﻿using Ataal.BL.DTO.Customer;
+﻿using Ataal.BL.DtO.technical;
+using Ataal.BL.DTO.Customer;
 using Ataal.BL.DTO.Identity;
 using Ataal.BL.DTO.problem;
 using Ataal.BL.DTO.Rate;
@@ -17,6 +18,7 @@ namespace Ataal.BL.Managers.Customer
 {
     public interface ICustomerManager
     {
+        public oneCustomerDto? GetCustomerById(int id);
         public  Task<int?> ReturnAddedProblemID(CustomerAddProblemDto CustDto);
         public Task<string?>? ReturnImagePath(IFormFile File);
         public List<ProblemReturnDto>? ReturnProblemsForCustomers(int CustomerId);

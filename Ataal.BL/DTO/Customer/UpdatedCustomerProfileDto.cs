@@ -13,7 +13,8 @@ namespace Ataal.BL.DTO.Customer
                                             string Address,
                                             string Email,
                                             string phone,
-                                            IFormFile PhotoFile);
+                                            string userName,
+                                            IFormFile? PhotoFile);
 
 
 

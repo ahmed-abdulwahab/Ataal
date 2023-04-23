@@ -103,11 +103,30 @@ namespace Ataal.Controllers.Customer
             var technical= _customerManager.gettechnical(technicalid);
             if (technical != null)
             {
-                return Ok();
+                return Ok(technical);
 
             }
             return BadRequest();
         }
+
+        [HttpGet]
+        [Route("{customerId}")]
+        public IActionResult GetCustomerById(int customerId)
+        {
+
+            var customer = _customerManager.GetCustomerById(customerId);
+            if (customer != null)
+            {
+                return Ok(customer);
+
+            }
+            return BadRequest();
+        }
+
+
+
+
+
 
         [HttpPost]
         [Route("Review")]
