@@ -39,6 +39,20 @@ namespace Ataal.BL.Managers.Customer
             _env = env;
             this.customerRepo = customerRepo;
         }
+        public oneCustomerDto? GetCustomerById(int id)
+        {
+          var customer=  customerRepo.GetNormalCustomerById(id);
+            if (customer != null) {
+          return new oneCustomerDto(firstName: customer.Frist_Name, lastName: customer.Last_Name, userName: customer.AppUser.UserName, Email: customer.AppUser.Email, phone: customer.AppUser.PhoneNumber, Photo: customer.Photo, Address: customer.Address);
+            }
+            return null;
+
+        }
+
+
+
+
+
         public async Task<int?> ReturnAddedProblemID(CustomerAddProblemDto CustDto)
         {
             if (CustDto != null)
@@ -97,7 +111,7 @@ namespace Ataal.BL.Managers.Customer
         }
         public async Task<int?> UpdateCustomerProfile(int CustomerId, UpdatedCustomerProfileDto Dto)
         {
-            var customer =await customerRepo.UpdateCustomerProfile(CustomerId);
+            var customer = customerRepo.GetNormalCustomerById(CustomerId);
 
             if (customer == null)
             {
@@ -110,16 +124,14 @@ namespace Ataal.BL.Managers.Customer
                 var photoPath = await ReturnImagePath(Dto.PhotoFile);
                 customer.Photo = photoPath;
             }
-            else if(Dto.PhotoFile==null)
-            {
-                customer.Photo = null;
-            }
+          
 
             customer.Frist_Name = Dto.FirstName;
             customer.Last_Name = Dto.LastName;
             customer.Address = Dto.Address;
-            customer.Phone = Dto.phone;
-            customer.Email = Dto.Email;
+            customer.AppUser.PhoneNumber = Dto.phone;
+            customer.AppUser.Email = Dto.Email;
+            customer.AppUser.UserName = Dto.userName;
 
             customer.Address = Dto.Address;
 
