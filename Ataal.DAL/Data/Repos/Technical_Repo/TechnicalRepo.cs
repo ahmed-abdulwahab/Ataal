@@ -50,6 +50,10 @@ namespace Ataal.DAL.Data.Repos.Technical_Repo
             return ataalContext.Set<Technical>().ToList();
         }
 
+
+        
+
+
         public Technical getTechnicalByID(int id)
         {
             var technicals = ataalContext.Set<Technical>().Include("AppUser");

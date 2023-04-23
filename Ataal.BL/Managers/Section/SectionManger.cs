@@ -1,4 +1,5 @@
 ﻿using Ataal.BL.DTO.Section;
+using Ataal.BL.DTO.Technical;
 using Ataal.DAL.Data.Models;
 using Ataal.DAL.Repos.Section;
 using Microsoft.AspNetCore.Hosting;
@@ -69,29 +70,44 @@ namespace Ataal.BL.Managers.Section
 																			   ));
 			return SectionDto.ToList();
 		}
-	//public List<SectionDetailsDto> getAllSSsectionWithDeatailsDtos()
-		//{
-		//	var SectionFromDB = sectionRepo.GetAllSections();
+        //public List<SectionDetailsDto> getAllSSsectionWithDeatailsDtos()
+        //{
+        //	var SectionFromDB = sectionRepo.GetAllSections();
 
-		//	var SectionDto = SectionFromDB
-		//		.Select(t => new SectionDetailsDto(id: t.Section_ID,
-		//											 Name: t.Section_Name,
-		//											 Description: t.Description,
-		//											 SectionProblemReadDtos: t.Problems.Select(p => new SectionProblemReadDto(id: p.Problem_ID,
-		//																													 title: p.Problem_Title,
-		//																													 Description: p.Description)).ToList(),
-		//											 SectionTecnicalReadDtos: t.Technicals.Select(t => new SectionTecnicalReadDto(Id: t.Id,
-		//																													   Phone: t.Phone,
-		//																													   Rate: t.Rate,
-		//																													   Brief: t.Brief)).ToList(),
-		//											 SectionKeyWordReadDtos: t.KeyWords.Select(k => new SectionKeyWordReadDto(Id: k.KeyWord_ID,
-		//																													   Name: k.KeyWord_Name)).ToList()
-		//																	   ));
-		//	return SectionDto.ToList();
-		//}
+        //	var SectionDto = SectionFromDB
+        //		.Select(t => new SectionDetailsDto(id: t.Section_ID,
+        //											 Name: t.Section_Name,
+        //											 Description: t.Description,
+        //											 SectionProblemReadDtos: t.Problems.Select(p => new SectionProblemReadDto(id: p.Problem_ID,
+        //																													 title: p.Problem_Title,
+        //																													 Description: p.Description)).ToList(),
+        //											 SectionTecnicalReadDtos: t.Technicals.Select(t => new SectionTecnicalReadDto(Id: t.Id,
+        //																													   Phone: t.Phone,
+        //																													   Rate: t.Rate,
+        //																													   Brief: t.Brief)).ToList(),
+        //											 SectionKeyWordReadDtos: t.KeyWords.Select(k => new SectionKeyWordReadDto(Id: k.KeyWord_ID,
+        //																													   Name: k.KeyWord_Name)).ToList()
+        //																	   ));
+        //	return SectionDto.ToList();
+        //}
 
 
-		public SectionDto GetSectionByID(int id)
+        public List<ReturnTechnicalsForCustomersSectionsDto>? GetTechnicalsForCustomersSectionSidebar(int SectionId)
+		{
+			var Technicalslist = sectionRepo.GetAllTechnicalsForSectionIdSortedByRate(SectionId);
+			if (Technicalslist == null)
+				return null;
+			var Technicals = Technicalslist.Select(S => new ReturnTechnicalsForCustomersSectionsDto(
+												name: $"{S.Frist_Name} {S.Last_Name}",
+												phone: S.AppUser.PhoneNumber,
+												Brief: S.Brief,
+												Rate: S.Rate,
+												address: S.Address)).ToList();
+			return Technicals;
+		}
+
+
+        public SectionDto GetSectionByID(int id)
 		{
 			var SectionByIDInDB = sectionRepo.GetSectionById(id);
 			if (SectionByIDInDB == null) return null;

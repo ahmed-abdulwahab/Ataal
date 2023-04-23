@@ -6,6 +6,7 @@ using Ataal.DAL.Data.Models;
 using Ataal.DAL.Repos.customer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Client.Region;
 
 namespace Ataal.Controllers.Customer
 {
@@ -29,6 +30,15 @@ namespace Ataal.Controllers.Customer
                 return BadRequest();
             }
             return Ok(problemId);
+        }
+        [HttpGet]
+        [Route("GetAllProblemsForCustomer/{CustomerId}")]
+        public IActionResult GetAllProblemsForCustomer(int CustomerId)
+        {
+            var problems = _customerManager.ReturnProblemsForCustomers(CustomerId);
+            if (problems == null)
+                return NotFound();
+            return Ok(problems);
         }
 
         [HttpPost]

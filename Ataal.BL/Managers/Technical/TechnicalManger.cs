@@ -92,6 +92,8 @@ namespace Ataal.BL.Mangers.Technical
             return 1;
         }
 
+        
+
         public int updateTechnical(int id, TechnicalUpdateDto technical)
         {
 

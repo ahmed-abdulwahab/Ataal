@@ -1,5 +1,6 @@
 ﻿using Ataal.BL.DtO.technical;
 using Ataal.BL.DTO.Technical;
+using Ataal.BL.Managers.Section;
 using Ataal.BL.Mangers.technical;
 using Microsoft.AspNetCore.Mvc;
 
@@ -42,6 +43,7 @@ namespace Ataal.Controllers.Technical
 
             return technical;
         }
+        
 
         // PUT api/<TechnicalController>/5
         [HttpPut("update/{id}")]
