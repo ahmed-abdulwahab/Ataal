@@ -23,7 +23,16 @@ namespace Ataal.Controllers.Section
 			return Ok(AllSection);
 		}
 
-		[HttpDelete]
+        [HttpGet]
+        [Route("AllSectionWithDetails_Customer")]
+        public IActionResult GetAllSectioninDetails_Customer()
+        {
+            var AllSection = sectionManger.getAllSectionWithDeatailsDtos_Customer();
+            return Ok(AllSection);
+        }
+
+
+        [HttpDelete]
 		[Route("DeleteSection")]
 		public IActionResult DeleteSection(int id)
 		{
@@ -68,10 +77,10 @@ namespace Ataal.Controllers.Section
 
         [HttpPost]
 		[Route("AddSection")]
-		public IActionResult AddNewSection([FromForm]AddSectionDto NewSection)
+		public async Task<IActionResult> AddNewSection([FromForm]AddSectionDto NewSectionDto)
 		{
-			var TargetSection = sectionManger.AddNewSection(NewSection);
-			if(TargetSection == null) return BadRequest(new { TargetSection = NewSection });
+			var TargetSection = await sectionManger.AddNewSection(NewSectionDto);
+			if(TargetSection == null) return BadRequest(new { TargetSection = NewSectionDto });
 			return Ok(TargetSection);
 		}
 

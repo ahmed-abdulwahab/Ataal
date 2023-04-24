@@ -14,7 +14,8 @@ namespace Ataal.BL.Managers.Section
 	public interface ISectionManger
 	{
 		public List<SectionDetailsDto> getAllSSsectionWithDeatailsDtos();
-		public List<SectionDto> getAllSectionDtos();
+        public List<SectionDetialsDtoCustomer> getAllSectionWithDeatailsDtos_Customer();
+        public List<SectionDto> getAllSectionDtos();
 		public SectionDto GetSectionByID(int id);
 		public List<ReturnTechnicalsForCustomersSectionsDto>? GetTechnicalsForCustomersSectionSidebar(int SectionId);
 

@@ -9,10 +9,10 @@ namespace Ataal.BL.DTO.Section
 	public record SectionDetailsDto( int id ,
 		                             string Name ,
 									 string Description  ,
-									 ICollection<SectionProblemReadDto>? SectionProblemReadDtos ,
-									 ICollection<SectionTecnicalReadDto>? SectionTecnicalReadDtos,
-									 ICollection<SectionKeyWordReadDto>? SectionKeyWordReadDtos );
-	
+                                     string? Photo,
+									 ICollection<SectionProblemReadDto>? SectionProblemReadDtos   ,
+									 ICollection<SectionTecnicalReadDto>? SectionTecnicalReadDtos ,
+									 ICollection<SectionKeyWordReadDto>? SectionKeyWordReadDtos   );
 
 }
 
