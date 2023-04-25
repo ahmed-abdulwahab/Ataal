@@ -26,7 +26,9 @@ namespace Ataal.BL.Managers.problem
             if (ProblemList != null)
             {
                 var problems = ProblemList.Select(P =>
-                              new ProblemReturnDto(Title: P.Problem_Title,
+                              new ProblemReturnDto(
+                                  id:P.Problem_ID,
+                                  Title: P.Problem_Title,
                                                     Description: P.Description,
                                                     Date:P.dateTime,
                                                     IsSolved: P.Solved,
@@ -66,7 +68,8 @@ namespace Ataal.BL.Managers.problem
                 return null;
             var ProblemReturnDto = new ProblemReturnDto
                  (
-                    Title: P.Problem_Title,
+                                                   id:P.Problem_ID,
+                                                   Title: P.Problem_Title,
                                                     Description: P.Description,
                                                     Date:P.dateTime,
                                                     IsSolved:P.Solved,

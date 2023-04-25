@@ -21,6 +21,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Ataal.BL.DTO.problem;
+using Ataal.BL.DTO.recommendation;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Ataal.BL.Managers.Customer
 {
@@ -40,6 +42,87 @@ namespace Ataal.BL.Managers.Customer
             _env = env;
             this.customerRepo = customerRepo;
         }
+        public int GetNotificationCount(int CustomerId)
+        {
+
+            return customerRepo.GetNotificationCount(CustomerId);
+        }
+
+        public NotificationDto GetAllNotification(int CustomerId)
+        {
+            var Modifiy_Customer = customerRepo.GetNormalCustomerById(CustomerId);
+            Modifiy_Customer.NotificationCounter=0;
+            customerRepo.SaveChanges();
+            var Recommendition= customerRepo.GetRecommenditionForCustomerById(CustomerId);
+
+            /*  NotificationDto notifs=new NotificationDto(RecomenditionList=*/
+            List<NotificationDataDto> All_Notification = new List<NotificationDataDto>();
+            //List < RecommendationCustomerDto > All= new List<RecommendationCustomerDto>();
+            //List<OffersCustomerDto> All_Offers = new List<OffersCustomerDto>();
+            var Offers=   customerRepo.GetOffersForCustomerById(CustomerId);
+            if (Recommendition != null && Recommendition.Problems != null)
+            {
+                foreach (var R in Recommendition.Problems)
+                {
+                    foreach (var Rr in R.Recommendations)
+                    {
+                        var Customer = customerRepo.GetNormalCustomerById(R.Customer_ID);
+                        NotificationDataDto Reco = new NotificationDataDto(
+                                   CustomerName: $"{Customer.Frist_Name} {Customer.Last_Name}",
+                                   TechnId: Rr.Technical_ID,
+                                   TechnicalName: $"{Rr.Technical.Frist_Name} {Rr.Technical.Last_Name}",
+                                  ProblemId: R.Problem_ID,
+                                  Problem_Title: R.Problem_Title,
+                                  OfferId:null,
+                                  date: Rr.Date
+
+
+
+                                  );
+                        All_Notification.Add(Reco);
+
+                    }
+                }
+            }
+            if (Offers != null && Offers.Problems != null)
+            {
+                foreach (var Problem in Offers.Problems)
+                {
+                    foreach (var offer in Problem.Offers)
+                    {
+
+                        NotificationDataDto Problem_offer = new NotificationDataDto(
+                                   OfferId: offer.Id,
+                                   TechnId: offer.technicalId,
+                                   TechnicalName: $"{offer.technical.Frist_Name} {offer.technical.Last_Name}",
+                                  ProblemId: offer.problemId,
+                                  Problem_Title: Problem.Problem_Title,
+                                  CustomerName:null,
+                                  date: offer.Date
+
+                                  );
+                        All_Notification.Add(Problem_offer);
+
+                    }
+              
+                }
+            }
+
+            DateTime thirtyDaysAgo = DateTime.Now.AddDays(-30); // calculate the date 30 days ago
+
+            var final_notification = All_Notification.Where(x => x.date >= thirtyDaysAgo)
+                                    .OrderByDescending(x => x.date)
+                                           .ToList();
+            return new NotificationDto(Notifications: final_notification); 
+
+                
+
+        }
+
+
+
+
+
         public oneCustomerDto? GetCustomerById(int id)
         {
           var customer=  customerRepo.GetNormalCustomerById(id);
@@ -82,7 +165,8 @@ namespace Ataal.BL.Managers.Customer
             if (Problemslist == null)
                 return null;
             var Problems = Problemslist.Select(P => new ProblemReturnDto(
-                                            Title: P.Problem_Title,
+                                                  id:P.Problem_ID,
+                                                   Title: P.Problem_Title,
                                                     Description: P.Description,
                                                     Date: P.dateTime,
                                                     IsSolved: P.Solved,

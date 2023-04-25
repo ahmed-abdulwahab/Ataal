@@ -106,11 +106,15 @@ namespace Ataal.BL.Managers.Section
 			if (Technicalslist == null)
 				return null;
 			var Technicals = Technicalslist.Select(S => new ReturnTechnicalsForCustomersSectionsDto(
+
 												name: $"{S.Frist_Name} {S.Last_Name}",
 												phone: S.AppUser.PhoneNumber,
 												Brief: S.Brief,
 												Rate: S.Rate,
-												address: S.Address)).ToList();
+												address: S.Address
+												//photo:S.Photo
+												)).ToList();
+
 			return Technicals;
 		}
 

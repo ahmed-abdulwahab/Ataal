@@ -22,7 +22,7 @@ namespace Ataal.DAL.Repos.problem
         }
         public Problem? GetProblemById(int ProblemId)
         {
-            return _ataalContext.Problems.Include(P=>P.KeyWord).FirstOrDefault(p=>p.Problem_ID== ProblemId);    
+            return _ataalContext.Problems.Include(P=>P.KeyWord).Include(p=>p.Customer).FirstOrDefault(p=>p.Problem_ID== ProblemId);    
         }
         public List<Problem>? GetAllProblems(int TechnicalID, int SectionId, int pageNumber)
         {

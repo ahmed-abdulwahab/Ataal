@@ -23,5 +23,7 @@ namespace Ataal.DAL.Data.Models
         public int Problem_ID { get; set; }
 
         public Problem problem { get; set; }
+
+   
     }
 }

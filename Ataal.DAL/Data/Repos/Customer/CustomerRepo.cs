@@ -26,6 +26,32 @@ namespace Ataal.DAL.Repos.customer
             return _ataalContext.Customers.Include(c => c.AppUser).FirstOrDefault(c => c.Id == CustomerId);
              
         }
+
+        public Customer? GetOffersForCustomerById(int CustomerId)
+        {
+            return _ataalContext.Customers.Include(c => c.AppUser)
+                .Include(c => c.Problems)
+                .ThenInclude(p => p.Offers).
+                ThenInclude(o => o.technical).FirstOrDefault(c => c.Id == CustomerId);
+
+        }
+        public Customer? GetRecommenditionForCustomerById(int CustomerId)
+        {
+            return _ataalContext.Customers.Include(c => c.AppUser)
+                .Include(c => c.Problems)
+                .ThenInclude(p => p.Recommendations).
+                ThenInclude(o=>o.Technical).FirstOrDefault(c => c.Id == CustomerId);
+
+        }
+
+
+
+
+
+
+
+        //   .Include(c=>c.Problems).ThenInclude(p=>p.r).ThenInclude(p=>p.Offers).ThenInclude(o=>o.technical)
+
         public Customer? GetCustomerWithBlockedListById(int CustomerId)
         {
             return _ataalContext.Customers.Include(c=>c.Blocked_Technicals_Id).FirstOrDefault(C=>C.Id==CustomerId);
@@ -266,6 +292,10 @@ namespace Ataal.DAL.Repos.customer
 
             customer.CreatedPayemntId= PayemntId;
             return _ataalContext.SaveChanges();
+        }
+        public int GetNotificationCount(int CustomerId)
+        {
+            return _ataalContext.Customers.FirstOrDefault(c => c.Id == CustomerId).NotificationCounter;
         }
     }
 }
