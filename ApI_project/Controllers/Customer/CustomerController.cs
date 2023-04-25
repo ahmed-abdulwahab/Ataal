@@ -216,5 +216,25 @@ namespace Ataal.Controllers.Customer
             return Ok(TechList.BlockListDtos);
         }
 
+        [HttpGet]
+        [Route("GetAllNotification/{CustomerId}")]
+        public IActionResult GetNotificationCount(int CustomerId)
+        {
+            var Number = _customerManager.GetNotificationCount(CustomerId);
+          
+            return Ok(Number);
+        }
+
+        [HttpGet]
+        [Route("GetAllNotificationData/{CustomerId}")]
+        public IActionResult GeAlltNotification(int CustomerId)
+        {
+            var Data = _customerManager.GetAllNotification(CustomerId);
+
+            return Ok(Data);
+        }
+
+       
+
     }
 }

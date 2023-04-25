@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace Ataal.BL.DTO.problem
 {
     public record ProblemReturnDto(
+        int id,
         string Title,
         string Description,
         DateTime? Date,

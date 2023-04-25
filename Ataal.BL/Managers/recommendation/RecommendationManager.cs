@@ -2,6 +2,7 @@
 using Ataal.DAL.Data.Models;
 using Ataal.DAL.Data.Repos.Technical_Repo;
 using Ataal.DAL.Repos.customer;
+using Ataal.DAL.Repos.problem;
 using Ataal.DAL.Repos.recommendation;
 using System;
 using System.Collections.Generic;
@@ -16,19 +17,25 @@ namespace Ataal.BL.Managers.recommendation
         private readonly IRecommendationRepo _recommendationRepo;
         private readonly ITechnicalRepo _technicalRepo;
         private readonly ICustomerRepo _customerRepo;
+        //private readonly ICustomerRepo _problemRebp;
+        private readonly IProblemRepo _problemRepo;
 
         public RecommendationManager(IRecommendationRepo recommendationRepo,
                                     ITechnicalRepo technicalRepo,
-                                    ICustomerRepo customerRepo)
+                                    ICustomerRepo customerRepo,
+                                    IProblemRepo problemRepo
+            )
         {
             _recommendationRepo = recommendationRepo;
             _technicalRepo= technicalRepo;
             _customerRepo = customerRepo;
+            _problemRepo = problemRepo;
         }
         public int AddRecommendation(AddRecommendationDto Dto)
         {
             var Technical = _technicalRepo.getNormalTechnicalById(Dto.TechnicalId);
             var Customer = _customerRepo.GetNormalCustomerById(Dto.CustomerId);
+            var Customer_Problem = _problemRepo.GetProblemById(Dto.ProblemId);
             var Recommendations = _recommendationRepo.GetAllRecommendations();
             foreach(var Reco in Recommendations)
             {
@@ -50,7 +57,7 @@ namespace Ataal.BL.Managers.recommendation
                 Date = DateTime.Now
             };
             Technical.NotificationCounter = Technical.NotificationCounter + 1;
-            Customer.NotificationCounter = Customer.NotificationCounter + 1;
+            Customer_Problem.Customer.NotificationCounter = Customer_Problem.Customer.NotificationCounter + 1;
             return _recommendationRepo.AddRecommendationForCustomer(Recommendation);
         }
         public List<ReturnRecommendationDto>? GetAllRecommendations()

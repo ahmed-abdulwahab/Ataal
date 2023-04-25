@@ -18,6 +18,8 @@ namespace Ataal.BL.Managers.Customer
 {
     public interface ICustomerManager
     {
+        public NotificationDto GetAllNotification(int CustomerId);
+        public int GetNotificationCount(int CustomerId);
         public oneCustomerDto? GetCustomerById(int id);
         public  Task<int?> ReturnAddedProblemID(CustomerAddProblemDto CustDto);
         public Task<string?>? ReturnImagePath(IFormFile File);
