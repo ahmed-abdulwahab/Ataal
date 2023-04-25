@@ -8,8 +8,7 @@ namespace Ataal.BL.DTO.Customer
 {
     public record oneCustomerDto(
          string Email,
-   
-         string phone,
+            string phone,
          string firstName,
          string lastName,
          string Address,

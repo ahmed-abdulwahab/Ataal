@@ -160,9 +160,9 @@ namespace Ataal.BL.Managers.Section
 			
 		}
 
-		public SectionDetailsDto GetSectionByIDinDetails(int id)
+		public SectionDetialsDtoCustomer GetSectionByIDinDetails(int id)
 		{
-			var SectioninDetails = getAllSSsectionWithDeatailsDtos().FirstOrDefault(s => s.id == id);
+			var SectioninDetails = getAllSectionWithDeatailsDtos_Customer().FirstOrDefault(s => s.id == id);
 			if (SectioninDetails == null) return null;
 			return SectioninDetails;
 		
