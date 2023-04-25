@@ -11,6 +11,8 @@ namespace Ataal.DAL.Data.Repos.Technical_Repo
     public interface ITechnicalRepo
     {
         public List<Technical> getAllTechnical();
+        public List<Technical> getAllTechnicalForSectionId(int SectionId);
+
         public Technical getTechnicalByID(int id);
         public Technical? getNormalTechnicalById(int TechnicalId);
         public Task<Technical> deleteTechnical(int id);

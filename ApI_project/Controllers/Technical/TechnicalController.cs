@@ -30,6 +30,18 @@ namespace Ataal.Controllers.Technical
             return AllTechnicals;
 
         }
+        [HttpGet]
+        [Route("GetAllTechnicalsForSectionId/{SectionId}")]
+        public ActionResult<List<ReturnTechnicalWithNameandIdDto>> GetAllTechnicalsForSectionId(int SectionId)
+        {
+            var AllTechnicals = ITechnicalManger.getAllTechnicalForSectionId(SectionId);
+
+            if (AllTechnicals == null) { return NotFound(); }
+
+
+            return Ok(AllTechnicals);
+
+        }
 
         // GET api/<TechnicalController>/5
         [HttpGet("{id}")]
