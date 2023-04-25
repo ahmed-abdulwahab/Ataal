@@ -14,7 +14,6 @@ namespace Ataal.DAL.Data.Models
     {
         [Key]
         public int Id { get; set; }
-
         public string Frist_Name { get; set; } = string.Empty;
         public string Last_Name { get; set; } = string.Empty;
         public int NotificationCounter { get; set; } = 0;

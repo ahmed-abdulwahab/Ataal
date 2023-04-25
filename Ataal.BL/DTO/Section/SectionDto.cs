@@ -9,7 +9,8 @@ namespace Ataal.BL.DTO.Section
 {
 	public record SectionDto(int ID,
 						     string Name,
-						     string Description
-			     			)
+						     string Description,
+                             string? Photo
+                             )
 		;
 }

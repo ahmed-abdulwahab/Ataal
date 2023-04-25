@@ -45,7 +45,8 @@ namespace Ataal.BL.Managers.Section
 			var SectionDto = SectionFromDB
 				.Select(t => new SectionDto(ID: t.Section_ID,
 											Name: t.Section_Name,
-											Description: t.Description
+											Description: t.Description,
+										    Photo:t.Photo
 
 											)) ;
 			return SectionDto.ToList();
@@ -57,9 +58,10 @@ namespace Ataal.BL.Managers.Section
 			if (SectionFromDB == null) return null;
 			var SectionDto = SectionFromDB
 				.Select(t => new SectionDetailsDto(id: t.Section_ID,
-													 Name: t.Section_Name,
-													 Description: t.Description,
-													 SectionProblemReadDtos: t.Problems?.Select(p => new SectionProblemReadDto(id: p.Problem_ID,
+												   Name: t.Section_Name,
+												   Description: t.Description,
+												   Photo:t.Photo,
+												   SectionProblemReadDtos: t.Problems?.Select(p => new SectionProblemReadDto(id: p.Problem_ID,
 																															  title: p.Problem_Title,
 																															  Description: p.Description)).ToList(),
 													 SectionTecnicalReadDtos: t.Technicals?.Select(t => new SectionTecnicalReadDto(Id: t.Id,
@@ -70,27 +72,33 @@ namespace Ataal.BL.Managers.Section
 																			   ));
 			return SectionDto.ToList();
 		}
-        //public List<SectionDetailsDto> getAllSSsectionWithDeatailsDtos()
-        //{
-        //	var SectionFromDB = sectionRepo.GetAllSections();
 
-        //	var SectionDto = SectionFromDB
-        //		.Select(t => new SectionDetailsDto(id: t.Section_ID,
-        //											 Name: t.Section_Name,
-        //											 Description: t.Description,
-        //											 SectionProblemReadDtos: t.Problems.Select(p => new SectionProblemReadDto(id: p.Problem_ID,
-        //																													 title: p.Problem_Title,
-        //																													 Description: p.Description)).ToList(),
-        //											 SectionTecnicalReadDtos: t.Technicals.Select(t => new SectionTecnicalReadDto(Id: t.Id,
-        //																													   Phone: t.Phone,
-        //																													   Rate: t.Rate,
-        //																													   Brief: t.Brief)).ToList(),
-        //											 SectionKeyWordReadDtos: t.KeyWords.Select(k => new SectionKeyWordReadDto(Id: k.KeyWord_ID,
-        //																													   Name: k.KeyWord_Name)).ToList()
-        //																	   ));
-        //	return SectionDto.ToList();
-        //}
 
+        public List<SectionDetialsDtoCustomer> getAllSectionWithDeatailsDtos_Customer()
+        {
+            var SectionFromDB = sectionRepo.GetAllSections_Customer();
+            if (SectionFromDB == null) return null;
+            var SectionDto = SectionFromDB
+                .Select(t => new SectionDetialsDtoCustomer(id: t.Section_ID,
+                                                   Name: t.Section_Name,
+                                                   Description: t.Description,
+                                                   Photo: t.Photo,
+                                                    ProblemWithCustomerDtos: t.Problems?.Select(p => new ProblemWithCustomerDto(id: p.Problem_ID,
+                                                                                                                     title: p.Problem_Title,
+                                                                                                                     Description: p.Description,
+                                                                                                                     CustomerDto: p.Customer != null ? new CustomerDto(Frist_Name: p.Customer.Frist_Name,
+                                                                                                                                                                       Last_Name: p.Customer.Last_Name,
+                                                                                                                                                                       ExpirationYear: p.Customer.ExpirationYear,
+                                                                                                                                                                       ExpirationMonth: p.Customer.ExpirationMonth,
+                                                                                                                                                                       photo: p.Customer.Photo) : null)).ToList(),
+                                                   SectionTecnicalReadDtos: t.Technicals?.Select(t => new SectionTecnicalReadDto(Id: t.Id,
+                                                                                                                                  Rate: t.Rate,
+                                                                                                                                  Brief: t.Brief)).ToList(),
+                                                   SectionKeyWordReadDtos: t.KeyWords?.Select(k => new SectionKeyWordReadDto(Id: k.KeyWord_ID,
+                                                                                                                               Name: k.KeyWord_Name)).ToList()
+                                                                               ));
+            return SectionDto.ToList();
+        }
 
         public List<ReturnTechnicalsForCustomersSectionsDto>? GetTechnicalsForCustomersSectionSidebar(int SectionId)
 		{
@@ -111,7 +119,7 @@ namespace Ataal.BL.Managers.Section
 		{
 			var SectionByIDInDB = sectionRepo.GetSectionById(id);
 			if (SectionByIDInDB == null) return null;
-			var sectionDto = new SectionDto(SectionByIDInDB.Section_ID,SectionByIDInDB.Section_Name,SectionByIDInDB.Description );
+			var sectionDto = new SectionDto(SectionByIDInDB.Section_ID,SectionByIDInDB.Section_Name,SectionByIDInDB.Description ,SectionByIDInDB.Photo );
 			return sectionDto;
 		}
 
@@ -162,5 +170,7 @@ namespace Ataal.BL.Managers.Section
 			if (DeletedSection == null) return 0;
 			return sectionRepo.DeleteSection(id);
 		}
-	}
+
+
+    }
 }

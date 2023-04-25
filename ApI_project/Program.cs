@@ -189,7 +189,7 @@ namespace ApI_project
 
             app.UseAuthorization();
             app.UseStaticFiles();
-
+          
             app.MapControllers();
             //using (var scope = app.Services.CreateScope())
             //{

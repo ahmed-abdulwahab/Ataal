@@ -39,7 +39,19 @@ namespace Ataal.DAL.Repos.Section
 				.Include(p=>p.Problems).ToList();
 		}
 
-		public Data.Models.Section? GetSectionById(int id)
+        public List<Data.Models.Section> GetAllSections_Customer()
+        {
+            return ataalContext
+                .Set<Data.Models.Section>()
+                .Include(t => t.Technicals)
+                .Include(k => k.KeyWords)
+                .Include(p => p.Problems)
+                    .ThenInclude(c => c.Customer)
+                .ToList();
+        }
+
+
+        public Data.Models.Section? GetSectionById(int id)
 		{
 			var Section = ataalContext.Sections.FirstOrDefault(s => s.Section_ID == id);
 			return Section;
@@ -70,7 +82,6 @@ namespace Ataal.DAL.Repos.Section
 		{
 			var ChosenSection = ataalContext.Sections.SingleOrDefault(S => S.Section_ID == id);
 			if (ChosenSection == null) return null;
-			ChosenSection.Section_ID = section.Section_ID;
 			ChosenSection.Section_Name = section.Section_Name;
 			ChosenSection.Description = section.Description;
 			SaveChanges();
