@@ -19,14 +19,8 @@ namespace Ataal.DAL.Repos.Reviews
         {
           return  _ataalContext.Reviews.FirstOrDefault(r=>r.ID== ReviewId);
         }
-        public List<Review> GetAllReviews()
-        {
-            return _ataalContext.Reviews.ToList();
-        }
-        public List<Review> GetReviewsByCustomerId(int CustomerId)
-        {
-            return _ataalContext.Reviews.Where(R=>R.Customer_ID==CustomerId).ToList();
-        }
+    
+
 
         public int SaveChanges()
         {

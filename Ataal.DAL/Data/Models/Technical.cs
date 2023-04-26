@@ -38,7 +38,9 @@ namespace Ataal.DAL.Data.Models
         public int Rate { get; set; } = 0;
 
         public string? Brief { get; set; }
-        public int NotificationCounter { get; set; } = 0;
+
+        
+
         public Offer? offer { get; set; }
 
 
@@ -49,7 +51,7 @@ namespace Ataal.DAL.Data.Models
 
         [Required]
         public ICollection<Section> Sections { get; set; }  // the sections which choosed by him to see its problems
-        public ICollection<Recommendation>? Recommendations { get; set; }
+
         public ICollection<Problem>? Problems_Solved { get; set; } // the problems which solved by him
         public ICollection<Review>? Reviews { get; set; } // reviews from customers for him
         public ICollection<Rate>? CustomersRate { get; set; }

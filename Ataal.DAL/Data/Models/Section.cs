@@ -23,7 +23,7 @@ namespace Ataal.DAL.Data.Models
 		 public string? Photo { get; set; }
 
     	 public ICollection<Problem>? Problems { get; set; }
-         public ICollection<Technical>? Technicals { get; set; }  
+         public ICollection<Technical>? Technicals { get; set; }  // all of technical in this section 
          public ICollection<KeyWords>? KeyWords { get; set; }
 
     }

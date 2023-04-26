@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Ataal.DAL.Data.Context;
 using Ataal.DAL.Data.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace Ataal.DAL.Repos.Section
 {
@@ -19,7 +18,8 @@ namespace Ataal.DAL.Repos.Section
         public int AddNewSection(Data.Models.Section section)
 		{
 			ataalContext.Sections.Add(section);
-			return SaveChanges();
+			SaveChanges();
+			return section.Section_ID;
 		}
 
 		public int DeleteSection(int id)
@@ -32,48 +32,16 @@ namespace Ataal.DAL.Repos.Section
 
 		public List<Data.Models.Section> GetAllSections()
 		{
-			return ataalContext
-				.Set<Data.Models.Section>()
-				.Include(t=>t.Technicals)
-				.Include(k=>k.KeyWords)
-				.Include(p=>p.Problems).ToList();
+			return ataalContext.Set<Data.Models.Section>().ToList();
 		}
 
-        public List<Data.Models.Section> GetAllSections_Customer()
-        {
-            return ataalContext
-                .Set<Data.Models.Section>()
-                .Include(t => t.Technicals)
-                .Include(k => k.KeyWords)
-                .Include(p => p.Problems)
-                    .ThenInclude(c => c.Customer)
-                .ToList();
-        }
-
-
-        public Data.Models.Section? GetSectionById(int id)
+		public Data.Models.Section? GetSectionById(int id)
 		{
 			var Section = ataalContext.Sections.FirstOrDefault(s => s.Section_ID == id);
 			return Section;
 		}
 
-		public Data.Models.Section GetSectionByIdWithDetails(int id)
-		{
-			return ataalContext
-			.Set<Data.Models.Section>()
-			.Include(t => t.Technicals)
-			.Include(k => k.KeyWords)
-			.Include(p => p.Problems)
-			.FirstOrDefault(s=>s.Section_ID == id);
-		}
-        public List<Technical> GetAllTechnicalsForSectionIdSortedByRate(int sectionId)
-		{
-			var Technicals = ataalContext.Sections.Include(s => s.Technicals).ThenInclude(T => T.AppUser).
-				FirstOrDefault(S => S.Section_ID == sectionId).Technicals.ToList();
-			return Technicals.Where(t=>t.Rate>=2).OrderByDescending(T=>T.Rate).Take(5).ToList();
-		}
-
-        public int SaveChanges()
+		public int SaveChanges()
 		{
 			return ataalContext.SaveChanges();
 		}
@@ -82,6 +50,7 @@ namespace Ataal.DAL.Repos.Section
 		{
 			var ChosenSection = ataalContext.Sections.SingleOrDefault(S => S.Section_ID == id);
 			if (ChosenSection == null) return null;
+			ChosenSection.Section_ID = section.Section_ID;
 			ChosenSection.Section_Name = section.Section_Name;
 			ChosenSection.Description = section.Description;
 			SaveChanges();
