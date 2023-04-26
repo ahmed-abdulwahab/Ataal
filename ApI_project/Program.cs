@@ -35,8 +35,17 @@ namespace ApI_project
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+           
+            #region Cros
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAnyOrigin",
+                    builder => builder.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod());
+            });
 
-
+            #endregion
 
             #region DB
             var connectionString = builder.Configuration.GetConnectionString("connection");
@@ -139,6 +148,7 @@ namespace ApI_project
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            app.UseCors("AllowAnyOrigin");
 
             app.UseHttpsRedirection();
 

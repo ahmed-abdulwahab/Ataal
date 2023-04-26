@@ -31,11 +31,24 @@ namespace Ataal.Controllers.Technical
         }
 
         // GET api/<TechnicalController>/5
-        [HttpGet("{id}")]
+        [HttpGet("TechnicalProfile/{id}")]
         public async Task<ActionResult<DetailedTechnicalDTO>> Get(int id)
         {
             var technical = ITechnicalManger.GetTechnical_Profile(id);
             if(technical == null) 
+            {
+                return NotFound();
+            }
+
+            return await technical;
+        }
+
+        // GET api/<TechnicalController>/5
+        [HttpGet("SideBarInfo/{id}")]
+        public async Task<ActionResult<SideBarTechnicalDto>> GetSomeInfo(int id)
+        {
+            var technical = ITechnicalManger.GetTechnical_SomeInfo(id);
+            if (technical == null)
             {
                 return NotFound();
             }

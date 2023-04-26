@@ -52,12 +52,9 @@ namespace Ataal.DAL.Data.Repos.Technical_Repo
 
         public Technical getTechnicalByID(int id)
         {
-            var technicals = ataalContext.Set<Technical>().Include("AppUser");
-            if(!technicals.Any()) 
-            {
-                return null!;
-            }
-            return technicals.FirstOrDefault(T => T.Id == id)!;
+            return ataalContext.Set<Technical>().Where(t => t.Id==id)
+                .Include("AppUser").Include(t => t.Problems_Solved).Include(t=>t.Reviews)?.ThenInclude(r => r.Customer)
+                .FirstOrDefault()!;
         }
 
         public Technical updateTechnical(int id, Technical technical)

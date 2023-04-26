@@ -59,7 +59,7 @@ namespace Ataal.BL.Mangers.Technical
                     (
                         id: R.Customer_ID,
                         name: R.Customer.Frist_Name + " " + R.Customer.Last_Name,
-                        Photo: R.Customer.Photo
+                        Photo: R.Customer?.Photo
                     ),
                     Description: R.Description,
                     date: R.date
@@ -149,6 +149,25 @@ namespace Ataal.BL.Mangers.Technical
             if (result == null) return null;
 
             return technical;
+        }
+
+        public async Task<SideBarTechnicalDto> GetTechnical_SomeInfo(int id)
+        {
+            var technical = technicalRepo.getTechnicalByID(id);
+
+            if (technical == null)
+                return null!;
+
+            return  new SideBarTechnicalDto(
+                    Name: technical.Frist_Name + " " + technical.Last_Name,
+                    Email: technical.AppUser.Email,
+                    Phone: technical.AppUser.PhoneNumber,
+                    Photo: technical.Photo,
+                    Rate: technical.Rate,
+                    Address: technical.Address,
+                    NumOfReviews: technical.Reviews.Count,
+                    NumOfSolvedProblems: technical.Problems_Solved.Count
+                    );
         }
     }
 }
