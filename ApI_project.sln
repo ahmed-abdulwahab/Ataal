@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ataal", "ApI_project\Ataal.csproj", "{60B6BCC1-8156-4AC6-A10B-350509B125E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ataal.BL", "Ataal.BL\Ataal.BL.csproj", "{D34F96E3-539B-44E3-BB59-6F5F5120A430}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ataal.DAL", "Ataal.DAL\Ataal.DAL.csproj", "{3AA4FD51-BD93-4627-99E5-426644497364}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{60B6BCC1-8156-4AC6-A10B-350509B125E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60B6BCC1-8156-4AC6-A10B-350509B125E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60B6BCC1-8156-4AC6-A10B-350509B125E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60B6BCC1-8156-4AC6-A10B-350509B125E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D34F96E3-539B-44E3-BB59-6F5F5120A430}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D34F96E3-539B-44E3-BB59-6F5F5120A430}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D34F96E3-539B-44E3-BB59-6F5F5120A430}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D34F96E3-539B-44E3-BB59-6F5F5120A430}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AA4FD51-BD93-4627-99E5-426644497364}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AA4FD51-BD93-4627-99E5-426644497364}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AA4FD51-BD93-4627-99E5-426644497364}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AA4FD51-BD93-4627-99E5-426644497364}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EC66E80A-03F1-4DC0-BD93-99BB802F1869}
+	EndGlobalSection
+EndGlobal
