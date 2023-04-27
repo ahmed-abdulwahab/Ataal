@@ -1,5 +1,6 @@
 ﻿using Ataal.BL.DtO.technical;
 using Ataal.BL.DTO.Technical;
+using Ataal.BL.Managers.Section;
 using Ataal.BL.Mangers.technical;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,6 +30,18 @@ namespace Ataal.Controllers.Technical
             return AllTechnicals;
 
         }
+        [HttpGet]
+        [Route("GetAllTechnicalsForSectionId/{SectionId}")]
+        public ActionResult<List<ReturnTechnicalWithNameandIdDto>> GetAllTechnicalsForSectionId(int SectionId)
+        {
+            var AllTechnicals = ITechnicalManger.getAllTechnicalForSectionId(SectionId);
+
+            if (AllTechnicals == null) { return NotFound(); }
+
+
+            return Ok(AllTechnicals);
+
+        }
 
         // GET api/<TechnicalController>/5
         [HttpGet("TechnicalProfile/{id}")]
@@ -55,6 +68,7 @@ namespace Ataal.Controllers.Technical
 
             return await technical;
         }
+        
 
         // PUT api/<TechnicalController>/5
         [HttpPut("update/{id}")]

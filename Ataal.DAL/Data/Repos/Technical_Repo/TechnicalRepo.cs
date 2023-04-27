@@ -45,10 +45,19 @@ namespace Ataal.DAL.Data.Repos.Technical_Repo
 
             return technical;
         }
-        public List<Technical> getAllTechnical()                     ///check the null after build the controller
+        public List<Technical> getAllTechnical()  ///check the null after build the controller
         {
             return ataalContext.Set<Technical>().ToList();
         }
+
+
+        public List<Technical> getAllTechnicalForSectionId(int SectionId)
+        {
+            var Section = ataalContext.Sections.Include(S=>S.Technicals)
+                .FirstOrDefault(t=>t.Section_ID==SectionId);
+            return Section.Technicals.ToList();
+        }
+
 
         public Technical getTechnicalByID(int id)
         {
@@ -56,7 +65,15 @@ namespace Ataal.DAL.Data.Repos.Technical_Repo
                 .Include("AppUser").Include(t => t.Problems_Solved).Include(t=>t.Reviews)?.ThenInclude(r => r.Customer)
                 .FirstOrDefault()!;
         }
-
+        public Technical? getNormalTechnicalById(int TechnicalId)
+        {
+            var technical= ataalContext.Technicals.Find(TechnicalId);
+            if(technical == null)
+            {
+                return null;
+            }
+            return technical;
+        }
         public Technical updateTechnical(int id, Technical technical)
         {
             var OldTechnical = ataalContext.Set<Technical>()?.FirstOrDefault(T=>T.Id==id)!;

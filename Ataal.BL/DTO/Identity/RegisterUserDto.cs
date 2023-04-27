@@ -14,6 +14,7 @@ namespace Ataal.BL.DTO.Identity
         string firstName,
         string lastName,
         string Address,
+   
         AppUserDto AppUser
     );
 }

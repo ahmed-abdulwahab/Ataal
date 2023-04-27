@@ -1,5 +1,5 @@
 ﻿using Ataal.BL.DtO.Customer;
-using Ataal.BL.DtO.Identity;
+using Ataal.BL.DTO.Identity;
 using Ataal.BL.DtO.Review;
 using Ataal.BL.DtO.Section;
 using Ataal.BL.DtO.technical;
@@ -88,6 +88,17 @@ namespace Ataal.BL.Mangers.Technical
                 Address: T.Address,
                 Rate: T.Rate
                 )).ToList();
+        }
+        public List<ReturnTechnicalWithNameandIdDto>? getAllTechnicalForSectionId(int SectionId)
+        {
+            var AllTechnicals = technicalRepo.getAllTechnicalForSectionId(SectionId);
+            if(AllTechnicals == null )
+            {
+                return null;
+            }
+            return AllTechnicals.Select(T => new ReturnTechnicalWithNameandIdDto(
+                Id: T.Id,
+                Name: $"{T.Frist_Name} {T.Last_Name}")).ToList();
         }
 
         public int deleteTechnical(int id)

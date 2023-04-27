@@ -10,7 +10,14 @@ namespace Ataal.DAL.Repos.customer
 {
     public interface ICustomerRepo
     {
+        public Customer? GetRecommenditionForCustomerById(int CustomerId);
+        public Customer? GetOffersForCustomerById(int CustomerId);
+        public int GetNotificationCount(int CustomerId);
+        public Customer? GetNormalCustomerById(int CustomerId);
         public Customer? GetCustomerWithBlockedList(int CustomerId);
+        public List<Problem> GetAllProblemsForCustomer(int CustomerId);
+        public Task<Customer>? UpdateCustomerProfile(int CustomerId);
+        public Customer? GetAllBlockedTechnicalFromCustomer(int CustomerId);
         public Technical? GetTechnicalWithBlockedList(int TechnicalId);
         public int? AddCustomerProblem(Problem problem);
         public Problem? GetProblemByID(int ProblemID);
@@ -18,7 +25,7 @@ namespace Ataal.DAL.Repos.customer
         public int AddTechnicalRate(Rate rate);
         public int ModifyingTchnicalRate(int TechnicalID);//int Technical Repository
         public Technical? GetTechnicalById(int TechnicalId);
-
+        public int assignCustomerPayemntId(int CustomerId,string PayemntId);
         public Customer CreateCustomer(Customer customer);
         public int? UpdateReview(int id, string Desc);
         public int? DeleteReview(int ReviewId);

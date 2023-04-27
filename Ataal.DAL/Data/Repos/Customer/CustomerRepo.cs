@@ -2,6 +2,7 @@
 using Ataal.DAL.Data.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,12 +20,70 @@ namespace Ataal.DAL.Repos.customer
             _ataalContext = ataalContext;
         }
 
+
+        public Customer? GetNormalCustomerById(int CustomerId)
+        {
+            return _ataalContext.Customers.Include(c => c.AppUser).FirstOrDefault(c => c.Id == CustomerId);
+             
+        }
+
+        public Customer? GetOffersForCustomerById(int CustomerId)
+        {
+            return _ataalContext.Customers.Include(c => c.AppUser)
+                .Include(c => c.Problems)
+                .ThenInclude(p => p.Offers).
+                ThenInclude(o => o.technical).FirstOrDefault(c => c.Id == CustomerId);
+
+        }
+        public Customer? GetRecommenditionForCustomerById(int CustomerId)
+        {
+            return _ataalContext.Customers.Include(c => c.AppUser)
+                .Include(c => c.Problems)
+                .ThenInclude(p => p.Recommendations).
+                ThenInclude(o=>o.Technical).FirstOrDefault(c => c.Id == CustomerId);
+
+        }
+
+
+
+
+
+
+
+        //   .Include(c=>c.Problems).ThenInclude(p=>p.r).ThenInclude(p=>p.Offers).ThenInclude(o=>o.technical)
+
+        public Customer? GetCustomerWithBlockedListById(int CustomerId)
+        {
+            return _ataalContext.Customers.Include(c=>c.Blocked_Technicals_Id).FirstOrDefault(C=>C.Id==CustomerId);
+        }
+
         public int? AddCustomerProblem(Problem problem)
         {
             _ataalContext.Set<Problem>().Add(problem);
             SaveChanges();
             return problem.Problem_ID;
         }
+        public List<Problem> GetAllProblemsForCustomer(int CustomerId)
+        {
+            return _ataalContext.Problems.
+                        Include(p=>p.KeyWord).
+                        Where(P=>P.Customer_ID==CustomerId).ToList();
+        }
+
+        public Customer? GetAllBlockedTechnicalFromCustomer(int CustomerId)
+        {
+            var Customer= GetCustomerWithBlockedList(CustomerId);
+             if(Customer!=null && Customer.Blocked_Technicals_Id!=null)
+                return Customer;
+            return null;
+        }
+
+
+        public async Task<Customer>? UpdateCustomerProfile(int CustomerId)
+        {
+            return await _ataalContext.Customers.FindAsync(CustomerId);
+        }
+
 
         public Problem? GetProblemByID(int ProblemID)
         {
@@ -260,6 +319,21 @@ namespace Ataal.DAL.Repos.customer
                 return unBlockedCustomers.ToList();
             }
             catch { return null!; }
+        }
+
+        public int assignCustomerPayemntId(int CustomerId, string PayemntId)
+        {
+
+            var customer = GetNormalCustomerById(CustomerId);
+            if (customer == null)
+                return 0;
+
+            customer.CreatedPayemntId = PayemntId;
+            return _ataalContext.SaveChanges();
+        }
+        public int GetNotificationCount(int CustomerId)
+        {
+            return _ataalContext.Customers.FirstOrDefault(c => c.Id == CustomerId).NotificationCounter;
         }
     }
 }

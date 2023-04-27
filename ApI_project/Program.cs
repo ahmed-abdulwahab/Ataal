@@ -20,13 +20,27 @@ using System.Security.Claims;
 using System.Text;
 using Ataal.DAL.Repos.customer;
 using Ataal.DAL.Data;
+using Ataal.DAL.Repos.recommendation;
+using Ataal.BL.Managers.recommendation;
+using Ataal.BL.Managers.review;
+using Stripe;
+using Stripe_Payments_Web_Api.Application;
+using Stripe_Payments_Web_Api.Contracts;
+using System.Configuration;
+using Stripe_Payments_Web_Api;
+using Ataal.DAL.Repos.keywords;
+using Ataal.BL.Managers.keywords;
 
 namespace ApI_project
 {
+    
     public class Program
     {
+        
+
         public static void Main(string[] args)
         {
+            
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
@@ -43,6 +57,22 @@ namespace ApI_project
                     builder => builder.AllowAnyOrigin()
                         .AllowAnyHeader()
                         .AllowAnyMethod());
+            });
+
+            #endregion
+
+            
+
+            builder.Services.AddStripeInfrastructure(builder.Configuration);
+
+            #region Cors
+
+            var corsPolicy = "AllowAll";
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(corsPolicy, p => p.AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod());
             });
 
             #endregion
@@ -121,24 +151,40 @@ namespace ApI_project
 
             builder.Services.AddScoped<IReviewRepo, ReviewRepo>();
             builder.Services.AddScoped<IProblemRepo, ProblemRepo>();
-
-
+            builder.Services.AddScoped<IRecommendationRepo, RecommendationRepo>();
+            builder.Services.AddScoped<IReviewRepo, ReviewRepo>();
+            builder.Services.AddScoped<IKeywordsRepo, KeywordsRepo>();
 
             #endregion
 
-            #region Managers
+
+
+
+            #region Manager
+            builder.Services.AddScoped<ISectionManger, SectionManger>();
+           
+
             builder.Services.AddScoped<ICustomerManager, CustomerManager>();
+
 
             builder.Services.AddScoped<ISectionManger, SectionManger>();
 
             builder.Services.AddScoped<IProblemManager, ProblemManager>();
             builder.Services.AddScoped<ItechnicalManger, TechnicalManger>();
             builder.Services.AddScoped<IIdentityManger, IdentityManager>();
-
+            builder.Services.AddScoped<IRecommendationManager, RecommendationManager>();
+            builder.Services.AddScoped<IReviewRepo, ReviewRepo>();
+            builder.Services.AddScoped<IReviewManager, ReviewManager>();
+            builder.Services.AddScoped<IKeywordsManager, KeywordsManager>();
 
 
 
             #endregion
+
+
+
+
+
 
             var app = builder.Build();
 
@@ -150,11 +196,12 @@ namespace ApI_project
             }
             app.UseCors("AllowAnyOrigin");
 
+            app.UseCors(corsPolicy);
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
             app.UseStaticFiles();
-
+          
             app.MapControllers();
             //using (var scope = app.Services.CreateScope())
             //{

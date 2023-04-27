@@ -15,7 +15,7 @@ namespace Ataal.Controllers.problem
             _problemManager = problemManager;
         }
         [HttpPost]
-        public IActionResult GetAllProblems(GetProblemsPagingDto GetProblemsPaging)
+        public IActionResult GetAllProblems([FromBody]GetProblemsPagingDto GetProblemsPaging)
         {
             var problems = _problemManager.GetProblemsForTechnical(GetProblemsPaging);
             if (problems == null)
@@ -45,6 +45,16 @@ namespace Ataal.Controllers.problem
                 return Ok("Already_Solved");
 
             return NotFound();
+        }
+        [HttpPost]
+        [Route("CustomerAcceptOffer")]
+        public IActionResult CustomerAcceptOffer(CustomerAcceptedProblemOfferDto CAPDto)
+        {
+            var Value = _problemManager.CustomerAcceptedOffer(CAPDto);
+            if(Value>0)
+                return Ok();
+            else
+                return BadRequest();
         }
 
 

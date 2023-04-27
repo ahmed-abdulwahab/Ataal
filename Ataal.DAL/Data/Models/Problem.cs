@@ -30,8 +30,10 @@ namespace Ataal.DAL.Data.Models
         [ForeignKey("Section")]
         public int Section_ID { get; set; }
         public Section Section { get; set; }
-
+        public DateTime dateTime { get; set; } = DateTime.Now;
         public int? AcceptedOfferID { get; set; }
+
+        public bool VIP { get; set; } = false;
 
        public ICollection<Offer>? Offers { get; set; }
 
@@ -39,6 +41,7 @@ namespace Ataal.DAL.Data.Models
         public int? Technical_ID { get; set; }            
         public Technical? Technical { get; set; }
 
+        public ICollection<Recommendation>? Recommendations { get; set; }
 
         [ForeignKey("Customer")]
         public int Customer_ID { get; set; }
@@ -46,7 +49,7 @@ namespace Ataal.DAL.Data.Models
         public Customer Customer { get; set; }
 
         [ForeignKey("KeyWord")]
-        public int KeyWord_ID { get; set; }
+        public int? KeyWord_ID { get; set; }
         public KeyWords? KeyWord { get; set; }
     }
 }

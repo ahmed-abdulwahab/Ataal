@@ -9,5 +9,6 @@ namespace Ataal.BL.DTO.Section
 	public record SectionProblemReadDto(int id,
 										 string title,
 										 string Description
+
 							);
 }
