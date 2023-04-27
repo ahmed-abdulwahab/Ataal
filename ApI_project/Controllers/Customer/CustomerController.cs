@@ -5,6 +5,7 @@ using Ataal.BL.Managers.Customer;
 using Ataal.DAL.Data.Models;
 using Ataal.DAL.Repos.customer;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Client.Region;
 
@@ -235,6 +236,29 @@ namespace Ataal.Controllers.Customer
         }
 
        
+
+        [HttpGet]
+        [Route("GetBlockedCustomers/{id}")]
+        public ActionResult<ICollection<UnBlocked_BlockedCustomersDto>> GetBlockedCustomers(int id)
+        {
+            var AllBlockedCustomers = _customerManager.GetBlockedCustomers(id);
+
+            if (AllBlockedCustomers == null) return NotFound();
+
+            return Ok(AllBlockedCustomers);
+        }
+
+        [HttpGet]
+        [Route("GetUnBlockedCustomers/{id}")]
+        public ActionResult<ICollection<UnBlocked_BlockedCustomersDto>> GetUnBlockedCustomers(int id)
+        {
+            var AllUnBlockedCustomers = _customerManager.GetUnBlockedCustomers(id);
+
+            if (AllUnBlockedCustomers == null) return NotFound();
+
+            return Ok(AllUnBlockedCustomers);
+        }
+
 
     }
 }

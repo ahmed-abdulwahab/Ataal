@@ -1,6 +1,7 @@
 ﻿using Ataal.BL.DtO.Review;
 using Ataal.BL.DtO.Section;
 using Ataal.DAL.Data.Models;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -16,7 +17,7 @@ namespace Ataal.BL.DtO.technical
             string eamil,
             string user_Name,
             string Phone,
-            byte[]? Photo,
+            string? Photo,
             int Rate,
             string? Brief,
             string Address,

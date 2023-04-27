@@ -31,17 +31,13 @@ namespace Ataal.DAL.Repos.customer
         public int? DeleteReview(int ReviewId);
         public int AddTechnicalReview(Review Review);
         public int? UpdateCustomerProblem(Problem problem);
-
-
-
-
         public int? BlockTechnical(Customer customer, Technical technical);
-
         public int? UnBlockTechnical(Customer customer, Technical technical);
-
         public int? BlockCustomer(Customer customer, Technical technical);
-
         public int? UnBlockCustomer(Customer customer, Technical technical);
+
+        public ICollection<Customer> GetBlockedCustomers(int TechnicalId);
+        public ICollection<Customer> GetUnBlockedCustomers(int TechnicalId);
 
         public int SaveChanges();
     }
