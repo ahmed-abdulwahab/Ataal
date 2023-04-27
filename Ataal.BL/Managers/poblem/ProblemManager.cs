@@ -121,9 +121,12 @@ namespace Ataal.BL.Managers.problem
             if (AllSolvedProblems == null) return null;
 
             return AllSolvedProblems.Select(P => new ProblemReturnDto(
+                        id: P.Problem_ID,
                         Title: P.Problem_Title,
                         Description: P.Description,
-                        IsSolved: P.Solved,
+                        IsSolved: P.Solved,   
+                        Date:P.dateTime,
+                        IsVIP: P.VIP,
                         Key_Word: P.KeyWord?.KeyWord_Name,
                         PhotoPath1: P.PhotoPath1,
                         PhotoPath2: P.PhotoPath2,
