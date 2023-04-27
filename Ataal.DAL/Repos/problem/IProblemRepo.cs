@@ -16,6 +16,8 @@ namespace Ataal.DAL.Repos.problem
         public int CustomerAcceptedProblem_Offer(int TechnicalId,int ProblemId);
         public int ProblemisVIP(int ProblemId);
         
+
+        public List<Problem> GetAllSolvedProblems(int TechnicalId);
         public int SaveChanges();
 
     }

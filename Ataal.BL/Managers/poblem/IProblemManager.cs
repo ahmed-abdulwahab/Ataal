@@ -16,6 +16,8 @@ namespace Ataal.BL.Managers.problem
 
         public int ProblemIsSolved(int ProblemId);
         public ProblemReturnDto? GetProblemById(int ProblemId);
+        public List<ProblemReturnDto> GetAllSolvedProblems(int TechnicalId);
+
 
         public int CustomerAcceptedOffer(CustomerAcceptedProblemOfferDto CAPDto);
     }

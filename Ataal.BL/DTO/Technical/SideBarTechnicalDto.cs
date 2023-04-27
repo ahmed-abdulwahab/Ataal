@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 
 namespace Ataal.BL.DTO.Technical
 {
-    public record Technical_Name_Photo_Address_Rate
-    (   int Id,
+    public record SideBarTechnicalDto
+    (
         string Name,
+        string Email,
+        string Phone,
         string? Photo,
         int Rate,
-        string Address
+        string Address,
+        int NumOfReviews,
+        int NumOfSolvedProblems
     );
 }

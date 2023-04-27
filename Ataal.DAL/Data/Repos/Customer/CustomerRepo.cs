@@ -283,13 +283,52 @@ namespace Ataal.DAL.Repos.customer
             }
         }
 
+        public ICollection<Customer> GetBlockedCustomers(int TechnicalId)
+        {
+            try
+            {
+                var Technical = _ataalContext.Technicals
+                  .Include(t => t.Blocked_Customers_Id)
+                  .FirstOrDefault(t => t.Id == TechnicalId);
+
+                if (Technical == null) return null!;
+
+                return  Technical.Blocked_Customers_Id;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public ICollection<Customer> GetUnBlockedCustomers(int TechnicalId)
+        {
+            try
+            {
+                var technical = _ataalContext.Technicals
+                    .Include(t => t.Blocked_Customers_Id)
+                  .FirstOrDefault(t => t.Id == TechnicalId);
+
+                if (technical == null) { return null!; }
+
+                var AllBlockedCustomers = technical.Blocked_Customers_Id.ToList();
+                var AllCustomers = _ataalContext.Customers.ToList();
+
+                var unBlockedCustomers = AllCustomers.Except(AllBlockedCustomers);
+
+                return unBlockedCustomers.ToList();
+            }
+            catch { return null!; }
+        }
+
         public int assignCustomerPayemntId(int CustomerId, string PayemntId)
         {
+
             var customer = GetNormalCustomerById(CustomerId);
             if (customer == null)
                 return 0;
 
-            customer.CreatedPayemntId= PayemntId;
+            customer.CreatedPayemntId = PayemntId;
             return _ataalContext.SaveChanges();
         }
         public int GetNotificationCount(int CustomerId)

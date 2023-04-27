@@ -12,7 +12,7 @@ namespace Ataal.BL.Managers.Technical
                             
                            
                             
-                            byte[]? Photo,
+                            string? Photo,
                             int Rate,
                             string? Brief,
                             string Address);

@@ -96,5 +96,13 @@ namespace Ataal.DAL.Repos.problem
             return _ataalContext.SaveChanges();
         }
 
+        public List<Problem> GetAllSolvedProblems(int TechnicalId)
+        {
+             var AllProblemsForSpecificTechnical = _ataalContext.Problems.Where(p => p.Technical_ID == TechnicalId);
+
+             if (AllProblemsForSpecificTechnical == null) return null;
+
+             return AllProblemsForSpecificTechnical.ToList();
+        }
     }
 }

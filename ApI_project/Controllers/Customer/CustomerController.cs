@@ -242,5 +242,28 @@ namespace Ataal.Controllers.Customer
 
        
 
+        [HttpGet]
+        [Route("GetBlockedCustomers/{id}")]
+        public ActionResult<ICollection<UnBlocked_BlockedCustomersDto>> GetBlockedCustomers(int id)
+        {
+            var AllBlockedCustomers = _customerManager.GetBlockedCustomers(id);
+
+            if (AllBlockedCustomers == null) return NotFound();
+
+            return Ok(AllBlockedCustomers);
+        }
+
+        [HttpGet]
+        [Route("GetUnBlockedCustomers/{id}")]
+        public ActionResult<ICollection<UnBlocked_BlockedCustomersDto>> GetUnBlockedCustomers(int id)
+        {
+            var AllUnBlockedCustomers = _customerManager.GetUnBlockedCustomers(id);
+
+            if (AllUnBlockedCustomers == null) return NotFound();
+
+            return Ok(AllUnBlockedCustomers);
+        }
+
+
     }
 }
