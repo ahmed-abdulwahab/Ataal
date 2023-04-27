@@ -45,9 +45,6 @@ namespace Ataal.BL.Managers.Customer
 
         public Task<RegisterUserDto> CreateCustomer(RegisterUserDto customer);
 
-        public ICollection<UnBlocked_BlockedCustomersDto> GetBlockedCustomers(int TechnicalId);
-        public ICollection<UnBlocked_BlockedCustomersDto> GetUnBlockedCustomers(int TechnicalId);
-
     }
 
 }

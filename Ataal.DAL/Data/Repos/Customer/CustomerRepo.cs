@@ -285,12 +285,6 @@ namespace Ataal.DAL.Repos.customer
 
         public int assignCustomerPayemntId(int CustomerId, string PayemntId)
         {
-            try
-            {
-                var Technical = _ataalContext.Technicals
-                  .Include(t => t.Blocked_Customers_Id)
-                  .FirstOrDefault(t => t.Id == TechnicalId);
-            
             var customer = GetNormalCustomerById(CustomerId);
             if (customer == null)
                 return 0;

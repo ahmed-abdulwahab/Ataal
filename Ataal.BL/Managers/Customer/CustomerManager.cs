@@ -476,31 +476,6 @@ namespace Ataal.BL.Managers.Customer
             return customer;
         }
 
-        public ICollection<UnBlocked_BlockedCustomersDto> GetBlockedCustomers(int TechnicalId)
-        {
-            var AllBlockedCustomers = customerRepo.GetBlockedCustomers(TechnicalId);
-
-            if (AllBlockedCustomers == null) return null!;
-            
-            return AllBlockedCustomers.Select(c => new UnBlocked_BlockedCustomersDto(
-                    CustomerId: c.Id,
-                    Photo: c.Photo!,
-                    Name: c.Frist_Name+" "+c.Last_Name
-                )).ToList();
-        }
-
-        public ICollection<UnBlocked_BlockedCustomersDto> GetUnBlockedCustomers(int TechnicalId)
-        {
-            var AllBlockedCustomers = customerRepo.GetUnBlockedCustomers(TechnicalId);
-
-            if (AllBlockedCustomers == null) return null!;
-
-            return AllBlockedCustomers.Select(c => new UnBlocked_BlockedCustomersDto(
-                    CustomerId: c.Id,
-                    Photo: c.Photo!,
-                    Name: c.Frist_Name + " " + c.Last_Name
-                )).ToList();
-        }
     }
 }
 

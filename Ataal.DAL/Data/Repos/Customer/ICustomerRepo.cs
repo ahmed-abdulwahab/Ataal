@@ -42,8 +42,6 @@ namespace Ataal.DAL.Repos.customer
         public int? BlockCustomer(Customer customer, Technical technical);
         public int? UnBlockCustomer(Customer customer, Technical technical);
 
-        public int? UnBlockCustomer(Customer customer, Technical technical);
-
         public int SaveChanges();
     }
 }

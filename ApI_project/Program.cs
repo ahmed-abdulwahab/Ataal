@@ -158,8 +158,6 @@ namespace ApI_project
             #region Manager
             builder.Services.AddScoped<ISectionManger, SectionManger>();
            
-
-            #region Managers
             builder.Services.AddScoped<ICustomerManager, CustomerManager>();
 
 
