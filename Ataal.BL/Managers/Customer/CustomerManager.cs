@@ -229,7 +229,7 @@ namespace Ataal.BL.Managers.Customer
 
             if (Dto.PhotoFile != null)
             {
-                var photoPath = await ReturnImagePath(Dto.PhotoFile);
+                var photoPath = await DealWithImages.ReturnImagePath(Dto.PhotoFile);
                 customer.Photo = photoPath;
             }
           
@@ -281,7 +281,7 @@ namespace Ataal.BL.Managers.Customer
         }
 
 
-        public Technical gettechnical(int techincalid)
+        public DAL.Data.Models.Technical gettechnical(int techincalid)
         {
             return customerRepo.GetTechnicalById(techincalid);
         }
