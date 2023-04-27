@@ -1,7 +1,10 @@
 ﻿using Ataal.BL.DTO.Customer;
+using Ataal.DAL.Data.Models;
 using Ataal.BL.DTO.Identity;
 using Ataal.BL.DTO.Rate;
 using Ataal.BL.DTO.Review;
+using Ataal.BL.DTO.Technical;
+using Ataal.BL.Managers.Technical;
 using Ataal.DAL.Data.Context;
 using Ataal.DAL.Data.Identity;
 using Ataal.DAL.Data.Models;
@@ -17,6 +20,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ataal.BL.DTO.problem;
+using Ataal.BL.DTO.recommendation;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Ataal.BL.Managers.Customer
 {
@@ -36,6 +42,101 @@ namespace Ataal.BL.Managers.Customer
             _env = env;
             this.customerRepo = customerRepo;
         }
+        public int GetNotificationCount(int CustomerId)
+        {
+
+            return customerRepo.GetNotificationCount(CustomerId);
+        }
+
+        public NotificationDto GetAllNotification(int CustomerId)
+        {
+            var Modifiy_Customer = customerRepo.GetNormalCustomerById(CustomerId);
+            Modifiy_Customer.NotificationCounter=0;
+            customerRepo.SaveChanges();
+            var Recommendition= customerRepo.GetRecommenditionForCustomerById(CustomerId);
+
+            /*  NotificationDto notifs=new NotificationDto(RecomenditionList=*/
+            List<NotificationDataDto> All_Notification = new List<NotificationDataDto>();
+            //List < RecommendationCustomerDto > All= new List<RecommendationCustomerDto>();
+            //List<OffersCustomerDto> All_Offers = new List<OffersCustomerDto>();
+            var Offers=   customerRepo.GetOffersForCustomerById(CustomerId);
+            if (Recommendition != null && Recommendition.Problems != null)
+            {
+                foreach (var R in Recommendition.Problems)
+                {
+                    foreach (var Rr in R.Recommendations)
+                    {
+                        var Customer = customerRepo.GetNormalCustomerById(R.Customer_ID);
+                        NotificationDataDto Reco = new NotificationDataDto(
+                                   CustomerName: $"{Customer.Frist_Name} {Customer.Last_Name}",
+                                   TechnId: Rr.Technical_ID,
+                                   TechnicalName: $"{Rr.Technical.Frist_Name} {Rr.Technical.Last_Name}",
+                                  ProblemId: R.Problem_ID,
+                                  Problem_Title: R.Problem_Title,
+                                  OfferId:null,
+                                  date: Rr.Date
+
+
+
+                                  );
+                        All_Notification.Add(Reco);
+
+                    }
+                }
+            }
+            if (Offers != null && Offers.Problems != null)
+            {
+                foreach (var Problem in Offers.Problems)
+                {
+                    foreach (var offer in Problem.Offers)
+                    {
+
+                        NotificationDataDto Problem_offer = new NotificationDataDto(
+                                   OfferId: offer.Id,
+                                   TechnId: offer.technicalId,
+                                   TechnicalName: $"{offer.technical.Frist_Name} {offer.technical.Last_Name}",
+                                  ProblemId: offer.problemId,
+                                  Problem_Title: Problem.Problem_Title,
+                                  CustomerName:null,
+                                  date: offer.Date
+
+                                  );
+                        All_Notification.Add(Problem_offer);
+
+                    }
+              
+                }
+            }
+
+            DateTime thirtyDaysAgo = DateTime.Now.AddDays(-30); // calculate the date 30 days ago
+
+            var final_notification = All_Notification.Where(x => x.date >= thirtyDaysAgo)
+                                    .OrderByDescending(x => x.date)
+                                           .ToList();
+            return new NotificationDto(Notifications: final_notification); 
+
+                
+
+        }
+
+
+
+
+
+        public oneCustomerDto? GetCustomerById(int id)
+        {
+          var customer=  customerRepo.GetNormalCustomerById(id);
+            if (customer != null) {
+          return new oneCustomerDto(firstName: customer.Frist_Name, lastName: customer.Last_Name, userName: customer.AppUser.UserName, Email: customer.AppUser.Email, phone: customer.AppUser.PhoneNumber, Photo: customer.Photo, Address: customer.Address);
+            }
+            return null;
+
+        }
+
+
+
+
+
         public async Task<int?> ReturnAddedProblemID(CustomerAddProblemDto CustDto)
         {
             if (CustDto != null)
@@ -43,6 +144,7 @@ namespace Ataal.BL.Managers.Customer
                 var problem = new Problem
                 {
                     Problem_Title = CustDto.Title,
+                    
                     Description = CustDto.Description,
                     Section_ID = CustDto.Section_ID,
                     Customer_ID = CustDto.Customer_ID,
@@ -50,12 +152,31 @@ namespace Ataal.BL.Managers.Customer
                     PhotoPath1 = await ReturnImagePath(CustDto.File1),
                     PhotoPath2 = await ReturnImagePath(CustDto.File2),//Ask why is there null reference warning                                                 
                     PhotoPath3 = await ReturnImagePath(CustDto.File3),
-                    PhotoPath4 = await ReturnImagePath(CustDto.File4),
+                    PhotoPath4 = await ReturnImagePath(CustDto.File4), 
                 };
                return customerRepo.AddCustomerProblem(problem);
             }
             return null;
             
+        }
+        public List<ProblemReturnDto>? ReturnProblemsForCustomers(int CustomerId)
+        {
+            var Problemslist = customerRepo.GetAllProblemsForCustomer(CustomerId);
+            if (Problemslist == null)
+                return null;
+            var Problems = Problemslist.Select(P => new ProblemReturnDto(
+                                                  id:P.Problem_ID,
+                                                   Title: P.Problem_Title,
+                                                    Description: P.Description,
+                                                    Date: P.dateTime,
+                                                    IsSolved: P.Solved,
+                                                    IsVIP: P.VIP,
+                                                    Key_Word: P.KeyWord?.KeyWord_Name,
+                                                    PhotoPath1: P.PhotoPath1,
+                                                    PhotoPath2: P.PhotoPath2,
+                                                    PhotoPath3: P.PhotoPath3,
+                                                    PhotoPath4: P.PhotoPath4)).ToList();
+            return Problems;
         }
         public async Task<int?> UpdatedProblem( updatedProblemDto CustDto)
 
@@ -91,8 +212,38 @@ namespace Ataal.BL.Managers.Customer
             return null;
 
         }
+        public async Task<int?> UpdateCustomerProfile(int CustomerId, UpdatedCustomerProfileDto Dto)
+        {
+            var customer = customerRepo.GetNormalCustomerById(CustomerId);
 
+            if (customer == null)
+            {
+                return 0;
+                throw new Exception("Customer not found");
+            }
 
+            if (Dto.PhotoFile != null)
+            {
+                var photoPath = await ReturnImagePath(Dto.PhotoFile);
+                customer.Photo = photoPath;
+            }
+          
+
+            customer.Frist_Name = Dto.FirstName;
+            customer.Last_Name = Dto.LastName;
+            customer.Address = Dto.Address;
+            customer.AppUser.PhoneNumber = Dto.phone;
+            customer.AppUser.Email = Dto.Email;
+            customer.AppUser.UserName = Dto.userName;
+
+            customer.Address = Dto.Address;
+
+            customerRepo.SaveChanges();
+            return 1;
+
+        }
+
+        
 
         public async Task<string?> ReturnImagePath(IFormFile File)
         {
@@ -146,9 +297,31 @@ namespace Ataal.BL.Managers.Customer
                 File.Delete(path);
             }
         }
-        public Technical gettechnical(int techincalid)
+        public Ataal.DAL.Data.Models.Technical gettechnical(int techincalid)
         {
             return customerRepo.GetTechnicalById(techincalid);
+        }
+
+
+        public CustomerWithTechnicalsBlockedListDto? GetAllBlockedTechnicals(int CustomerId)
+        {
+            var BlockedList=customerRepo.GetAllBlockedTechnicalFromCustomer(CustomerId);
+            var BlockedTechnicals = new CustomerWithTechnicalsBlockedListDto(
+                BlockListDtos: BlockedList.Blocked_Technicals_Id.Select(technical =>
+                                new ReturnTechnicalForBlockListDto(
+                                    id: technical.Id,
+                                    name: technical.Frist_Name + " " + technical.Last_Name,
+                                    
+                                    Photo: technical.Photo,
+                                    Rate: technical.Rate,
+                                    Brief: technical.Brief,
+                                    Address: technical.Address
+                                    )).ToList()
+                ) ;
+                
+            if (BlockedTechnicals == null)
+                return null;
+            return BlockedTechnicals;
         }
 
         public int CustomerAddingRate(RateCreationDto rateCreationDto)
@@ -172,7 +345,7 @@ namespace Ataal.BL.Managers.Customer
                 Technical_ID = ReviewDto.Technical_Id,
                 Description = ReviewDto.Description,
                 date = DateTime.Now
-                
+
 
             };
             return customerRepo.AddTechnicalReview(NewReview);

@@ -17,6 +17,13 @@ namespace Ataal.DAL.Data.Models
 
         public string Frist_Name { get; set; } = string.Empty;
         public string Last_Name { get; set; } = string.Empty;
+        public int NotificationCounter { get; set; } = 0;
+        public string? CardNumber { get; set; }
+        public string? ExpirationYear { get; set; }
+        public string? ExpirationMonth { get; set; }
+        public string? Cvc { get; set; }
+        public string? Email { get; set; }
+        public string? CreatedPayemntId { get; set; }
 
         [ForeignKey("AppUser")]
         public string AppUserId { get; set; }
@@ -25,7 +32,7 @@ namespace Ataal.DAL.Data.Models
 
         [Phone]
         public string? Phone { get; set; }
-        public byte[]? Photo { get; set; }
+        public string? Photo { get; set; }
 
         [StringLength(100, ErrorMessage = "Address cannot exceed 100 characters")]
         public string? Address { get; set; }

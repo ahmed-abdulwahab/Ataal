@@ -7,6 +7,7 @@ using Ataal.DAL.Repos.customer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Client.Region;
 
 namespace Ataal.Controllers.Customer
 {
@@ -22,23 +23,36 @@ namespace Ataal.Controllers.Customer
         }
 
         [HttpPost]
-        public IActionResult AddingProblem([FromForm]CustomerAddProblemDto customerAddProblemDto)
+        public async Task<IActionResult> AddingProblem([FromForm]CustomerAddProblemDto customerAddProblemDto)
+        //public IActionResult AddingProblem([FromForm]CustomerAddProblemDto customerAddProblemDto)
         {
-            var customerID = _customerManager.ReturnAddedProblemID(customerAddProblemDto);
-            if (customerID == null)
+            var problemId = await _customerManager.ReturnAddedProblemID(customerAddProblemDto);
+            if (problemId == null)
+            //var customerID = _customerManager.ReturnAddedProblemID(customerAddProblemDto);
+            //if (customerID == null)
             {
                 return BadRequest();
             }
-            return Ok(customerID);
+            return Ok(problemId);
+            //return Ok(customerID);
+        }
+        [HttpGet]
+        [Route("GetAllProblemsForCustomer/{CustomerId}")]
+        public IActionResult GetAllProblemsForCustomer(int CustomerId)
+        {
+            var problems = _customerManager.ReturnProblemsForCustomers(CustomerId);
+            if (problems == null)
+                return NotFound();
+            return Ok(problems);
         }
 
         [HttpPost]
         [Route("update_Problem/{id}")]
-        public IActionResult UpdatingingProblem(int ProblemId,[FromForm] updatedProblemDto CustDto)
+        public async Task<IActionResult> UpdatingingProblem(int ProblemId,[FromForm] updatedProblemDto CustDto)
         {
             if (ProblemId != CustDto.Problem_id)
                 return BadRequest();
-            var Affected = _customerManager.UpdatedProblem(CustDto);
+            var Affected = await _customerManager.UpdatedProblem(CustDto);
             if (Affected == null) // check if it = 0
             {
                 return BadRequest();
@@ -48,10 +62,17 @@ namespace Ataal.Controllers.Customer
         }
 
 
+        [HttpPut("UpdateCustomerProfile/{id}")]
+        //[Route("UpdateCustomerProfile")]
+        public async Task<IActionResult> UpdateCustomerProfile(int id, [FromForm] UpdatedCustomerProfileDto dto)
+        {
+            await _customerManager.UpdateCustomerProfile(id, dto);
+
+            return Ok();
+        }
 
 
 
-       
         [HttpDelete]
         public IActionResult DeletingProblem(int problemID)
         {
@@ -87,11 +108,30 @@ namespace Ataal.Controllers.Customer
             var technical= _customerManager.gettechnical(technicalid);
             if (technical != null)
             {
-                return Ok();
+                return Ok(technical);
 
             }
             return BadRequest();
         }
+
+        [HttpGet]
+        [Route("{customerId}")]
+        public IActionResult GetCustomerById(int customerId)
+        {
+
+            var customer = _customerManager.GetCustomerById(customerId);
+            if (customer != null)
+            {
+                return Ok(customer);
+
+            }
+            return BadRequest();
+        }
+
+
+
+
+
 
         [HttpPost]
         [Route("Review")]
@@ -173,27 +213,34 @@ namespace Ataal.Controllers.Customer
         }
 
         [HttpGet]
-        [Route("GetBlockedCustomers/{id}")]
-        public ActionResult<ICollection<UnBlocked_BlockedCustomersDto>> GetBlockedCustomers(int id)
+        [Route("GetAllBlockedTechnicals/{CustomerId}")]
+        public IActionResult GetAllBlockedTechnicals(int CustomerId)
         {
-            var AllBlockedCustomers = _customerManager.GetBlockedCustomers(id);
-
-            if (AllBlockedCustomers == null) return NotFound();
-
-            return Ok(AllBlockedCustomers);
+            var TechList = _customerManager.GetAllBlockedTechnicals(CustomerId);
+            if (TechList == null)
+                return NotFound();
+            return Ok(TechList.BlockListDtos);
         }
 
         [HttpGet]
-        [Route("GetUnBlockedCustomers/{id}")]
-        public ActionResult<ICollection<UnBlocked_BlockedCustomersDto>> GetUnBlockedCustomers(int id)
+        [Route("GetAllNotification/{CustomerId}")]
+        public IActionResult GetNotificationCount(int CustomerId)
         {
-            var AllUnBlockedCustomers = _customerManager.GetUnBlockedCustomers(id);
-
-            if (AllUnBlockedCustomers == null) return NotFound();
-
-            return Ok(AllUnBlockedCustomers);
+            var Number = _customerManager.GetNotificationCount(CustomerId);
+          
+            return Ok(Number);
         }
 
+        [HttpGet]
+        [Route("GetAllNotificationData/{CustomerId}")]
+        public IActionResult GeAlltNotification(int CustomerId)
+        {
+            var Data = _customerManager.GetAllNotification(CustomerId);
+
+            return Ok(Data);
+        }
+
+       
 
     }
 }

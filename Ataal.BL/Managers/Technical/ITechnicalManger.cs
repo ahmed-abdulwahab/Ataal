@@ -13,6 +13,7 @@ namespace Ataal.BL.Mangers.technical
     {
         public List<Technical_Name_Photo_Address_Rate> GetAllTechnicals();
         public DetailedTechnicalDTO GetTechnical_Profile(int id);
+        public List<ReturnTechnicalWithNameandIdDto>? getAllTechnicalForSectionId(int SectionId);
 
         public int deleteTechnical(int id);
 

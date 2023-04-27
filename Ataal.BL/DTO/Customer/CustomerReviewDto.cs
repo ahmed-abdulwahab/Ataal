@@ -5,5 +5,5 @@ using System.Linq;
 
 namespace Ataal.BL.DtO.Customer
 {
-    public record CustomerReviewDto(int id, string name, byte[]? Photo);
+    public record CustomerReviewDto(int id, string name, string? Photo);
 }

@@ -20,6 +20,16 @@ using System.Security.Claims;
 using System.Text;
 using Ataal.DAL.Repos.customer;
 using Ataal.DAL.Data;
+using Ataal.DAL.Repos.recommendation;
+using Ataal.BL.Managers.recommendation;
+using Ataal.BL.Managers.review;
+using Stripe;
+using Stripe_Payments_Web_Api.Application;
+using Stripe_Payments_Web_Api.Contracts;
+using System.Configuration;
+using Stripe_Payments_Web_Api;
+using Ataal.DAL.Repos.keywords;
+using Ataal.BL.Managers.keywords;
 using Ataal.DAL.Data.Repos.OfferRepo;
 using Ataal.BL.Managers.Offer;
 using Ataal.DAL.Data.Repos.Report_Repo;
@@ -27,10 +37,14 @@ using Ataal.BL.Managers.Report;
 
 namespace ApI_project
 {
+    
     public class Program
     {
+        
+
         public static void Main(string[] args)
         {
+            
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
@@ -39,6 +53,22 @@ namespace ApI_project
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            
+
+            builder.Services.AddStripeInfrastructure(builder.Configuration);
+
+            #region Cors
+
+            var corsPolicy = "AllowAll";
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(corsPolicy, p => p.AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod());
+            });
+
+            #endregion
 
             #region DB
             var connectionString = builder.Configuration.GetConnectionString("connection");
@@ -114,28 +144,39 @@ namespace ApI_project
 
             builder.Services.AddScoped<IReviewRepo, ReviewRepo>();
             builder.Services.AddScoped<IProblemRepo, ProblemRepo>();
+            builder.Services.AddScoped<IRecommendationRepo, RecommendationRepo>();
+            builder.Services.AddScoped<IReviewRepo, ReviewRepo>();
+            builder.Services.AddScoped<IKeywordsRepo, KeywordsRepo>();
 
             builder.Services.AddScoped<IOfferRepo, OfferRepo>();
 
             builder.Services.AddScoped<IReportRepo, ReportRepo>();
-
-
-
             #endregion
+
+
+
+            #region Manager
+            builder.Services.AddScoped<ISectionManger, SectionManger>();
+           
 
             #region Managers
             builder.Services.AddScoped<ICustomerManager, CustomerManager>();
+
 
             builder.Services.AddScoped<ISectionManger, SectionManger>();
 
             builder.Services.AddScoped<IProblemManager, ProblemManager>();
             builder.Services.AddScoped<ItechnicalManger, TechnicalManger>();
             builder.Services.AddScoped<IIdentityManger, IdentityManager>();
+            builder.Services.AddScoped<IRecommendationManager, RecommendationManager>();
+            builder.Services.AddScoped<IReviewRepo, ReviewRepo>();
+            builder.Services.AddScoped<IReviewManager, ReviewManager>();
+            builder.Services.AddScoped<IKeywordsManager, KeywordsManager>();
+
 
             builder.Services.AddScoped<IOfferManger, OfferManger>();
 
             builder.Services.AddScoped<IReportManger, ReportManger>();
-
 
 
 
@@ -151,11 +192,12 @@ namespace ApI_project
                 app.UseSwaggerUI();
             }
 
+            app.UseCors(corsPolicy);
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
             app.UseStaticFiles();
-
+          
             app.MapControllers();
             //using (var scope = app.Services.CreateScope())
             //{
