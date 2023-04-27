@@ -24,13 +24,17 @@ namespace Ataal.Controllers.Customer
 
         [HttpPost]
         public async Task<IActionResult> AddingProblem([FromForm]CustomerAddProblemDto customerAddProblemDto)
+        //public IActionResult AddingProblem([FromForm]CustomerAddProblemDto customerAddProblemDto)
         {
             var problemId = await _customerManager.ReturnAddedProblemID(customerAddProblemDto);
             if (problemId == null)
+            //var customerID = _customerManager.ReturnAddedProblemID(customerAddProblemDto);
+            //if (customerID == null)
             {
                 return BadRequest();
             }
             return Ok(problemId);
+            //return Ok(customerID);
         }
         [HttpGet]
         [Route("GetAllProblemsForCustomer/{CustomerId}")]
@@ -207,6 +211,7 @@ namespace Ataal.Controllers.Customer
             else
                 return NotFound();
         }
+
         [HttpGet]
         [Route("GetAllBlockedTechnicals/{CustomerId}")]
         public IActionResult GetAllBlockedTechnicals(int CustomerId)

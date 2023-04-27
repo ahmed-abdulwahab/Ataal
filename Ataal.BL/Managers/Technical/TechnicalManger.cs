@@ -1,5 +1,6 @@
 ﻿using Ataal.BL.DtO.Customer;
 using Ataal.BL.DTO.Identity;
+using Ataal.BL.DtO.Identity;
 using Ataal.BL.DtO.Review;
 using Ataal.BL.DtO.Section;
 using Ataal.BL.DtO.technical;

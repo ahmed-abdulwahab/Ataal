@@ -330,6 +330,7 @@ namespace Ataal.BL.Managers.Customer
                 Description = ReviewDto.Description,
                 date = DateTime.Now
 
+
             };
             return customerRepo.AddTechnicalReview(NewReview);
         }
