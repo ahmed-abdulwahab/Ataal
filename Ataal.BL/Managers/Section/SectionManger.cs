@@ -1,4 +1,5 @@
-﻿using Ataal.BL.DTO.Section;
+﻿using Ataal.BL.DtO.Section;
+using Ataal.BL.DTO.Section;
 using Ataal.BL.DTO.Technical;
 using Ataal.DAL.Data.Models;
 using Ataal.DAL.Repos.Section;
@@ -52,7 +53,17 @@ namespace Ataal.BL.Managers.Section
 			return SectionDto.ToList();
 		}
 
-		public List<SectionDetailsDto> getAllSSsectionWithDeatailsDtos()
+        public List<Section_Name_And_Id_DtO> getAllSectionsNames()
+        {
+            var SectionFromDB = sectionRepo.GetAllSections();
+            var SectionDto = SectionFromDB
+                .Select(t => new Section_Name_And_Id_DtO(id: t.Section_ID,
+                                            Name: t.Section_Name
+                                            ));
+            return SectionDto.ToList();
+        }
+
+        public List<SectionDetailsDto> getAllSSsectionWithDeatailsDtos()
 		{
 			var SectionFromDB = sectionRepo.GetAllSections();
 			if (SectionFromDB == null) return null;
