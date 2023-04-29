@@ -1,4 +1,5 @@
-﻿using Ataal.BL.DTO.Section;
+﻿using Ataal.BL.DtO.Section;
+using Ataal.BL.DTO.Section;
 using Ataal.BL.DTO.Technical;
 using Ataal.DAL.Data.Models;
 using Ataal.DAL.Repos.Section;
@@ -52,7 +53,17 @@ namespace Ataal.BL.Managers.Section
 			return SectionDto.ToList();
 		}
 
-		public List<SectionDetailsDto> getAllSSsectionWithDeatailsDtos()
+        public List<Section_Name_And_Id_DtO> getAllSectionsNames()
+        {
+            var SectionFromDB = sectionRepo.GetAllSections();
+            var SectionDto = SectionFromDB
+                .Select(t => new Section_Name_And_Id_DtO(id: t.Section_ID,
+                                            Name: t.Section_Name
+                                            ));
+            return SectionDto.ToList();
+        }
+
+        public List<SectionDetailsDto> getAllSSsectionWithDeatailsDtos()
 		{
 			var SectionFromDB = sectionRepo.GetAllSections();
 			if (SectionFromDB == null) return null;
@@ -62,10 +73,18 @@ namespace Ataal.BL.Managers.Section
 												   Description: t.Description,
 												   Photo:t.Photo,
 												   SectionProblemReadDtos: t.Problems?.Select(p => new SectionProblemReadDto(id: p.Problem_ID,
-																															  title: p.Problem_Title,
-																															  Description: p.Description)).ToList(),
+                                                                                                                             title: p.Problem_Title,
+                                                                                                                             Description: p.Description,
+                                                                                                                             Photo1: p.PhotoPath1,
+                                                                                                                             Photo2: p.PhotoPath2,
+                                                                                                                             Photo3: p.PhotoPath3,
+                                                                                                                             Photo4: p.PhotoPath4)).ToList(),
 													 SectionTecnicalReadDtos: t.Technicals?.Select(t => new SectionTecnicalReadDto(Id: t.Id,
 																															      Rate: t.Rate,
+																																  FName:t.Frist_Name,
+																																  LName:t.Last_Name,
+																																  photo:t.Photo,
+																																  Addres:t.Address,
 																															      Brief: t.Brief)).ToList(),
 													 SectionKeyWordReadDtos: t.KeyWords?.Select(k => new SectionKeyWordReadDto(Id: k.KeyWord_ID,
 																														       Name: k.KeyWord_Name)).ToList()
@@ -84,19 +103,27 @@ namespace Ataal.BL.Managers.Section
                                                    Description: t.Description,
                                                    Photo: t.Photo,
                                                     ProblemWithCustomerDtos: t.Problems?.Select(p => new ProblemWithCustomerDto(id: p.Problem_ID,
-                                                                                                                     title: p.Problem_Title,
-                                                                                                                     Description: p.Description,
-                                                                                                                     CustomerDto: p.Customer != null ? new CustomerDto(Frist_Name: p.Customer.Frist_Name,
+                                                                                                                                title: p.Problem_Title,
+																																Description: p.Description,
+																																Photo1:p.PhotoPath1,
+																																Photo2:p.PhotoPath2,
+																																Photo3:p.PhotoPath3,
+																																Photo4:p.PhotoPath4,
+																																CustomerDto: p.Customer != null ? new CustomerDto(Frist_Name: p.Customer.Frist_Name,
                                                                                                                                                                        Last_Name: p.Customer.Last_Name,
                                                                                                                                                                        ExpirationYear: p.Customer.ExpirationYear,
                                                                                                                                                                        ExpirationMonth: p.Customer.ExpirationMonth,
                                                                                                                                                                        photo: p.Customer.Photo) : null)).ToList(),
                                                    SectionTecnicalReadDtos: t.Technicals?.Select(t => new SectionTecnicalReadDto(Id: t.Id,
                                                                                                                                   Rate: t.Rate,
+                                                                                                                                  FName: t.Frist_Name,
+                                                                                                                                  LName: t.Last_Name,
+                                                                                                                                  photo: t.Photo,
+                                                                                                                                  Addres: t.Address,
                                                                                                                                   Brief: t.Brief)).ToList(),
                                                    SectionKeyWordReadDtos: t.KeyWords?.Select(k => new SectionKeyWordReadDto(Id: k.KeyWord_ID,
                                                                                                                                Name: k.KeyWord_Name)).ToList()
-                                                                               ));
+                                                                               ));;
             return SectionDto.ToList();
         }
 
