@@ -98,7 +98,7 @@ namespace Ataal.DAL.Repos.problem
 
         public List<Problem> GetAllSolvedProblems(int TechnicalId)
         {
-             var AllProblemsForSpecificTechnical = _ataalContext.Problems.Where(p => p.Technical_ID == TechnicalId);
+             var AllProblemsForSpecificTechnical = _ataalContext.Problems.Include(p=>p.KeyWord).Where(p => p.Technical_ID == TechnicalId);
 
              if (AllProblemsForSpecificTechnical == null) return null;
 
