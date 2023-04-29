@@ -104,5 +104,16 @@ namespace Ataal.DAL.Repos.problem
 
              return AllProblemsForSpecificTechnical.ToList();
         }
+
+        public List<Problem> get_All_Problems_forTechincal(int SectionId,int TechnicalId)
+        {
+            Technical technical = _ataalContext.Technicals
+                .Include(T=>T.Blocked_Customers_Id)?.FirstOrDefault(T=>T.Id == TechnicalId) ?? null!;    //I will replace 1 with that come from identity      
+
+            var Blocked_Customers_ID = technical?.Blocked_Customers_Id?.Select(C=>C.Id).ToList() ?? new List<int>();
+
+            return _ataalContext.Problems.Include(P=>P.KeyWord)
+                .Where(p =>  !(Blocked_Customers_ID.Contains(p.Customer_ID)) && p.Section_ID==SectionId ).ToList();
+        }
     }
 }
