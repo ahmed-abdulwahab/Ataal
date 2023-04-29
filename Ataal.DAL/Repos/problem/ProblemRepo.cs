@@ -113,7 +113,7 @@ namespace Ataal.DAL.Repos.problem
             var Blocked_Customers_ID = technical?.Blocked_Customers_Id?.Select(C=>C.Id).ToList() ?? new List<int>();
 
             return _ataalContext.Problems.Include(P=>P.KeyWord)
-                .Where(p =>  !(Blocked_Customers_ID.Contains(p.Customer_ID)) && p.Section_ID==SectionId ).ToList();
+                .Where(p =>  !(Blocked_Customers_ID.Contains(p.Customer_ID)) && p.Section_ID==SectionId && p.Solved==false ).ToList();
         }
     }
 }
