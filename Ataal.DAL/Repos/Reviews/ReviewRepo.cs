@@ -27,6 +27,13 @@ namespace Ataal.DAL.Repos.Reviews
         {
             return _ataalContext.Reviews.Where(R=>R.Customer_ID==CustomerId).ToList();
         }
+        public int DeleteReview(int id)
+        {
+            var DeletedReview = _ataalContext.Reviews.FirstOrDefault(s => s.ID == id);
+                if (DeletedReview == null) { return 0; }
+            _ataalContext.Remove(DeletedReview);
+                return SaveChanges();
+        }
 
         public int SaveChanges()
         {
