@@ -6,6 +6,6 @@ using System.Threading.Tasks;
 
 namespace Ataal.BL.DTO.Technical
 {
-    public record TechnicalDto(int? Id,string? Name);
+    public record ReturnTechnicalWithNameandIdDto(int? Id,string? Name);
   
 }

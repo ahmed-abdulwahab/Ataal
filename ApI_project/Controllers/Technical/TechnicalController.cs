@@ -36,7 +36,7 @@ namespace Ataal.Controllers.Technical
         }
         [HttpGet]
         [Route("GetAllTechnicalsForSectionId/{SectionId}")]
-        public ActionResult<List<TechnicalDto>> GetAllTechnicalsForSectionId(int SectionId)
+        public ActionResult<List<ReturnTechnicalWithNameandIdDto>> GetAllTechnicalsForSectionId(int SectionId)
         {
             var AllTechnicals = ITechnicalManger.getAllTechnicalForSectionId(SectionId);
 
