@@ -21,6 +21,7 @@ namespace Ataal.BL.Managers.review
             var ReviewsList=_reviewRepo.GetAllReviews();
             var Reviews = ReviewsList.Select(R =>
                                             new ReviewGetDto(
+                                                ReviewId:R.ID,
                                                 CustomerId: R.Customer_ID,
                                                 TechnicalId: R.Technical_ID,
                                                 Description: R.Description,
@@ -36,6 +37,7 @@ namespace Ataal.BL.Managers.review
             var ReviewsList = _reviewRepo.GetReviewsByCustomerId(customerId);
             var Reviews = ReviewsList.Select(R =>
                                             new ReviewGetDto(
+                                                ReviewId:R.ID,
                                                 CustomerId: R.Customer_ID,
                                                 TechnicalId: R.Technical_ID,
                                                 Description: R.Description,
