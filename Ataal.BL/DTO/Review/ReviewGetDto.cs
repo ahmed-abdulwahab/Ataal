@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Ataal.BL.DTO.Review
 {
-    public record ReviewGetDto(int CustomerId,
+    public record ReviewGetDto(int ReviewId,
+                               int CustomerId,
                                int TechnicalId,
                                string Description,
                                DateTime DateTime
