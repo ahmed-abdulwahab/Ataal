@@ -22,7 +22,6 @@ namespace Ataal.BL.Managers.Section
         public List<SectionDto> getAllSectionDtos();
 		public SectionDto GetSectionByID(int id);
 		public List<ReturnTechnicalsForCustomersSectionsDto>? GetTechnicalsForCustomersSectionSidebar(int SectionId);
-
         public SectionDetialsDtoCustomer GetSectionByIDinDetails(int id);
 		public int UpdateSectionById(SectionDto sectionDto, int id);
 		public Task<int?> AddNewSection(AddSectionDto addSectionDto);
