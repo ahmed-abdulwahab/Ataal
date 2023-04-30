@@ -16,6 +16,7 @@ using System.Security;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using static Ataal.BL.Constants;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 
 namespace Ataal.BL.Mangers.Technical
 {
@@ -123,7 +124,11 @@ namespace Ataal.BL.Mangers.Technical
 
             technicalToUpdate.Last_Name = technical.lastName ?? technicalToUpdate.Last_Name;
 
-            technicalToUpdate.Photo =  await DealWithImages.ReturnImagePath(technical.photo) ?? technicalToUpdate.Photo;
+            var fileBytes = Convert.FromBase64String(technical.photo);
+            var file = new FormFile(new MemoryStream(fileBytes), 0, fileBytes.Length, "photo", "image.jpg");
+            technicalToUpdate.Photo = await DealWithImages.ReturnImagePath(file) ?? technicalToUpdate.Photo;
+
+            //technicalToUpdate.Photo =  await DealWithImages.ReturnImagePath(technical.photo) ?? technicalToUpdate.Photo;
 
             technicalToUpdate.Address = technical.Address ?? technicalToUpdate.Address;
 
