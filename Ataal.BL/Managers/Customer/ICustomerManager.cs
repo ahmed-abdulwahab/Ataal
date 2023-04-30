@@ -22,7 +22,6 @@ namespace Ataal.BL.Managers.Customer
         public int GetNotificationCount(int CustomerId);
         public oneCustomerDto? GetCustomerById(int id);
         public  Task<int?> ReturnAddedProblemID(CustomerAddProblemDto CustDto);
-        public Task<string?>? ReturnImagePath(IFormFile File);
         public List<ProblemReturnDto>? ReturnProblemsForCustomers(int CustomerId);
         public Task<int?> UpdateCustomerProfile(int CustomerId, UpdatedCustomerProfileDto Dto);
         public CustomerWithTechnicalsBlockedListDto? GetAllBlockedTechnicals(int CustomerId);
@@ -44,6 +43,9 @@ namespace Ataal.BL.Managers.Customer
         public bool UnBlockCustomer(BlockAndUnblockTechnicalAndCustomersDto BDto);
 
         public Task<RegisterUserDto> CreateCustomer(RegisterUserDto customer);
+
+        public ICollection<UnBlocked_BlockedCustomersDto> GetBlockedCustomers(int TechnicalId);
+        public ICollection<UnBlocked_BlockedCustomersDto> GetUnBlockedCustomers(int TechnicalId);
 
     }
 

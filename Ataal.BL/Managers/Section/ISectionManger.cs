@@ -1,4 +1,5 @@
-﻿using Ataal.BL.DTO.Customer;
+﻿using Ataal.BL.DtO.Section;
+using Ataal.BL.DTO.Customer;
 using Ataal.BL.DTO.Section;
 using Ataal.BL.DTO.Technical;
 using Ataal.DAL.Data.Models;
@@ -13,7 +14,10 @@ namespace Ataal.BL.Managers.Section
 {
 	public interface ISectionManger
 	{
-		public List<SectionDetailsDto> getAllSSsectionWithDeatailsDtos();
+		public List<Section_Name_And_Id_DtO> getAllSectionsNames();
+
+
+        public List<SectionDetailsDto> getAllSSsectionWithDeatailsDtos();
         public List<SectionDetialsDtoCustomer> getAllSectionWithDeatailsDtos_Customer();
         public List<SectionDto> getAllSectionDtos();
 		public SectionDto GetSectionByID(int id);

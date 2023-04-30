@@ -30,6 +30,10 @@ using System.Configuration;
 using Stripe_Payments_Web_Api;
 using Ataal.DAL.Repos.keywords;
 using Ataal.BL.Managers.keywords;
+using Ataal.DAL.Data.Repos.OfferRepo;
+using Ataal.BL.Managers.Offer;
+using Ataal.DAL.Data.Repos.Report_Repo;
+using Ataal.BL.Managers.Report;
 
 namespace ApI_project
 {
@@ -49,6 +53,17 @@ namespace ApI_project
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+           
+            #region Cros
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAnyOrigin",
+                    builder => builder.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod());
+            });
+
+            #endregion
 
             
 
@@ -144,15 +159,16 @@ namespace ApI_project
             builder.Services.AddScoped<IReviewRepo, ReviewRepo>();
             builder.Services.AddScoped<IKeywordsRepo, KeywordsRepo>();
 
-            #endregion
+            builder.Services.AddScoped<IOfferRepo, OfferRepo>();
 
+            builder.Services.AddScoped<IReportRepo, ReportRepo>();
+            #endregion
 
 
 
             #region Manager
             builder.Services.AddScoped<ISectionManger, SectionManger>();
            
-
             builder.Services.AddScoped<ICustomerManager, CustomerManager>();
 
 
@@ -167,13 +183,14 @@ namespace ApI_project
             builder.Services.AddScoped<IKeywordsManager, KeywordsManager>();
 
 
+            builder.Services.AddScoped<IOfferManger, OfferManger>();
+
+            builder.Services.AddScoped<IReportManger, ReportManger>();
+
+
+
 
             #endregion
-
-
-
-
-
 
             var app = builder.Build();
 
@@ -183,6 +200,7 @@ namespace ApI_project
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            app.UseCors("AllowAnyOrigin");
 
             app.UseCors(corsPolicy);
             app.UseHttpsRedirection();

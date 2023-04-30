@@ -5,6 +5,7 @@ using Ataal.BL.Managers.Customer;
 using Ataal.DAL.Data.Models;
 using Ataal.DAL.Repos.customer;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Client.Region;
 
@@ -23,13 +24,17 @@ namespace Ataal.Controllers.Customer
 
         [HttpPost]
         public async Task<IActionResult> AddingProblem([FromForm]CustomerAddProblemDto customerAddProblemDto)
+        //public IActionResult AddingProblem([FromForm]CustomerAddProblemDto customerAddProblemDto)
         {
             var problemId = await _customerManager.ReturnAddedProblemID(customerAddProblemDto);
             if (problemId == null)
+            //var customerID = _customerManager.ReturnAddedProblemID(customerAddProblemDto);
+            //if (customerID == null)
             {
                 return BadRequest();
             }
             return Ok(problemId);
+            //return Ok(customerID);
         }
         [HttpGet]
         [Route("GetAllProblemsForCustomer/{CustomerId}")]
@@ -206,6 +211,7 @@ namespace Ataal.Controllers.Customer
             else
                 return NotFound();
         }
+
         [HttpGet]
         [Route("GetAllBlockedTechnicals/{CustomerId}")]
         public IActionResult GetAllBlockedTechnicals(int CustomerId)
@@ -235,6 +241,29 @@ namespace Ataal.Controllers.Customer
         }
 
        
+
+        [HttpGet]
+        [Route("GetBlockedCustomers/{id}")]
+        public ActionResult<ICollection<UnBlocked_BlockedCustomersDto>> GetBlockedCustomers(int id)
+        {
+            var AllBlockedCustomers = _customerManager.GetBlockedCustomers(id);
+
+            if (AllBlockedCustomers == null) return NotFound();
+
+            return Ok(AllBlockedCustomers);
+        }
+
+        [HttpGet]
+        [Route("GetUnBlockedCustomers/{id}")]
+        public ActionResult<ICollection<UnBlocked_BlockedCustomersDto>> GetUnBlockedCustomers(int id)
+        {
+            var AllUnBlockedCustomers = _customerManager.GetUnBlockedCustomers(id);
+
+            if (AllUnBlockedCustomers == null) return NotFound();
+
+            return Ok(AllUnBlockedCustomers);
+        }
+
 
     }
 }

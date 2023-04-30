@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Ataal.BL.Managers.problem
 {
@@ -112,6 +114,53 @@ namespace Ataal.BL.Managers.problem
                 return 0;
           return _problemRepo.ProblemisVIP(ProblemId);
             
+        }
+
+        public List<ProblemReturnDto> GetAllSolvedProblems(int TechnicalId)
+        {
+            var AllSolvedProblems = _problemRepo.GetAllSolvedProblems(TechnicalId);
+
+            if (AllSolvedProblems == null) return null;
+
+            return AllSolvedProblems.Select(P => new ProblemReturnDto(
+                        id: P.Problem_ID,
+                        Title: P.Problem_Title,
+                        Description: P.Description,
+                        IsSolved: P.Solved,   
+                        Date:P.dateTime,
+                        IsVIP: P.VIP,
+                        Key_Word: P.KeyWord?.KeyWord_Name,
+                        PhotoPath1: P.PhotoPath1,
+                        PhotoPath2: P.PhotoPath2,
+                        PhotoPath3: P.PhotoPath3,
+                        PhotoPath4: P.PhotoPath4
+
+                )).ToList();
+        }
+
+        public List<ProblemInfoForTechnical> ProblemInfoForTechnical(int SectionID, int TechnicalId)
+        {
+            try
+            {
+                var allProblems = _problemRepo.get_All_Problems_forTechincal(SectionID, TechnicalId);
+
+                var all_Problems_info_DTO = allProblems.Select(P => new ProblemInfoForTechnical
+                (
+                    id: P.Problem_ID,
+                    Title: P.Problem_Title,
+                    Date: P.dateTime,
+                    Description: P.Description,
+                    IsVIP: P.VIP,
+                    Key_Word: P.KeyWord?.KeyWord_Name
+                )).ToList();
+
+                return all_Problems_info_DTO;
+            }
+            catch
+            {
+                return null!;
+            }
+
         }
     }
 }

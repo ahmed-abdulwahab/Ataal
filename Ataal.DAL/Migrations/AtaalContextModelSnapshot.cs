@@ -200,6 +200,9 @@ namespace Ataal.DAL.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("OfferMassage")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<double>("OfferSalary")
                         .HasColumnType("float");
 
@@ -361,7 +364,7 @@ namespace Ataal.DAL.Migrations
                     b.Property<int>("Review_ID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TechnicalId")
+                    b.Property<int>("TechnicalId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -467,8 +470,8 @@ namespace Ataal.DAL.Migrations
                     b.Property<int>("NotificationCounter")
                         .HasColumnType("int");
 
-                    b.Property<byte[]>("Photo")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("Photo")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Rate")
                         .HasColumnType("int");
@@ -775,7 +778,9 @@ namespace Ataal.DAL.Migrations
 
                     b.HasOne("Ataal.DAL.Data.Models.Technical", null)
                         .WithMany("Reports")
-                        .HasForeignKey("TechnicalId");
+                        .HasForeignKey("TechnicalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Review");
                 });

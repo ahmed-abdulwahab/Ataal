@@ -1,5 +1,7 @@
 ﻿using Ataal.BL.DtO.technical;
+using Ataal.BL.DTO.Offer;
 using Ataal.BL.DTO.Technical;
+using Ataal.BL.Managers.Offer;
 using Ataal.BL.Managers.Section;
 using Ataal.BL.Mangers.technical;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +15,12 @@ namespace Ataal.Controllers.Technical
     public class TechnicalController : ControllerBase
     {
         private readonly ItechnicalManger ITechnicalManger;
+        private readonly IOfferManger offerManger;
 
-        public TechnicalController(ItechnicalManger itechnicalManger)
+        public TechnicalController(ItechnicalManger itechnicalManger,IOfferManger offerManger)
         {
             this.ITechnicalManger = itechnicalManger;
+            this.offerManger = offerManger;
         }
         // GET: api/<TechnicalController>
         [HttpGet]
@@ -44,8 +48,8 @@ namespace Ataal.Controllers.Technical
         }
 
         // GET api/<TechnicalController>/5
-        [HttpGet("{id}")]
-        public ActionResult<DetailedTechnicalDTO> Get(int id)
+        [HttpGet("TechnicalProfile/{id}")]
+        public async Task<ActionResult<DetailedTechnicalDTO>> Get(int id)
         {
             var technical = ITechnicalManger.GetTechnical_Profile(id);
             if(technical == null) 
@@ -53,15 +57,28 @@ namespace Ataal.Controllers.Technical
                 return NotFound();
             }
 
-            return technical;
+            return await technical;
+        }
+
+        // GET api/<TechnicalController>/5
+        [HttpGet("SideBarInfo/{id}")]
+        public async Task<ActionResult<SideBarTechnicalDto>> GetSomeInfo(int id)
+        {
+            var technical = ITechnicalManger.GetTechnical_SomeInfo(id);
+            if (technical == null)
+            {
+                return NotFound();
+            }
+
+            return await technical;
         }
         
 
         // PUT api/<TechnicalController>/5
         [HttpPut("update/{id}")]
-        public ActionResult Put(int id, TechnicalUpdateDto technical)
+        public async Task<ActionResult> Put(int id, TechnicalUpdateDto technical)
         {
-            var technicalUpdated = ITechnicalManger.updateTechnical(id, technical);
+            var technicalUpdated = await ITechnicalManger.updateTechnical(id, technical);
 
             if (technicalUpdated == -1) return NotFound();
 
@@ -79,5 +96,6 @@ namespace Ataal.Controllers.Technical
             return Ok();
 
         }
+
     }
 }

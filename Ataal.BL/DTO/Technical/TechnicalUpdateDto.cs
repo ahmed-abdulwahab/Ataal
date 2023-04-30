@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,7 @@ namespace Ataal.BL.DTO.Technical
       string? Email,
       string? Address,
       string? userName,
-      byte[]? photo,
+      string? photo,
       string? Breif
 
     );

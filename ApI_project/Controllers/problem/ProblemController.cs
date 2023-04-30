@@ -12,7 +12,7 @@ namespace Ataal.Controllers.problem
         private readonly IProblemManager _problemManager;
         public ProblemController(IProblemManager problemManager)
         {
-            _problemManager= problemManager;
+            _problemManager = problemManager;
         }
         [HttpPost]
         public IActionResult GetAllProblems([FromBody]GetProblemsPagingDto GetProblemsPaging)
@@ -27,8 +27,8 @@ namespace Ataal.Controllers.problem
         [Route("{ProblemId}")]
         public IActionResult GetProblemById(int ProblemId)
         {
-            var problemDto=_problemManager.GetProblemById(ProblemId);
-            if(problemDto!=null)
+            var problemDto = _problemManager.GetProblemById(ProblemId);
+            if (problemDto != null)
             {
                 return Ok(problemDto);
             }
@@ -38,12 +38,12 @@ namespace Ataal.Controllers.problem
         [Route("ProblemIsSolved/{ProblemId}")]
         public IActionResult ProblemIsSolved(int ProblemId)
         {
-            var value=_problemManager.ProblemIsSolved(ProblemId);
+            var value = _problemManager.ProblemIsSolved(ProblemId);
             if (value > 0)
                 return Ok("Solved");
             else if (value == -1)
                 return Ok("Already_Solved");
-            
+
             return NotFound();
         }
         [HttpPost]
@@ -57,5 +57,30 @@ namespace Ataal.Controllers.problem
                 return BadRequest();
         }
 
+
+        [HttpGet]
+        [Route("GetAllSolvedProblem/{TechnicalId}")]
+        public IActionResult GetAllSolvedProblems(int TechnicalId) {
+
+            var AllSolvedProblems = _problemManager.GetAllSolvedProblems(TechnicalId);
+
+            if (AllSolvedProblems == null) return NotFound();
+
+            return Ok(AllSolvedProblems);
+
+
+        }
+
+        [HttpGet]
+        [Route("GetAllProblemsInfoForTechnical/{SectionId}/{TechnicalId}")]
+        public IActionResult GetProblemsInfoForTechnical(int SectionId, int TechnicalId)
+        {
+
+            var AllSolvedProblems = _problemManager.ProblemInfoForTechnical(SectionId, TechnicalId);
+
+            if (AllSolvedProblems == null) return NotFound();
+
+            return Ok(AllSolvedProblems);
+        }
     }
 }

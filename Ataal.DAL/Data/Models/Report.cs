@@ -22,13 +22,14 @@ namespace Ataal.DAL.Data.Models
     {
         [Key]
         public int Id { get; set; }
-        /// <summary>
     
         [ForeignKey("Review")]
         public int Review_ID { get; set; }
  
+        [ForeignKey("Technical")]
+        public int TechnicalId { get; set; }
+
         public Review Review { get; set; }
-        /// <summary>
    
         public Causes Causes { get; set; }
 

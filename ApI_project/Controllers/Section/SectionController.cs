@@ -1,4 +1,5 @@
-﻿using Ataal.BL.DTO.Section;
+﻿using Ataal.BL.DtO.Section;
+using Ataal.BL.DTO.Section;
 using Ataal.BL.Managers.Section;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -31,6 +32,13 @@ namespace Ataal.Controllers.Section
             return Ok(AllSection);
         }
 
+        [HttpGet]
+        [Route("GetaAllSectionsNamesAndId")]
+        public IActionResult GetAllSectionsNames()
+        {
+			var AllSections = sectionManger.getAllSectionsNames();
+            return Ok(AllSections);
+        }
 
         [HttpDelete]
 		[Route("DeleteSection")]

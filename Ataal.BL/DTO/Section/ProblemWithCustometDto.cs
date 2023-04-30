@@ -9,6 +9,10 @@ namespace Ataal.BL.DTO.Section
     public record ProblemWithCustomerDto(int id,
                                          string title,
                                          string Description,
+                                         string? Photo1,
+                                         string? Photo2,
+                                         string? Photo3,
+                                         string? Photo4,
                                          CustomerDto? CustomerDto
                            );
 }
