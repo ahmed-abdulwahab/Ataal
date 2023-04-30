@@ -91,14 +91,14 @@ namespace Ataal.BL.Mangers.Technical
                 Rate: T.Rate
                 )).ToList();
         }
-        public List<ReturnTechnicalWithNameandIdDto>? getAllTechnicalForSectionId(int SectionId)
+        public List<TechnicalDto>? getAllTechnicalForSectionId(int SectionId)
         {
             var AllTechnicals = technicalRepo.getAllTechnicalForSectionId(SectionId);
             if(AllTechnicals == null )
             {
                 return null;
             }
-            return AllTechnicals.Select(T => new ReturnTechnicalWithNameandIdDto(
+            return AllTechnicals.Select(T => new TechnicalDto(
                 Id: T.Id,
                 Name: $"{T.Frist_Name} {T.Last_Name}")).ToList();
         }
