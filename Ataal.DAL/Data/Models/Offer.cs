@@ -22,6 +22,6 @@ namespace Ataal.DAL.Data.Models
         public double OfferSalary { get; set; }
         public DateTime Date { set; get; } = DateTime.Now;
 
-
+        public string? OfferMassage { get; set; }
     }
 }

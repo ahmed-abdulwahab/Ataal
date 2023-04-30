@@ -1,5 +1,7 @@
 ﻿using Ataal.BL.DtO.technical;
+using Ataal.BL.DTO.Offer;
 using Ataal.BL.DTO.Technical;
+using Ataal.BL.Managers.Offer;
 using Ataal.BL.Managers.Section;
 using Ataal.BL.Mangers.technical;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +15,12 @@ namespace Ataal.Controllers.Technical
     public class TechnicalController : ControllerBase
     {
         private readonly ItechnicalManger ITechnicalManger;
+        private readonly IOfferManger offerManger;
 
-        public TechnicalController(ItechnicalManger itechnicalManger)
+        public TechnicalController(ItechnicalManger itechnicalManger,IOfferManger offerManger)
         {
             this.ITechnicalManger = itechnicalManger;
+            this.offerManger = offerManger;
         }
         // GET: api/<TechnicalController>
         [HttpGet]
@@ -92,5 +96,6 @@ namespace Ataal.Controllers.Technical
             return Ok();
 
         }
+
     }
 }
