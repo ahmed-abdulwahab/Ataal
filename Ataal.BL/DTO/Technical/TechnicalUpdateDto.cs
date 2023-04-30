@@ -16,7 +16,7 @@ namespace Ataal.BL.DTO.Technical
       string? Email,
       string? Address,
       string? userName,
-      IFormFile? photo,
+      string? photo,
       string? Breif
 
     );

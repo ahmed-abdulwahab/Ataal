@@ -4,6 +4,7 @@ using Ataal.DAL.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ataal.DAL.Migrations
 {
     [DbContext(typeof(AtaalContext))]
-    partial class AtaalContextModelSnapshot : ModelSnapshot
+    [Migration("20230428230959_ModifyDataanotation")]
+    partial class ModifyDataanotation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -200,9 +203,6 @@ namespace Ataal.DAL.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("OfferMassage")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<double>("OfferSalary")
                         .HasColumnType("float");
 
@@ -364,7 +364,7 @@ namespace Ataal.DAL.Migrations
                     b.Property<int>("Review_ID")
                         .HasColumnType("int");
 
-                    b.Property<int>("TechnicalId")
+                    b.Property<int?>("TechnicalId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -470,8 +470,8 @@ namespace Ataal.DAL.Migrations
                     b.Property<int>("NotificationCounter")
                         .HasColumnType("int");
 
-                    b.Property<string>("Photo")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Photo")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<int>("Rate")
                         .HasColumnType("int");
@@ -778,9 +778,7 @@ namespace Ataal.DAL.Migrations
 
                     b.HasOne("Ataal.DAL.Data.Models.Technical", null)
                         .WithMany("Reports")
-                        .HasForeignKey("TechnicalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TechnicalId");
 
                     b.Navigation("Review");
                 });

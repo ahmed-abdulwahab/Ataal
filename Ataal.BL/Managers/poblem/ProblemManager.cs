@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Ataal.BL.Managers.problem
 {
@@ -136,5 +138,29 @@ namespace Ataal.BL.Managers.problem
                 )).ToList();
         }
 
+        public List<ProblemInfoForTechnical> ProblemInfoForTechnical(int SectionID, int TechnicalId)
+        {
+            try
+            {
+                var allProblems = _problemRepo.get_All_Problems_forTechincal(SectionID, TechnicalId);
+
+                var all_Problems_info_DTO = allProblems.Select(P => new ProblemInfoForTechnical
+                (
+                    id: P.Problem_ID,
+                    Title: P.Problem_Title,
+                    Date: P.dateTime,
+                    Description: P.Description,
+                    IsVIP: P.VIP,
+                    Key_Word: P.KeyWord?.KeyWord_Name
+                )).ToList();
+
+                return all_Problems_info_DTO;
+            }
+            catch
+            {
+                return null!;
+            }
+
+        }
     }
 }

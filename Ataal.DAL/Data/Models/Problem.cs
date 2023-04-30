@@ -14,7 +14,7 @@ namespace Ataal.DAL.Data.Models
         public int Problem_ID { get; set; }
 
         [Required]
-        [StringLength(20, ErrorMessage = "Description cannot exceed 20 characters")]
+        [StringLength(100, ErrorMessage = "Description cannot exceed 20 characters")]
         public string Problem_Title { get; set; }
 
         [Required]

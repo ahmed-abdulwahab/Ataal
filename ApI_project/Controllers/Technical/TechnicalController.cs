@@ -76,7 +76,7 @@ namespace Ataal.Controllers.Technical
 
         // PUT api/<TechnicalController>/5
         [HttpPut("update/{id}")]
-        public async Task<ActionResult> Put(int id, [FromForm] TechnicalUpdateDto technical)
+        public async Task<ActionResult> Put(int id, TechnicalUpdateDto technical)
         {
             var technicalUpdated = await ITechnicalManger.updateTechnical(id, technical);
 
