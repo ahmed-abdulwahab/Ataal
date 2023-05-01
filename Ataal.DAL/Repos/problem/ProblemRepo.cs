@@ -115,5 +115,10 @@ namespace Ataal.DAL.Repos.problem
             return _ataalContext.Problems.Include(P=>P.KeyWord)
                 .Where(p =>  !(Blocked_Customers_ID.Contains(p.Customer_ID)) && p.Section_ID==SectionId && p.Solved==false ).ToList();
         }
+ 
+        public List<Problem>? GetAllProblems()
+        {
+            return _ataalContext.Problems.ToList();
+        }
     }
 }
