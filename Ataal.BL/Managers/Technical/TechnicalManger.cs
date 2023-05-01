@@ -186,5 +186,7 @@ namespace Ataal.BL.Mangers.Technical
                     NumOfSolvedProblems: technical.Problems_Solved.Count
                     );
         }
+
+
     }
 }

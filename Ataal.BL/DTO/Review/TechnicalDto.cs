@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ataal.BL.DTO.Technical
+namespace Ataal.BL.DTO.Review
 {
-
-    public record ReturnTechnicalWithNameandIdDto(int? Id,string? Name);
+    public record TechnicalDto(int? Id,string? Name);
   
 }

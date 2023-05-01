@@ -24,6 +24,7 @@ using Ataal.BL.DTO.problem;
 using Ataal.BL.DTO.recommendation;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using static Ataal.BL.Constants;
+using Ataal.BL.DtO.Section;
 
 namespace Ataal.BL.Managers.Customer
 {
@@ -334,6 +335,31 @@ namespace Ataal.BL.Managers.Customer
             };
             return customerRepo.AddTechnicalReview(NewReview);
         }
+
+
+        public List<AllTechnicansWithSectionsForCustomerDto>? ReturnAllTechnicansForCustomerNeed(int CustomerId)
+        {
+            var TechnicansList = customerRepo.getAllTechnicalForSectionIdCustomerNeed(CustomerId);
+            var Technicans = TechnicansList.Select(T => new AllTechnicansWithSectionsForCustomerDto(
+                                                        Id: T.Id,
+                                                        Name: $"{T.Frist_Name} {T.Last_Name}",
+                                                        Phone: T.AppUser.PhoneNumber,
+                                                        Email: T.AppUser.Email,
+                                                        Address: T.Address,
+                                                        photo: T.Photo,
+                                                        Breif: T.Brief,
+                                                        Sections: T.Sections?.Select(S => new Section_Name_And_Id_DtO
+                                                        (
+                                                            id: S.Section_ID,
+                                                            Name: S.Section_Name
+
+                                                        )
+
+
+                                    ))).ToList();
+            return Technicans;
+        }
+
         public int ModifyingTechnical_Rate(int TechnicalId)
         {
             return customerRepo.ModifyingTchnicalRate(TechnicalId);

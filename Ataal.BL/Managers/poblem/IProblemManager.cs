@@ -1,4 +1,5 @@
 ﻿using Ataal.BL.DTO.problem;
+using Ataal.BL.DTO.Review;
 using Ataal.DAL.Data.Models;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace Ataal.BL.Managers.problem
 
         public int?CustomerAcceptedOffer(CustomerAcceptedProblemOfferDto CAPDto);
 
-
+        public List<Problem>? GetAllProblems ();
         public List<ProblemInfoForTechnical> ProblemInfoForTechnical(int SectionID, int TechnicalId);         //for technical view problems (brief)
     }
 

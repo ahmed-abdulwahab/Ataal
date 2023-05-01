@@ -56,8 +56,15 @@ namespace Ataal.Controllers.Section
 			var Section = sectionManger.GetSectionByIDinDetails(id);
 			return Ok(Section);
 		}
+        [HttpGet]
+        [Route("GetSectionWithDetailsCustomerNeeds")]
+        public IActionResult GetSectionByForCustomerNeed(int id)
+        {
+            var Section = sectionManger.GetSectionByIDforCustomerNeed(id);
+            return Ok(Section);
+        }
 
-		[HttpGet]
+        [HttpGet]
 		[Route("AllSectionWithoutDetails")]
 		public IActionResult GetAllSection()
 		{

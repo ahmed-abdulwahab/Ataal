@@ -1,7 +1,9 @@
 ﻿using Ataal.BL.DTO.problem;
+using Ataal.BL.DTO.Review;
 using Ataal.DAL.Data.Models;
 using Ataal.DAL.Data.Repos.Technical_Repo;
 using Ataal.DAL.Repos.problem;
+using Stripe;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -161,6 +163,16 @@ namespace Ataal.BL.Managers.problem
                 return null!;
             }
 
+        }
+
+
+        public List<Problem>? GetAllProblems()
+        {
+            var ProblemList = _problemRepo.GetAllProblems();
+            if (ProblemList == null)
+                return null;
+            else
+                return ProblemList;
         }
     }
 }

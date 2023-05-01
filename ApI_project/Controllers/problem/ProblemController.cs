@@ -1,5 +1,6 @@
 ﻿using Ataal.BL.DTO.problem;
 using Ataal.BL.Managers.problem;
+using Ataal.BL.Managers.Section;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -81,6 +82,14 @@ namespace Ataal.Controllers.problem
             if (AllSolvedProblems == null) return NotFound();
 
             return Ok(AllSolvedProblems);
+        }
+
+        [HttpGet]
+        [Route("GetAllProblem")]
+        public IActionResult GetAllSectionsNames()
+        {
+            var AllProblems = _problemManager.GetAllProblems();
+            return Ok(AllProblems);
         }
     }
 }

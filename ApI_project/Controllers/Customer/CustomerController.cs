@@ -45,6 +45,15 @@ namespace Ataal.Controllers.Customer
                 return NotFound();
             return Ok(problems);
         }
+        [HttpGet]
+        [Route("GetAllTechnicansCustomerNeed/{CustomerId}")]
+        public IActionResult GetAllTechnicansCustomerNeed(int CustomerId)
+        {
+            var Technicans=_customerManager.ReturnAllTechnicansForCustomerNeed(CustomerId);
+            if(Technicans==null)
+                return NotFound();
+            return Ok(Technicans);
+        }
 
         [HttpPost]
         [Route("update_Problem/{id}")]
