@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTO\keywords\" />
     <Folder Include="DTO\ProblemSolved\" />
   </ItemGroup>
 

@@ -1,4 +1,5 @@
-﻿using Ataal.DAL.Data.Models;
+﻿using Ataal.BL.DTO.keywords;
+using Ataal.DAL.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace Ataal.BL.Managers.keywords
 {
     public interface IKeywordsManager
     {
-        public List<string> GetAllKeywordsBySectionId(int sectionId);
+        public List<ReturnkeywordsWithIdDto> GetAllKeywordsBySectionId(int sectionId);
     }
 }
