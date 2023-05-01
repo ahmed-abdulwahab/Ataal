@@ -18,6 +18,8 @@ namespace Ataal.BL.Managers.Section
 
 
         public List<SectionDetailsDto> getAllSSsectionWithDeatailsDtos();
+		public List<SectionDetailsDto> getAllSSsectionforCustomerNeed();
+        public SectionDetailsDto GetSectionByIDforCustomerNeed(int id);
         public List<SectionDetialsDtoCustomer> getAllSectionWithDeatailsDtos_Customer();
         public List<SectionDto> getAllSectionDtos();
 		public SectionDto GetSectionByID(int id);
