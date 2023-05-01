@@ -23,5 +23,9 @@ namespace Ataal.DAL.Data.Models
         public DateTime Date { set; get; } = DateTime.Now;
 
         public string? OfferMassage { get; set; }
+
+        public bool Accepted { get; set; } = false;
+
+        
     }
 }

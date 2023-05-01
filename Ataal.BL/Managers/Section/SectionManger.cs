@@ -138,8 +138,8 @@ namespace Ataal.BL.Managers.Section
 												phone: S.AppUser.PhoneNumber,
 												Brief: S.Brief,
 												Rate: S.Rate,
-												address: S.Address
-												//photo:S.Photo
+												address: S.Address,
+												photo:S.Photo
 												)).ToList();
 
 			return Technicals;

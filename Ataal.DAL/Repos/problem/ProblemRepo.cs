@@ -1,5 +1,6 @@
 ﻿using Ataal.DAL.Data.Context;
 using Ataal.DAL.Data.Models;
+using Ataal.DAL.Data.Repos.OfferRepo;
 using Ataal.DAL.Repos.Section;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,12 +14,14 @@ namespace Ataal.DAL.Repos.problem
 {
     public class ProblemRepo:IProblemRepo
     {
+        private readonly IOfferRepo _offerRepo;
         private readonly AtaalContext _ataalContext;
         private readonly ISectionRepo _sectionRepo;
-        public ProblemRepo(AtaalContext ataalContext, ISectionRepo sectionRepo)
+        public ProblemRepo(AtaalContext ataalContext, ISectionRepo sectionRepo, IOfferRepo offerRepo)
         {
             _ataalContext = ataalContext;
             _sectionRepo = sectionRepo;
+             _offerRepo= offerRepo;
         }
         public Problem? GetProblemById(int ProblemId)
         {
@@ -85,11 +88,21 @@ namespace Ataal.DAL.Repos.problem
             problem.VIP = true;
             return SaveChanges();
         }
-        public int CustomerAcceptedProblem_Offer(int TechnicalId, int ProblemId)
-        {
-            var problem = _ataalContext.Problems.FirstOrDefault(p => p.Problem_ID == ProblemId);
-            problem.Technical_ID = TechnicalId;
-            return SaveChanges();
+        public int? CustomerAcceptedProblem_Offer(int TechnicalId, int ProblemId ,int offerId)
+        {   //we should increase counter of notification in tech 
+            // and we should add  boolean in offer to know if it accepted or no : i did it
+           var Acc= _offerRepo.AssignOfferAsAccepted(offerId);
+            if (Acc == true)
+            {
+                var problem = _ataalContext.Problems.FirstOrDefault(p => p.Problem_ID == ProblemId);
+                problem.Technical_ID = TechnicalId;
+                return SaveChanges();
+            }
+            else
+            {
+                return null;
+            }
+           
         }
         public int SaveChanges()
         {

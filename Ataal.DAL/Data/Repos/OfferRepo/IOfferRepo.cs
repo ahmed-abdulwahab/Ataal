@@ -9,6 +9,7 @@ namespace Ataal.DAL.Data.Repos.OfferRepo
 {
     public interface IOfferRepo
     {
+        public bool AssignOfferAsAccepted(int id);
         public bool CreateOffer(Offer offer);
         public List<Offer> getAll_Offers(int technicalID, int problemID);
         public Offer getByID(int id);

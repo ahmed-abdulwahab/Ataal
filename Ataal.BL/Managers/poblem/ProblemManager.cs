@@ -86,13 +86,13 @@ namespace Ataal.BL.Managers.problem
            
         }
 
-        public int CustomerAcceptedOffer(CustomerAcceptedProblemOfferDto CAPDto)
+        public int? CustomerAcceptedOffer(CustomerAcceptedProblemOfferDto CAPDto)
         {
             var technical = _technicalRepo.getNormalTechnicalById(CAPDto.TechnicalId);
             if (technical != null)
             {
                 technical.NotificationCounter=technical.NotificationCounter+1;
-                return _problemRepo.CustomerAcceptedProblem_Offer(CAPDto.TechnicalId, CAPDto.ProblemId);
+                return _problemRepo.CustomerAcceptedProblem_Offer(CAPDto.TechnicalId, CAPDto.ProblemId, CAPDto.OfferId);
             }
             return 0;
         }
