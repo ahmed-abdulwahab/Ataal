@@ -10,7 +10,7 @@ namespace Ataal.DAL.Data.Models
 {
      public  enum Causes { 
   
-       Harassment_or_bullying,
+        Harassment_or_bullying,
         Hate_speech_or_discrimination,
         Inappropriate_content,
         Impersonation_or_fake_accounts,

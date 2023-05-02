@@ -82,7 +82,6 @@ namespace Ataal.DAL.Repos.Section
 		{
 			var ChosenSection = ataalContext.Sections.SingleOrDefault(S => S.Section_ID == id);
 			if (ChosenSection == null) return null;
-			ChosenSection.Section_ID = section.Section_ID;
 			ChosenSection.Section_Name = section.Section_Name;
 			ChosenSection.Description = section.Description;
 			SaveChanges();
