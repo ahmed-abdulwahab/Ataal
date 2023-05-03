@@ -44,7 +44,9 @@ namespace Ataal.DAL.Repos.Section
                 .Set<Data.Models.Section>()
                 .Include(t => t.Technicals)
                 .Include(k => k.KeyWords)
-                .Include(p => p.Problems.Where(s=>s.Solved!=true)).ThenInclude(k => k.KeyWord).ToList();
+                .Include(p => p.Problems.Where(s=>s.Solved!=true))
+				.ThenInclude(C=>C.Customer).ToList();
+				
         }
 
         public List<Data.Models.Section> GetAllSections_Customer()

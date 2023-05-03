@@ -1,7 +1,9 @@
 ﻿using Ataal.BL.DtO.Section;
+using Ataal.BL.DTO.problem;
 using Ataal.BL.DTO.Section;
 using Ataal.BL.DTO.Technical;
 using Ataal.DAL.Data.Models;
+using Ataal.DAL.Repos.problem;
 using Ataal.DAL.Repos.Section;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -17,10 +19,12 @@ namespace Ataal.BL.Managers.Section
 	public class SectionManger : ISectionManger
 	{
 		private ISectionRepo sectionRepo;
+		private readonly IProblemRepo _problemRepo;
 		private readonly IWebHostEnvironment _env;
-		public SectionManger( ISectionRepo _sectionRepo , IWebHostEnvironment env)
+		public SectionManger( ISectionRepo _sectionRepo , IWebHostEnvironment env, IProblemRepo problemRepo)
         {
             sectionRepo = _sectionRepo;
+			_problemRepo = problemRepo;
 			_env = env;
         }
 
@@ -94,20 +98,24 @@ namespace Ataal.BL.Managers.Section
 			return SectionDto.ToList();
 		}
 
-        public List<SectionDetailsDto> getAllSSsectionforCustomerNeed()
+        public List<SectionDetailsForCustomerNeedDto> getAllSSsectionforCustomerNeed()
         {
             var SectionFromDB = sectionRepo.GetAllSectionsforCustomerneed();
             if (SectionFromDB == null) return null;
             var SectionDto = SectionFromDB
-                .Select(t => new SectionDetailsDto(id: t.Section_ID,
+                .Select(t => new SectionDetailsForCustomerNeedDto(id: t.Section_ID,
                                                    Name: t.Section_Name,
                                                    Description: t.Description,
                                                    Photo: t.Photo,
-                                                   SectionProblemReadDtos: t.Problems?.Select(p => new SectionProblemReadDto(id: p.Problem_ID,
+                                                   SectionProblemReadDtos: t.Problems?.Select(p => new ProblemWithCustomerDetails(id: p.Problem_ID,
                                                                                                                              title: p.Problem_Title,
                                                                                                                              Description: p.Description,
                                                                                                                              Date: p.dateTime,
-                                                                                                                             keyword: p.KeyWord?.KeyWord_Name,
+																															 CustomerId:p.Customer_ID,
+																															 CustomerName:$"{p.Customer.Frist_Name} {p.Customer.Last_Name}",
+																															 CustomerPhoto:p.Customer.Photo,
+                                                                                                                             keyword:
+																															_problemRepo.GetKeywordByProblemId(p.Problem_ID).KeyWord_Name,
                                                                                                                              Photo1: p.PhotoPath1,
                                                                                                                              Photo2: p.PhotoPath2,
                                                                                                                              Photo3: p.PhotoPath3,
@@ -227,7 +235,7 @@ namespace Ataal.BL.Managers.Section
 			return SectioninDetails;
 		
 		}
-        public SectionDetailsDto GetSectionByIDforCustomerNeed(int id)
+        public SectionDetailsForCustomerNeedDto GetSectionByIDforCustomerNeed(int id)
         {
             var SectioninDetails = getAllSSsectionforCustomerNeed().FirstOrDefault(s => s.id == id);
             if (SectioninDetails == null) return null;

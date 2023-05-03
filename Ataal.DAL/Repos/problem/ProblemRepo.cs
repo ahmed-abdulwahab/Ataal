@@ -23,9 +23,18 @@ namespace Ataal.DAL.Repos.problem
             _sectionRepo = sectionRepo;
              _offerRepo= offerRepo;
         }
+        public KeyWords? GetKeywordByProblemId(int ProblemId)
+        {
+            var problem = _ataalContext.Problems.Include(K => K.KeyWord)
+                .FirstOrDefault(P => P.Problem_ID == ProblemId);
+            return problem.KeyWord;
+        }
         public Problem? GetProblemById(int ProblemId)
         {
-            return _ataalContext.Problems.Include(P=>P.KeyWord).Include(p=>p.Customer).FirstOrDefault(p=>p.Problem_ID== ProblemId);    
+            return _ataalContext.Problems.Include(P=>P.KeyWord)
+                .Include(p=>p.Customer)
+                .Include(S=>S.Section)
+                .FirstOrDefault(p=>p.Problem_ID== ProblemId);    
         }
         public List<Problem>? GetAllProblems(int TechnicalID, int SectionId, int pageNumber)
         {

@@ -175,6 +175,8 @@ namespace Ataal.BL.Managers.Customer
                                                     Date: P.dateTime,
                                                     IsSolved: P.Solved,
                                                     IsVIP: P.VIP,
+                                                    Section_id: P.Section.Section_ID,
+                                                    Key_WordId: P.KeyWord?.KeyWord_ID,
                                                     Key_Word: P.KeyWord?.KeyWord_Name,
                                                     PhotoPath1: P.PhotoPath1,
                                                     PhotoPath2: P.PhotoPath2,
