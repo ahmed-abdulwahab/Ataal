@@ -81,7 +81,7 @@ namespace Stripe_Payments_Web_Api.Application
 
             // Create the payment
             await _chargeService.CreateAsync(paymentOptions, null, ct);
-            _problemManager.ProblemIsVIP(customer1.problemId);
+            //_problemManager.ProblemIsVIP(customer1.problemId);
             return true;
         }
 

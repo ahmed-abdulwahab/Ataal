@@ -11,8 +11,9 @@ namespace Ataal.BL.DTO.Customer
                                        ,string Description
                                        ,int Section_ID
                                        ,int Customer_ID
-                                       ,int KyeWord_ID
-                                       ,IFormFile? File1
+                                       ,int? KyeWord_ID
+                                        ,  bool VIP
+                                       , IFormFile? File1
                                        ,IFormFile? File2
                                        ,IFormFile? File3
                                        ,IFormFile? File4
