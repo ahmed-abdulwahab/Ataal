@@ -15,6 +15,7 @@ namespace Ataal.BL.DTO.Technical
                                             string? Address,
                                             string? photo,
                                             string? Breif,
+                                            int ? rate,
                                             IEnumerable<Section_Name_And_Id_DtO>? Sections
 
         );

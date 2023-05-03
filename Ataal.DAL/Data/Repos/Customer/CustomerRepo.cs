@@ -109,6 +109,7 @@ namespace Ataal.DAL.Repos.customer
             UpdatedProblem.Description = problem.Description;
             UpdatedProblem.Section_ID = problem.Section_ID;
             UpdatedProblem.KeyWord_ID=problem.KeyWord_ID;
+            UpdatedProblem.VIP = problem.VIP;
             UpdatedProblem.PhotoPath1 = problem.PhotoPath1;
             UpdatedProblem.PhotoPath2 = problem.PhotoPath2;
             UpdatedProblem.PhotoPath3 = problem.PhotoPath3;
