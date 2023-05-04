@@ -23,6 +23,8 @@ namespace Ataal.BL.Managers.Customer
         public oneCustomerDto? GetCustomerById(int id);
         public  Task<int?> ReturnAddedProblemID(CustomerAddProblemDto CustDto);
         public List<ProblemReturnDto>? ReturnProblemsForCustomers(int CustomerId);
+
+        public List<AllTechnicansWithSectionsForCustomerDto>?ReturnAllTechnicansForCustomerNeed(int CustomerId);
         public Task<int?> UpdateCustomerProfile(int CustomerId, UpdatedCustomerProfileDto Dto);
         public CustomerWithTechnicalsBlockedListDto? GetAllBlockedTechnicals(int CustomerId);
         public  Task<int?> UpdatedProblem(updatedProblemDto CustDto);

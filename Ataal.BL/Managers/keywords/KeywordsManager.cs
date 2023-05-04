@@ -1,4 +1,5 @@
-﻿using Ataal.DAL.Data.Models;
+﻿using Ataal.BL.DTO.keywords;
+using Ataal.DAL.Data.Models;
 using Ataal.DAL.Repos.keywords;
 using System;
 using System.Collections.Generic;
@@ -15,9 +16,13 @@ namespace Ataal.BL.Managers.keywords
         {
             _keywordsRepo = keywordsRepo;
         }
-        public List<string> GetAllKeywordsBySectionId(int sectionId)
+        public List<ReturnkeywordsWithIdDto> GetAllKeywordsBySectionId(int sectionId)
         {
-            var Keywords=_keywordsRepo.GetAllKeywordsBySectionId(sectionId); 
+            var KeywordsList=_keywordsRepo.GetAllKeywordsBySectionId(sectionId);
+            var Keywords = KeywordsList.Select(K => new ReturnkeywordsWithIdDto(
+                                                KeywordId: K.KeyWord_ID,
+                                                KeywordName: K.KeyWord_Name
+                    )).ToList();
             return Keywords;
         }
     }

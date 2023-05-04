@@ -13,7 +13,8 @@ namespace Ataal.BL.DTO.problem
         DateTime? Date,
         bool IsSolved,
         bool IsVIP,
-
+        int Section_id,
+        int? Key_WordId,
         string? Key_Word,
         string? PhotoPath1,
         string? PhotoPath2,

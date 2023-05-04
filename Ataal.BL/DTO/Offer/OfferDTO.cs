@@ -9,5 +9,6 @@ namespace Ataal.BL.DTO.Offer
     public record OfferDTO
         (
             int Technicalid, int problemID, double OfferSalary, string? OfferMassege
+           
         );
 }

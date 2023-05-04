@@ -1,7 +1,9 @@
 ﻿using Ataal.BL.DTO.problem;
+using Ataal.BL.DTO.Review;
 using Ataal.DAL.Data.Models;
 using Ataal.DAL.Data.Repos.Technical_Repo;
 using Ataal.DAL.Repos.problem;
+using Stripe;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +37,8 @@ namespace Ataal.BL.Managers.problem
                                                     Date:P.dateTime,
                                                     IsSolved: P.Solved,
                                                     IsVIP: P.VIP,
+                                                    Section_id:P.Section.Section_ID,
+                                                    Key_WordId: P.KeyWord?.KeyWord_ID,
                                                     Key_Word: P.KeyWord?.KeyWord_Name,
                                                     PhotoPath1: P.PhotoPath1,
                                                     PhotoPath2: P.PhotoPath2,
@@ -76,6 +80,8 @@ namespace Ataal.BL.Managers.problem
                                                     Date:P.dateTime,
                                                     IsSolved:P.Solved,
                                                     IsVIP:P.VIP,
+                                                    Section_id: P.Section.Section_ID,
+                                                    Key_WordId:P.KeyWord?.KeyWord_ID,
                                                     Key_Word: P.KeyWord?.KeyWord_Name,
                                                     PhotoPath1: P.PhotoPath1,
                                                     PhotoPath2: P.PhotoPath2,
@@ -86,13 +92,13 @@ namespace Ataal.BL.Managers.problem
            
         }
 
-        public int CustomerAcceptedOffer(CustomerAcceptedProblemOfferDto CAPDto)
+        public int? CustomerAcceptedOffer(CustomerAcceptedProblemOfferDto CAPDto)
         {
             var technical = _technicalRepo.getNormalTechnicalById(CAPDto.TechnicalId);
             if (technical != null)
             {
                 technical.NotificationCounter=technical.NotificationCounter+1;
-                return _problemRepo.CustomerAcceptedProblem_Offer(CAPDto.TechnicalId, CAPDto.ProblemId);
+                return _problemRepo.CustomerAcceptedProblem_Offer(CAPDto.TechnicalId, CAPDto.ProblemId, CAPDto.OfferId);
             }
             return 0;
         }
@@ -129,6 +135,8 @@ namespace Ataal.BL.Managers.problem
                         IsSolved: P.Solved,   
                         Date:P.dateTime,
                         IsVIP: P.VIP,
+                        Key_WordId:P.KeyWord?.KeyWord_ID,
+                        Section_id: P.Section.Section_ID,
                         Key_Word: P.KeyWord?.KeyWord_Name,
                         PhotoPath1: P.PhotoPath1,
                         PhotoPath2: P.PhotoPath2,
@@ -175,6 +183,16 @@ namespace Ataal.BL.Managers.problem
                 return null!;
             }
 
+        }
+
+
+        public List<Problem>? GetAllProblems()
+        {
+            var ProblemList = _problemRepo.GetAllProblems();
+            if (ProblemList == null)
+                return null;
+            else
+                return ProblemList;
         }
     }
 }

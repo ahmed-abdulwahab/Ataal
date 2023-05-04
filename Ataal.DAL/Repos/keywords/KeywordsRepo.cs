@@ -15,10 +15,10 @@ namespace Ataal.DAL.Repos.keywords
         {
             _ataalContext = ataalContext;
         }
-        public List<string> GetAllKeywordsBySectionId(int sectionId)
+        public List<KeyWords> GetAllKeywordsBySectionId(int sectionId)
         {
-            return _ataalContext.KeyWords.Where(K=>K.Section_ID==sectionId)
-                                .Select(k=>k.KeyWord_Name).ToList();
+            return _ataalContext.KeyWords.ToList();
+                                
         }
 
         public int SaveChanges()
