@@ -79,10 +79,10 @@ namespace Ataal.BL.Managers.Report
             var newReport = new Ataal.DAL.Data.Models.Report() 
             {
                 Description = reportDto.Description,
-                //Review_ID = reportDto.Review_ID,
-                Created_Date= reportDto.Created_Date,
+                Review_ID = reportDto.Review_ID,
+                Created_Date = reportDto.Created_Date,
                 Causes = causes,
-                //TechnicalId = reportDto.technicalid
+                TechnicalId = reportDto.technicalid
             };
             
             return reportRepo.Add(newReport);

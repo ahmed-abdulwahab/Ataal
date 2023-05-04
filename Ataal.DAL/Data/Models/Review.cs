@@ -41,5 +41,7 @@ namespace Ataal.DAL.Data.Models
 
 
 
+
+
     }
 }

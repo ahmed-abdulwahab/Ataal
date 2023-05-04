@@ -138,6 +138,20 @@ namespace Ataal.BL.Managers.problem
                 )).ToList();
         }
 
+        public List<ProblemInfoForTechnical> Search(string query)
+        {
+            var allProblemsThatAppearedInSearch = _problemRepo.get_All_Problems_for_Search(query);
+
+            return allProblemsThatAppearedInSearch.Select(P => new ProblemInfoForTechnical(
+                     id: P.Problem_ID,
+                    Title: P.Problem_Title,
+                    Date: P.dateTime,
+                    Description: P.Description,
+                    IsVIP: P.VIP,
+                    Key_Word: P.KeyWord?.KeyWord_Name
+                )).ToList();
+        }
+
         public List<ProblemInfoForTechnical> ProblemInfoForTechnical(int SectionID, int TechnicalId)
         {
             try

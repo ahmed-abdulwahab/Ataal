@@ -115,5 +115,18 @@ namespace Ataal.DAL.Repos.problem
             return _ataalContext.Problems.Include(P=>P.KeyWord)
                 .Where(p =>  !(Blocked_Customers_ID.Contains(p.Customer_ID)) && p.Section_ID==SectionId && p.Solved==false ).ToList();
         }
+
+
+        public List<Problem> get_All_Problems_for_Search(string query)
+        {
+            var results = _ataalContext.Problems.Include(p=>p.KeyWord).Include(p=>p.Section).Where(p => p.KeyWord.KeyWord_Name.Contains(query) ||
+                                                p.Section.Section_Name.Contains(query)
+                                                || p.Problem_Title.Contains(query)).ToList();
+            return results;
+
+        }
+
+
+
     }
 }
