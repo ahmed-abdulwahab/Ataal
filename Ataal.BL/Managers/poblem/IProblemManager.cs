@@ -1,4 +1,5 @@
-﻿using Ataal.BL.DTO.problem;
+﻿using Ataal.BL.DTO.Customer;
+using Ataal.BL.DTO.problem;
 using Ataal.BL.DTO.Review;
 using Ataal.DAL.Data.Models;
 using System;
@@ -28,6 +29,8 @@ namespace Ataal.BL.Managers.problem
 
         public List<Problem>? GetAllProblems ();
         public List<ProblemInfoForTechnical> ProblemInfoForTechnical(int SectionID, int TechnicalId);         //for technical view problems (brief)
+        public Sidebar_Customer GetCoustomerByProblemID(int ProblemId);
+
     }
 
 }

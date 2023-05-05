@@ -109,5 +109,34 @@ namespace Ataal.DAL.Data.Repos.Technical_Repo
                 return null!;
             }
         }
+
+        public int saveChanges()
+        {
+            return ataalContext.SaveChanges();
+        }
+
+        public int? getPoints(int TechnicalID)
+        {
+             var technical = ataalContext.Technicals.FirstOrDefault(T => T.Id==TechnicalID);
+
+            if (technical == null || technical.Points == null)
+                return 0;
+            return technical.Points;
+        }
+
+        public bool decreasePoints(int technicalID)
+        {
+            try
+            {
+                var technical = ataalContext.Technicals.FirstOrDefault(T => T.Id == technicalID);
+                technical!.Points -= 10;
+                ataalContext.SaveChanges(true);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }
