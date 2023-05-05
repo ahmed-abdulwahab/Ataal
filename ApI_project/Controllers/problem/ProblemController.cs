@@ -85,6 +85,18 @@ namespace Ataal.Controllers.problem
         }
 
         [HttpGet]
+        [Route("GetAllProblemsInfoForTechnical/{TechnicalId}")]
+        public IActionResult GetProblemsInfoForTechnical(int TechnicalId)
+        {
+
+            var AllSolvedProblems = _problemManager.ProblemInfoForTechnical(TechnicalId);
+
+            if (AllSolvedProblems == null) return NotFound();
+
+            return Ok(AllSolvedProblems);
+        }
+
+        [HttpGet]
         [Route("GetAllProblem")]
         public IActionResult GetAllSectionsNames()
         {

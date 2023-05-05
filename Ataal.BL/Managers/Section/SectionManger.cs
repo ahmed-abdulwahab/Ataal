@@ -79,7 +79,7 @@ namespace Ataal.BL.Managers.Section
 												   SectionProblemReadDtos: t.Problems?.Select(p => new SectionProblemReadDto(id: p.Problem_ID,
                                                                                                                              title: p.Problem_Title,
                                                                                                                              Description: p.Description,
-																															 Date:p.dateTime,
+																															 Date: p.dateTime,
 																															 keyword:p.KeyWord?.KeyWord_Name,
                                                                                                                              Photo1: p.PhotoPath1,
                                                                                                                              Photo2: p.PhotoPath2,

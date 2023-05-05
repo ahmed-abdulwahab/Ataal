@@ -14,10 +14,11 @@ namespace Ataal.Controllers.Search
             _problemManager = problemManager;
         }
         [HttpGet]
-        public IActionResult Search(string query)
+        [Route("/{TechnicalId}")]
+        public IActionResult Search(string query, int TechnicalId)
         {
 
-            var result = _problemManager.Search(query);
+            var result = _problemManager.Search(query, TechnicalId);
 
             if (result == null) return NotFound();
 

@@ -12,7 +12,9 @@ namespace Ataal.BL.Managers.problem
     public interface IProblemManager
     {
 
-        public List<ProblemInfoForTechnical> Search(string query);
+        public List<ProblemInfoForTechnical> ProblemInfoForTechnical(int TechnicalId);
+
+        public List<ProblemInfoForTechnical> Search(string query, int TechnicalId);
 
         public int ProblemIsVIP(int ProblemId);
         public List<ProblemReturnDto>? GetProblemsForTechnical(GetProblemsPagingDto GetProblemsPaging);

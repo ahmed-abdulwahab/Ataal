@@ -135,20 +135,20 @@ namespace Ataal.BL.Managers.problem
                         IsSolved: P.Solved,   
                         Date:P.dateTime,
                         IsVIP: P.VIP,
-                        Key_WordId:P.KeyWord?.KeyWord_ID,
-                        Section_id: P.Section.Section_ID,
-                        Key_Word: P.KeyWord?.KeyWord_Name,
-                        PhotoPath1: P.PhotoPath1,
-                        PhotoPath2: P.PhotoPath2,
-                        PhotoPath3: P.PhotoPath3,
-                        PhotoPath4: P.PhotoPath4
+                        Key_WordId:P.KeyWord?.KeyWord_ID ?? -1,
+                        Section_id: P.Section?.Section_ID ?? -1,
+                        Key_Word: P.KeyWord?.KeyWord_Name ?? "error",
+                        PhotoPath1: P.PhotoPath1 ?? "error",
+                        PhotoPath2: P.PhotoPath2 ?? "error" ,
+                        PhotoPath3: P.PhotoPath3 ?? "error",
+                        PhotoPath4: P.PhotoPath4 ?? "error"
 
                 )).ToList();
         }
 
-        public List<ProblemInfoForTechnical> Search(string query)
+        public List<ProblemInfoForTechnical> Search(string query, int TechnicalId)
         {
-            var allProblemsThatAppearedInSearch = _problemRepo.get_All_Problems_for_Search(query);
+            var allProblemsThatAppearedInSearch = _problemRepo.get_All_Problems_for_Search(query, TechnicalId);
 
             return allProblemsThatAppearedInSearch.Select(P => new ProblemInfoForTechnical(
                      id: P.Problem_ID,
@@ -165,6 +165,31 @@ namespace Ataal.BL.Managers.problem
             try
             {
                 var allProblems = _problemRepo.get_All_Problems_forTechincal(SectionID, TechnicalId);
+
+                var all_Problems_info_DTO = allProblems.Select(P => new ProblemInfoForTechnical
+                (
+                    id: P.Problem_ID,
+                    Title: P.Problem_Title,
+                    Date: P.dateTime,
+                    Description: P.Description,
+                    IsVIP: P.VIP,
+                    Key_Word: P.KeyWord?.KeyWord_Name
+                )).ToList();
+
+                return all_Problems_info_DTO;
+            }
+            catch
+            {
+                return null!;
+            }
+
+        }
+
+        public List<ProblemInfoForTechnical> ProblemInfoForTechnical(int TechnicalId)
+        {
+            try
+            {
+                var allProblems = _problemRepo.get_All_Problems_forTechincal(TechnicalId);
 
                 var all_Problems_info_DTO = allProblems.Select(P => new ProblemInfoForTechnical
                 (
