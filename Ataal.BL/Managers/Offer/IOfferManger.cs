@@ -1,4 +1,5 @@
 ﻿using Ataal.BL.DTO.Offer;
+using Ataal.DAL.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,11 @@ namespace Ataal.BL.Managers.Offer
         public GetByIdOffer getByID(int id);
         public bool deleteOffer(int id);
 
+        public OfferDTO getByIDUsingTechnical(int technicalId,int ProblemID);
+
+
+
+
+        public bool deleteOfferByTechnicalandProblemId(int TechnicalID,int ProblemID);
     }
 }

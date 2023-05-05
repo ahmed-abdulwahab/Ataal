@@ -2,6 +2,7 @@
 using Ataal.BL.DTO.stripe;
 using Ataal.BL.Managers.problem;
 using Ataal.DAL.Data.Models;
+using Ataal.DAL.Data.Repos.Technical_Repo;
 using Ataal.DAL.Repos.customer;
 using Stripe;
 using Stripe_Payments_Web_Api.Contracts;
@@ -15,6 +16,7 @@ namespace Stripe_Payments_Web_Api.Application
         private readonly ChargeService _chargeService;
         private readonly CustomerService _customerService;
         private readonly TokenService _tokenService;
+        private readonly ITechnicalRepo technicalRepo;
         private readonly IProblemManager _problemManager;
 
         public StripeAppService(
@@ -22,13 +24,16 @@ namespace Stripe_Payments_Web_Api.Application
             CustomerService customerService,
             IProblemManager problemManager,
             ICustomerRepo customerRepo,
-            TokenService tokenService)
+            TokenService tokenService,
+            ITechnicalRepo technicalRepo
+            )
         {
             _chargeService = chargeService;
             _customerService = customerService;
             _customerRepo = customerRepo;
             _problemManager = problemManager;
             _tokenService = tokenService;
+            this.technicalRepo = technicalRepo;
         }
 
         /// <summary>
@@ -85,7 +90,71 @@ namespace Stripe_Payments_Web_Api.Application
             return true;
         }
 
-        
+
+
+
+
+
+
+
+
+
+        public async Task<bool> AddStripePayment_Technical_Async(StripePayment payment_State, CancellationToken ct)
+        {
+            try
+            {
+                var technical = technicalRepo.getTechnicalByID(payment_State.customerId);
+                TokenCreateOptions tokenOptions = new TokenCreateOptions
+                {
+                    Card = new TokenCardOptions
+                    {
+                        Name = technical.Frist_Name,
+                        Number = payment_State.CardNumber,
+                        ExpYear = payment_State.ExpirationYear,
+                        ExpMonth = payment_State.ExpirationMonth,
+                        Cvc = payment_State.Cvc
+                    }
+                };
+
+                // Create new Stripe Token
+                Token stripeToken = await _tokenService.CreateAsync(tokenOptions, null, ct);
+
+                // Set Customer options using
+                CustomerCreateOptions customerOptions = new CustomerCreateOptions
+                {
+                    Name = $"{technical.Frist_Name} {technical.Last_Name}",
+                    Source = stripeToken.Id,
+                };
+
+                // Create Tecnical at Stripe
+                var createdCustomer = await _customerService.CreateAsync(customerOptions, null, ct);
+
+                //_customerRepo.assignCustomerPayemntId(payment_State.customerId, createdCustomer.Id);
+
+
+                //var customertest = _customerRepo.GetNormalCustomerById(payment_State.customerId);
+
+                ChargeCreateOptions paymentOptions = new ChargeCreateOptions
+                {
+                    Customer = createdCustomer.Id,
+                    Currency = "USD",
+                    Amount = payment_State.price * 100
+                };
+
+                // Create the payment
+                await _chargeService.CreateAsync(paymentOptions, null, ct);
+                if (technical.Points == null)
+                    technical.Points = 0;
+                technical.Points += (payment_State.price * 10);
+                technicalRepo.saveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
 
         /// <summary>
         /// Add a new payment at Stripe using Customer and Payment details.

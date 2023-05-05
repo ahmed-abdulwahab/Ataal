@@ -23,5 +23,9 @@ namespace Ataal.BL.Mangers.technical
 
         public Task<RegisterUserDto> addTechnical(RegisterUserDto technical);
 
+        public int? getPoints(int id);
+
+        public bool decreasePoints(int technicalID);
+
     }
 }

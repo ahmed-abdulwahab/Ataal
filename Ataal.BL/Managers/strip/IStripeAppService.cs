@@ -9,7 +9,9 @@ namespace Stripe_Payments_Web_Api.Contracts
     {
         //Task <int> AddStripeCustomerAsync(int CustomerId, CancellationToken ct);
         Task<bool> AddStripePaymentAsync(StripePayment customer1, CancellationToken ct);
-        
+
+        Task<bool> AddStripePayment_Technical_Async(StripePayment payment_State, CancellationToken ct);
+
     }
 }
 

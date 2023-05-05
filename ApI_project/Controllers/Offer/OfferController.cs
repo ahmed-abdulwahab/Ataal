@@ -49,15 +49,24 @@ namespace Ataal.Controllers.Offer
             return Ok(offerDTO);
         }
 
+
+        [HttpGet("offer/{TechnicalID}/{ProblemID}")]
+        public ActionResult<OfferDTO> getOfferByIdForpayment(int TechnicalID,int ProblemID)
+        {
+            var offerDTO = offerManger.getByIDUsingTechnical(TechnicalID, ProblemID);
+
+            return Ok(offerDTO);
+        }
+
         // POST api/<OfferController>
         [HttpPost]
-        public ActionResult postOffer(OfferDTO offer)
+        public ActionResult<int> postOffer(OfferDTO offer)
         {
             var is_Saved = offerManger.createOffer(offer);
 
-            if (!is_Saved) return BadRequest();
+            if (!is_Saved) return BadRequest(0);
 
-            return NoContent();
+            return Ok(1);
         }
 
         // DELETE api/<OfferController>/5
@@ -65,6 +74,14 @@ namespace Ataal.Controllers.Offer
         public ActionResult Delete(int id)
         {
             if (offerManger.deleteOffer(id))
+                return Ok();
+            return BadRequest();
+        }
+
+        [HttpDelete("{TechnicalID}/{ProblemID}")]
+        public ActionResult DeleteByTechnicalID(int TechnicalID, int ProblemID)
+        {
+            if (offerManger.deleteOfferByTechnicalandProblemId(TechnicalID, ProblemID))
                 return Ok();
             return BadRequest();
         }

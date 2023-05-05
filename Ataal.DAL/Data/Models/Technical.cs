@@ -42,8 +42,9 @@ namespace Ataal.DAL.Data.Models
         public Offer? offer { get; set; }
 
 
-        [StringLength(100, ErrorMessage = "Address cannot exceed 100 characters")]
+        public int? Points { get; set; } = 0;
 
+        [StringLength(100, ErrorMessage = "Address cannot exceed 100 characters")]
         [Required]
         public string Address { get; set; } = string.Empty;
 
