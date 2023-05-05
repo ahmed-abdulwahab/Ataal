@@ -1,7 +1,10 @@
 ﻿using Ataal.BL.DTO.Offer;
+using Ataal.DAL.Data.Models;
 using Ataal.DAL.Data.Repos.OfferRepo;
 using Ataal.DAL.Data.Repos.Technical_Repo;
 using Ataal.DAL.Repos.customer;
+using Ataal.DAL.Repos.problem;
+using Microsoft.AspNetCore.Http.HttpResults;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +18,14 @@ namespace Ataal.BL.Managers.Offer
         private readonly ITechnicalRepo technicalRepo;
         private readonly ICustomerRepo customerRepo;
         private readonly IOfferRepo offerRepo;
+        private readonly IProblemRepo _problemRepo;
 
-        public OfferManger(ITechnicalRepo technicalRepo, ICustomerRepo customerRepo, IOfferRepo offerRepo)
+        public OfferManger(IProblemRepo problemRepo,ITechnicalRepo technicalRepo, ICustomerRepo customerRepo, IOfferRepo offerRepo)
         {
             this.technicalRepo = technicalRepo;
             this.customerRepo = customerRepo;
             this.offerRepo = offerRepo;
+            _problemRepo= problemRepo;
         }
 
 
@@ -40,16 +45,20 @@ namespace Ataal.BL.Managers.Offer
             )).ToList();
         }
 
-        public OfferDTO getByID(int id)
+        public GetByIdOffer getByID(int id)
         {
             var allOffers = offerRepo.getByID(id);
 
-            return new OfferDTO
+            return new GetByIdOffer
             (
+
                 allOffers.technicalId,
                 allOffers.problemId,
                 allOffers.OfferSalary,
-                allOffers.OfferMassage
+            allOffers.OfferMassage,
+             offerId: allOffers.Id,
+           Acepted:allOffers.Accepted
+
             );
         }
 
@@ -64,8 +73,8 @@ namespace Ataal.BL.Managers.Offer
             var technical = technicalRepo.getTechnicalByID(offerDTO.Technicalid);
 
             var prblem = customerRepo.GetProblemByID(offerDTO.problemID);
-            
 
+            var Customer_Problem = _problemRepo.GetProblemById(offerDTO.problemID);
             if (technical == null || prblem == null)
                 return false;
 
@@ -79,10 +88,16 @@ namespace Ataal.BL.Managers.Offer
                 technical = technical,
             };
 
-            if (!offerRepo.CreateOffer(newOffer))
+            if (!offerRepo.CreateOffer(newOffer)){
                 return false;
+            }
+            else
+            {
+                Customer_Problem.Customer.NotificationCounter = Customer_Problem.Customer.NotificationCounter + 1;
 
-            return true;
+                return true;
+            }
+           
         }
 
         public OfferDTO getByIDUsingTechnical(int technicalId, int ProblemID)

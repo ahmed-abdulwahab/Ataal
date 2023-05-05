@@ -14,7 +14,7 @@ namespace Ataal.DAL.Repos.Reviews
         public List<Review> GetAllReviews();
         public List<Review> GetReviewsByCustomerId(int CustomerId);
 
-
+        public int DeleteReview(int id);
         public int SaveChanges();
     }
 }

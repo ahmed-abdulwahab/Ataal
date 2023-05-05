@@ -7,6 +7,7 @@ namespace Ataal.DAL.Repos.Section
 	{
         
         public List<Data.Models.Section> GetAllSections();
+        public List<Data.Models.Section> GetAllSectionsforCustomerneed();
         public List<Data.Models.Section> GetAllSections_Customer();
         public Data.Models.Section GetSectionByIdWithDetails(int id );
 		public Data.Models.Section? GetSectionById(int id);

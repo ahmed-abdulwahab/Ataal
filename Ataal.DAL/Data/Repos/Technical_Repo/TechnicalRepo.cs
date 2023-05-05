@@ -51,12 +51,14 @@ namespace Ataal.DAL.Data.Repos.Technical_Repo
         }
 
 
+
         public List<Technical> getAllTechnicalForSectionId(int SectionId)
         {
             var Section = ataalContext.Sections.Include(S=>S.Technicals)
                 .FirstOrDefault(t=>t.Section_ID==SectionId);
             return Section.Technicals.ToList();
         }
+        
 
 
         public Technical? getTechnicalByID(int id)

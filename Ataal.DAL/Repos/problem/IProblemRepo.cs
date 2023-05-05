@@ -10,12 +10,17 @@ namespace Ataal.DAL.Repos.problem
     public interface IProblemRepo
     {
         public Problem? GetProblemById(int ProblemId);
+        public KeyWords? GetKeywordByProblemId(int ProblemId);
+        public List<Problem>? GetAllProblems();
         public List<Problem>? GetAllProblems(int TechnicalID, int SectionId, int pageNumber);
         public List<Problem>? GetAllProblemsForCustomersSection(int SectionId, int pageNumber);
         public int ProblemIsSolved(int ProblemId);
-        public int CustomerAcceptedProblem_Offer(int TechnicalId,int ProblemId);
+        public int? CustomerAcceptedProblem_Offer(int TechnicalId,int ProblemId, int offerId);
         public int ProblemisVIP(int ProblemId);
-        
+
+        public List<Problem> get_All_Problems_for_Search(string query, int TechnicalId);
+        public List<Problem> get_All_Problems_forTechincal(int TechnicalId);
+
 
         public List<Problem> GetAllSolvedProblems(int TechnicalId);
 

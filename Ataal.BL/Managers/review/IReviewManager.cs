@@ -10,7 +10,9 @@ namespace Ataal.BL.Managers.review
 {
     public interface IReviewManager
     {
+        public ReviewGetDto GetReviewbyId(int id);
         public List<ReviewGetDto>? GetAllReviews();
         public List<ReviewGetDto>? GetReviewsByCustomerId(int customerId);
+        public int DeleteReview(int id);
     }
 }

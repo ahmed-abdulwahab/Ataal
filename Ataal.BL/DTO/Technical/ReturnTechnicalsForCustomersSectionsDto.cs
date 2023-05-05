@@ -11,8 +11,8 @@ namespace Ataal.BL.DTO.Technical
                                                           string? phone,
                                                           string? Brief,
                                                           int Rate,
-                                                          string address
-                                                         /* string? photo*/);
+                                                          string address,
+                                                         string? photo);
     
     
 }

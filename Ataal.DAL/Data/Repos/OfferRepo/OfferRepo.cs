@@ -63,6 +63,32 @@ namespace Ataal.DAL.Data.Repos.OfferRepo
                 return false;
             }
         }
+        public bool AssignOfferAsAccepted(int id)
+        {
+            try
+            {
+               var offer= ataalContext.Offers.FirstOrDefault(o=>o.Id==id);
+                if (offer.Accepted == false)
+                {
+                    offer.Accepted = true;
+                    ataalContext.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+                
+               
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
+
         public bool deleteOffer(int id)
         {
             try

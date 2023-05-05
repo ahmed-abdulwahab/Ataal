@@ -20,7 +20,13 @@ namespace Ataal.DAL.Repos.customer
             _ataalContext = ataalContext;
         }
 
+        public Customer? GetNormalCustomer(int CustomerId)
+        {
+            return _ataalContext.Customers
+                .Include(c => c.Blocked_Technicals_Id)
+                .FirstOrDefault(C => C.Id == CustomerId);
 
+        }
         public Customer? GetNormalCustomerById(int CustomerId)
         {
             return _ataalContext.Customers.Include(c => c.AppUser).Include(c => c.Reviews).FirstOrDefault(c => c.Id == CustomerId);
@@ -103,6 +109,7 @@ namespace Ataal.DAL.Repos.customer
             UpdatedProblem.Description = problem.Description;
             UpdatedProblem.Section_ID = problem.Section_ID;
             UpdatedProblem.KeyWord_ID=problem.KeyWord_ID;
+            UpdatedProblem.VIP = problem.VIP;
             UpdatedProblem.PhotoPath1 = problem.PhotoPath1;
             UpdatedProblem.PhotoPath2 = problem.PhotoPath2;
             UpdatedProblem.PhotoPath3 = problem.PhotoPath3;
@@ -179,6 +186,15 @@ namespace Ataal.DAL.Repos.customer
 
             }
             return 0;
+
+        }
+        public List<Technical>? getAllTechnicalForSectionIdCustomerNeed(int CustomerId)
+        {
+            var Customer = GetNormalCustomer(CustomerId);
+            var TechIDs = Customer.Blocked_Technicals_Id.Select(T=>T.Id).ToList();
+            var Technicans = _ataalContext.Technicals.Include(s=>s.AppUser)
+                .Include(s => s.Sections).Where(s => !TechIDs.Contains(s.Id)).ToList();
+            return Technicans;
 
         }
         public int AddTechnicalReview(Review Review)

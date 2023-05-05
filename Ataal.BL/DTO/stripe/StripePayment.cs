@@ -8,7 +8,7 @@ namespace Ataal.BL.DTO.stripe
 {
     public record StripePayment(
         int customerId,
-        int problemId,
+      
         string CardNumber,
         string ExpirationYear,
         string ExpirationMonth,

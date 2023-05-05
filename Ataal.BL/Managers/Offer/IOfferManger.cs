@@ -13,7 +13,7 @@ namespace Ataal.BL.Managers.Offer
         public bool createOffer(OfferDTO offerDTO);
         public List<OfferDTO> getAll_Offers(int technicaID, int problemID);
 
-        public OfferDTO getByID(int id);
+        public GetByIdOffer getByID(int id);
         public bool deleteOffer(int id);
 
         public OfferDTO getByIDUsingTechnical(int technicalId,int ProblemID);

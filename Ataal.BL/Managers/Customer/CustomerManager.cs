@@ -24,6 +24,7 @@ using Ataal.BL.DTO.problem;
 using Ataal.BL.DTO.recommendation;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using static Ataal.BL.Constants;
+using Ataal.BL.DtO.Section;
 
 namespace Ataal.BL.Managers.Customer
 {
@@ -147,7 +148,7 @@ namespace Ataal.BL.Managers.Customer
                 var problem = new Problem
                 {
                     Problem_Title = CustDto.Title,
-                    
+                    VIP=CustDto.VIP,
                     Description = CustDto.Description,
                     Section_ID = CustDto.Section_ID,
                     Customer_ID = CustDto.Customer_ID,
@@ -174,6 +175,8 @@ namespace Ataal.BL.Managers.Customer
                                                     Date: P.dateTime,
                                                     IsSolved: P.Solved,
                                                     IsVIP: P.VIP,
+                                                    Section_id: P.Section.Section_ID,
+                                                    Key_WordId: P.KeyWord?.KeyWord_ID,
                                                     Key_Word: P.KeyWord?.KeyWord_Name,
                                                     PhotoPath1: P.PhotoPath1,
                                                     PhotoPath2: P.PhotoPath2,
@@ -187,15 +190,21 @@ namespace Ataal.BL.Managers.Customer
             DealWithImages.Initialize(env);
 
             var problem = ReturnProblemByID(CustDto.Problem_id);
-
+            string p1=problem.PhotoPath1, p2= problem.PhotoPath2, p3= problem.PhotoPath3, p4=problem.PhotoPath4;
             if (problem != null)
             {
-                DealWithImages.DeleteFile(problem.PhotoPath1 ?? "");
-                DealWithImages.DeleteFile(problem.PhotoPath2 ?? "");
-                DealWithImages.DeleteFile(problem.PhotoPath3 ?? "");
-                DealWithImages.DeleteFile(problem.PhotoPath4 ?? "");
+                if (CustDto.File1 != null || CustDto.File2 != null || CustDto.File3 != null || CustDto.File4 != null)
+                {
+                    DealWithImages.DeleteFile(problem.PhotoPath1 ?? "");
+                    DealWithImages.DeleteFile(problem.PhotoPath2 ?? "");
+                    DealWithImages.DeleteFile(problem.PhotoPath3 ?? "");
+                    DealWithImages.DeleteFile(problem.PhotoPath4 ?? "");
+                    p1 = await DealWithImages.ReturnImagePath(CustDto.File1);
+                    p2 = await DealWithImages.ReturnImagePath(CustDto.File2);//Ask why is there null reference warning                                                 
+                    p3 = await DealWithImages.ReturnImagePath(CustDto.File3);
+                    p4 = await DealWithImages.ReturnImagePath(CustDto.File4);
 
-               
+                }
             }
             if (CustDto != null)
             {
@@ -205,12 +214,12 @@ namespace Ataal.BL.Managers.Customer
                     Problem_Title = CustDto.Title,
                     Description = CustDto.Description,
                     Section_ID = CustDto.Section_ID,
-                
+                     VIP=CustDto.VIP,
                     KeyWord_ID = CustDto.KyeWord_ID,
-                    PhotoPath1 = await DealWithImages.ReturnImagePath(CustDto.File1),
-                    PhotoPath2 = await DealWithImages.ReturnImagePath(CustDto.File2),//Ask why is there null reference warning                                                 
-                    PhotoPath3 = await DealWithImages.ReturnImagePath(CustDto.File3),
-                    PhotoPath4 = await DealWithImages.ReturnImagePath(CustDto.File4),
+                    PhotoPath1 =p1,
+                    PhotoPath2 = p2,//Ask why is there null reference warning                                                 
+                    PhotoPath3 = p3,
+                    PhotoPath4 =p4,
                 };
                 return customerRepo.UpdateCustomerProblem(Newproblem);
             }
@@ -334,6 +343,32 @@ namespace Ataal.BL.Managers.Customer
             };
             return customerRepo.AddTechnicalReview(NewReview);
         }
+
+
+        public List<AllTechnicansWithSectionsForCustomerDto>? ReturnAllTechnicansForCustomerNeed(int CustomerId)
+        {
+            var TechnicansList = customerRepo.getAllTechnicalForSectionIdCustomerNeed(CustomerId);
+            var Technicans = TechnicansList.Select(T => new AllTechnicansWithSectionsForCustomerDto(
+                                                        Id: T.Id,
+                                                        Name: $"{T.Frist_Name} {T.Last_Name}",
+                                                        Phone: T.AppUser.PhoneNumber,
+                                                        Email: T.AppUser.Email,
+                                                        Address: T.Address,
+                                                        photo: T.Photo,
+                                                        Breif: T.Brief,
+                                                        rate: T.Rate,
+                                                        Sections: T.Sections?.Select(S => new Section_Name_And_Id_DtO
+                                                        (
+                                                            id: S.Section_ID,
+                                                            Name: S.Section_Name
+
+                                                        )
+
+
+                                    ))).ToList();
+            return Technicans;
+        }
+
         public int ModifyingTechnical_Rate(int TechnicalId)
         {
             return customerRepo.ModifyingTchnicalRate(TechnicalId);

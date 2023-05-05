@@ -9,7 +9,7 @@ namespace Ataal.DAL.Repos.keywords
 {
     public interface IKeywordsRepo
     {
-        public List<string> GetAllKeywordsBySectionId(int sectionId);
+        public List<KeyWords> GetAllKeywordsBySectionId(int sectionId);
         public int SaveChanges();
     }
 }

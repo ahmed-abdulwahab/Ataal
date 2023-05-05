@@ -21,8 +21,6 @@ namespace Ataal.BL.DtO.technical
             int Rate,
             string? Brief,
             string Address,
-
-
             IEnumerable<ReviewDto>? Reviews,
             IEnumerable<Section_Name_And_Id_DtO>? Sections
 

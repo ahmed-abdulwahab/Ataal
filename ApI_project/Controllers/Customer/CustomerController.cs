@@ -45,9 +45,18 @@ namespace Ataal.Controllers.Customer
                 return NotFound();
             return Ok(problems);
         }
+        [HttpGet]
+        [Route("GetAllTechnicansCustomerNeed/{CustomerId}")]
+        public IActionResult GetAllTechnicansCustomerNeed(int CustomerId)
+        {
+            var Technicans=_customerManager.ReturnAllTechnicansForCustomerNeed(CustomerId);
+            if(Technicans==null)
+                return NotFound();
+            return Ok(Technicans);
+        }
 
         [HttpPost]
-        [Route("update_Problem/{id}")]
+        [Route("update_Problem/{ProblemId}")]
         public async Task<IActionResult> UpdatingingProblem(int ProblemId,[FromForm] updatedProblemDto CustDto)
         {
             if (ProblemId != CustDto.Problem_id)
@@ -58,7 +67,7 @@ namespace Ataal.Controllers.Customer
                 return BadRequest();
             }
 
-            return Ok("updated");
+            return Ok();
         }
 
 
