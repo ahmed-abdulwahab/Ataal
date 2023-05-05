@@ -186,5 +186,16 @@ namespace Ataal.BL.Mangers.Technical
                     NumOfSolvedProblems: technical.Problems_Solved.Count
                     );
         }
+
+        public int? getPoints(int id)
+        {
+            return technicalRepo.getPoints(id);
+        }
+
+        public bool decreasePoints(int technicalID)
+        {
+            return technicalRepo.decreasePoints(technicalID);
+
+        }
     }
 }

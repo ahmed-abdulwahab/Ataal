@@ -23,7 +23,7 @@ namespace Ataal.DAL.Repos.customer
 
         public Customer? GetNormalCustomerById(int CustomerId)
         {
-            return _ataalContext.Customers.Include(c => c.AppUser).FirstOrDefault(c => c.Id == CustomerId);
+            return _ataalContext.Customers.Include(c => c.AppUser).Include(c => c.Reviews).FirstOrDefault(c => c.Id == CustomerId);
              
         }
 

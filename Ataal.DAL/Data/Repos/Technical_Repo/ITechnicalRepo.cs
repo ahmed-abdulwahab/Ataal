@@ -18,6 +18,10 @@ namespace Ataal.DAL.Data.Repos.Technical_Repo
         public Task<Technical> deleteTechnical(int id);
         public Technical updateTechnical(int id, Technical technical);
         public Technical CreateTechnical(Technical technical);
-        
+        public int saveChanges();
+        public int? getPoints(int TechnicalID);
+
+        public bool decreasePoints(int technicalID);
+
     }
 }

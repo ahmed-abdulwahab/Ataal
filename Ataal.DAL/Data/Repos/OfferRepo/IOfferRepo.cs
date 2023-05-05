@@ -14,6 +14,9 @@ namespace Ataal.DAL.Data.Repos.OfferRepo
         public Offer getByID(int id);
         public bool deleteOffer(int id);
 
+        public Offer getByIDUsingTechnical(int technicalId, int ProblemID);
+
+        public bool deleteOfferByTechnicalandProblemId(int TechnicalID, int ProblemID);
 
     }
 }

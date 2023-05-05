@@ -1,6 +1,8 @@
-﻿using Ataal.BL.DTO.problem;
+﻿using Ataal.BL.DTO.Customer;
+using Ataal.BL.DTO.problem;
 using Ataal.DAL.Data.Models;
 using Ataal.DAL.Data.Repos.Technical_Repo;
+using Ataal.DAL.Repos.customer;
 using Ataal.DAL.Repos.problem;
 using System;
 using System.Collections.Generic;
@@ -16,10 +18,13 @@ namespace Ataal.BL.Managers.problem
     {
         private readonly IProblemRepo _problemRepo;
         private readonly ITechnicalRepo _technicalRepo;
-        public ProblemManager(IProblemRepo problemRepo, ITechnicalRepo technicalRepo)
+        private readonly ICustomerRepo customerRepo;
+
+        public ProblemManager(IProblemRepo problemRepo, ITechnicalRepo technicalRepo, ICustomerRepo customerRepo)
         {
             _problemRepo= problemRepo;
             _technicalRepo= technicalRepo;
+            this.customerRepo = customerRepo;
         }
         public List<ProblemReturnDto>? GetProblemsForTechnical(GetProblemsPagingDto GetProblemsPaging)
         {
@@ -161,6 +166,24 @@ namespace Ataal.BL.Managers.problem
                 return null!;
             }
 
+        }
+
+        public Sidebar_Customer GetCoustomerByProblemID(int ProblemId)
+        {
+            Problem problem = _problemRepo.GetProblemById(ProblemId)!;
+            var coustomer = customerRepo.GetNormalCustomerById(problem.Customer_ID);
+
+            var customerSideBarDto = new Sidebar_Customer
+            (
+                                       id: coustomer!.Id,
+                                       firstName: coustomer.Frist_Name,
+                                       lastName: coustomer.Last_Name,
+                                       Photo: coustomer.Photo,
+                                       address: coustomer.Address!,
+                                       numOfProblems: coustomer.Reviews!.Count!
+
+            );
+            return customerSideBarDto;
         }
     }
 }

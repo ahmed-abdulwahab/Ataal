@@ -82,5 +82,20 @@ namespace Ataal.Controllers.problem
 
             return Ok(AllSolvedProblems);
         }
+
+
+
+
+        [HttpGet]
+        [Route("Customer/{ProblemId}")]                               //return Coustomer for sidebar
+        public IActionResult GetCoustomerByProblemId(int ProblemId)
+        {
+            var problemDto = _problemManager.GetCoustomerByProblemID(ProblemId);
+            if (problemDto != null)
+            {
+                return Ok(problemDto);
+            }
+            return NotFound();
+        }
     }
 }

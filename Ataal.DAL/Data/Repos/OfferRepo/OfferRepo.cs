@@ -77,5 +77,32 @@ namespace Ataal.DAL.Data.Repos.OfferRepo
                 return false;
             }
         }
+
+        public Offer getByIDUsingTechnical(int technicalId, int ProblemID)
+        {
+            try
+            {
+                return ataalContext.Offers.FirstOrDefault(O => O.technicalId == technicalId && O.problemId== ProblemID)!;
+            }
+            catch
+            {
+                return null!;
+            }
+        }
+
+        public bool deleteOfferByTechnicalandProblemId(int TechnicalID, int ProblemID)
+        {
+            try
+            {
+                var offer = ataalContext.Offers.FirstOrDefault(O => O.technicalId == TechnicalID && O.problemId == ProblemID)!;
+                ataalContext.Offers.Remove(offer);
+                ataalContext.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }

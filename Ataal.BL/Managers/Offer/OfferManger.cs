@@ -84,5 +84,24 @@ namespace Ataal.BL.Managers.Offer
 
             return true;
         }
+
+        public OfferDTO getByIDUsingTechnical(int technicalId, int ProblemID)
+        {
+            var allOffers = offerRepo.getByIDUsingTechnical(technicalId, ProblemID);
+            if (allOffers == null)
+                return null!;
+            return new OfferDTO
+            (
+                allOffers.technicalId,
+                allOffers.problemId,
+                allOffers.OfferSalary,
+                allOffers.OfferMassage
+            );
+        }
+
+        public bool deleteOfferByTechnicalandProblemId(int TechnicalID, int ProblemID)
+        {
+            return offerRepo.deleteOfferByTechnicalandProblemId(TechnicalID, ProblemID);
+        }
     }
 }
