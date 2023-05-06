@@ -121,7 +121,7 @@ namespace Ataal.Controllers.Identity
             );
 
             //Add Customer
-             await customerManager.CreateCustomer(technical);
+          await customerManager.CreateCustomer(technical);
 
 
             var claims = new List<Claim>

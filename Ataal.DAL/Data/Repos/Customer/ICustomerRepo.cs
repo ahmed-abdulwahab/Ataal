@@ -10,6 +10,7 @@ namespace Ataal.DAL.Repos.customer
 {
     public interface ICustomerRepo
     {
+        public Customer? GetCustomerByAppUser(string Appuser);
         public Customer? GetRecommenditionForCustomerById(int CustomerId);
         public Customer? GetOffersForCustomerById(int CustomerId);
         public int GetNotificationCount(int CustomerId);

@@ -32,6 +32,8 @@ namespace Ataal.BL.Managers.problem
                 var problems = ProblemList.Select(P =>
                               new ProblemReturnDto(
                                   id:P.Problem_ID,
+                                   TechnicanName: P.Technical?.Frist_Name + "" + P.Technical?.Last_Name,
+                                  TechId:P.Technical_ID,
                                   Title: P.Problem_Title,
                                                     Description: P.Description,
                                                     Date:P.dateTime,
@@ -75,6 +77,8 @@ namespace Ataal.BL.Managers.problem
             var ProblemReturnDto = new ProblemReturnDto
                  (
                                                    id:P.Problem_ID,
+                                                    TechnicanName: P.Technical?.Frist_Name + "" + P.Technical?.Last_Name,
+                                                   TechId:P.Technical_ID,
                                                    Title: P.Problem_Title,
                                                     Description: P.Description,
                                                     Date:P.dateTime,
@@ -130,6 +134,8 @@ namespace Ataal.BL.Managers.problem
 
             return AllSolvedProblems.Select(P => new ProblemReturnDto(
                         id: P.Problem_ID,
+                         TechnicanName: P.Technical?.Frist_Name +""+ P.Technical?.Last_Name,
+                        TechId:P.Technical_ID,
                         Title: P.Problem_Title,
                         Description: P.Description,
                         IsSolved: P.Solved,   

@@ -170,12 +170,14 @@ namespace Ataal.BL.Managers.Customer
                 return null;
             var Problems = Problemslist.Select(P => new ProblemReturnDto(
                                                   id:P.Problem_ID,
+                                                  TechnicanName: $"{P.Technical?.Frist_Name} {P.Technical?.Last_Name}",
+                                                  TechId:P.Technical_ID,
                                                    Title: P.Problem_Title,
                                                     Description: P.Description,
                                                     Date: P.dateTime,
                                                     IsSolved: P.Solved,
                                                     IsVIP: P.VIP,
-                                                    Section_id: P.Section.Section_ID,
+                                                    Section_id: P.Section_ID,
                                                     Key_WordId: P.KeyWord?.KeyWord_ID,
                                                     Key_Word: P.KeyWord?.KeyWord_Name,
                                                     PhotoPath1: P.PhotoPath1,
@@ -228,6 +230,8 @@ namespace Ataal.BL.Managers.Customer
         }
         public async Task<int?> UpdateCustomerProfile(int CustomerId, UpdatedCustomerProfileDto Dto)
         {
+            DealWithImages.Initialize(env);
+
             var customer = customerRepo.GetNormalCustomerById(CustomerId);
 
             if (customer == null)
@@ -238,8 +242,15 @@ namespace Ataal.BL.Managers.Customer
 
             if (Dto.PhotoFile != null)
             {
+                if (customer.Photo != null)
+                {
+                    DealWithImages.DeleteFile(customer.Photo ?? "");
+                }
+
+
                 var photoPath = await DealWithImages.ReturnImagePath(Dto.PhotoFile);
                 customer.Photo = photoPath;
+
             }
           
 
@@ -519,6 +530,18 @@ namespace Ataal.BL.Managers.Customer
                     Photo: c.Photo!,
                     Name: c.Frist_Name + " " + c.Last_Name
                 )).ToList();
+        }
+
+
+        public LoginCustomerDto? GetCustomerByAppUser(string Appuser)
+        {
+            var cust = customerRepo.GetCustomerByAppUser(Appuser);
+            if (cust != null)
+            {
+                return new LoginCustomerDto(id:cust.Id,name:$"{cust.Frist_Name} {cust.Last_Name}",photo:cust.Photo);
+            }
+            else { return null; }
+          
         }
     }
 }

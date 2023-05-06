@@ -8,6 +8,8 @@ namespace Ataal.BL.DTO.problem
 {
     public record ProblemReturnDto(
         int id,
+        string?TechnicanName,
+        int ?TechId,
         string Title,
         string Description,
         DateTime? Date,
