@@ -27,6 +27,16 @@ namespace Ataal.DAL.Repos.customer
                 .FirstOrDefault(C => C.Id == CustomerId);
 
         }
+        public Customer? GetCustomerByAppUser(string Appuser)
+        {
+            return _ataalContext.Customers
+                .Include(c => c.Blocked_Technicals_Id)
+                .FirstOrDefault(C => C.AppUserId == Appuser);
+
+        }
+
+
+
         public Customer? GetNormalCustomerById(int CustomerId)
         {
             return _ataalContext.Customers.Include(c => c.AppUser).Include(c => c.Reviews).FirstOrDefault(c => c.Id == CustomerId);
@@ -72,7 +82,8 @@ namespace Ataal.DAL.Repos.customer
         public List<Problem> GetAllProblemsForCustomer(int CustomerId)
         {
             return _ataalContext.Problems.
-                        Include(p=>p.KeyWord).
+                        Include(p=>p.KeyWord)
+                        .Include(problem=> problem.Technical).
                         Where(P=>P.Customer_ID==CustomerId).ToList();
         }
 

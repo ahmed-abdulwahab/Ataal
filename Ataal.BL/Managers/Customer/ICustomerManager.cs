@@ -18,6 +18,8 @@ namespace Ataal.BL.Managers.Customer
 {
     public interface ICustomerManager
     {
+        public LoginCustomerDto? GetCustomerByAppUser(string Appuser);
+
         public NotificationDto GetAllNotification(int CustomerId);
         public int GetNotificationCount(int CustomerId);
         public oneCustomerDto? GetCustomerById(int id);

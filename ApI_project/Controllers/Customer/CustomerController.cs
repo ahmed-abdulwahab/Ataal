@@ -137,9 +137,21 @@ namespace Ataal.Controllers.Customer
             return BadRequest();
         }
 
+        [HttpGet]
+        [Route("/appuser/{AppUserId}")]
+        public IActionResult GetCustomerByAppUser(string AppUserId)
+        {
 
+            var customer = _customerManager.GetCustomerByAppUser(AppUserId);
+            if (customer != null)
+            {
+                return Ok(customer);
 
+            }
+            return BadRequest();
+        }
 
+        //GetCustomerByAppUser
 
 
         [HttpPost]

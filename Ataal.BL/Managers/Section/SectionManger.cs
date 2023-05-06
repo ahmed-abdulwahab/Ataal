@@ -115,7 +115,7 @@ namespace Ataal.BL.Managers.Section
 																															 CustomerName:$"{p.Customer.Frist_Name} {p.Customer.Last_Name}",
 																															 CustomerPhoto:p.Customer.Photo,
                                                                                                                              keyword:
-																															_problemRepo.GetKeywordByProblemId(p.Problem_ID).KeyWord_Name,
+																															_problemRepo.GetKeywordByProblemId(p.Problem_ID)?.KeyWord_Name,
                                                                                                                              Photo1: p.PhotoPath1,
                                                                                                                              Photo2: p.PhotoPath2,
                                                                                                                              Photo3: p.PhotoPath3,
