@@ -187,6 +187,15 @@ namespace Ataal.BL.Mangers.Technical
                     );
         }
 
+        public int? getPoints(int id)
+        {
+            return technicalRepo.getPoints(id);
+        }
 
+        public bool decreasePoints(int technicalID)
+        {
+            return technicalRepo.decreasePoints(technicalID);
+
+        }
     }
 }

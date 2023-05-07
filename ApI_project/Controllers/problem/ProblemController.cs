@@ -85,11 +85,38 @@ namespace Ataal.Controllers.problem
         }
 
         [HttpGet]
+        [Route("GetAllProblemsInfoForTechnical/{TechnicalId}")]
+        public IActionResult GetProblemsInfoForTechnical(int TechnicalId)
+        {
+
+            var AllSolvedProblems = _problemManager.ProblemInfoForTechnical(TechnicalId);
+
+            if (AllSolvedProblems == null) return NotFound();
+
+            return Ok(AllSolvedProblems);
+        }
+
+        [HttpGet]
         [Route("GetAllProblem")]
         public IActionResult GetAllSectionsNames()
         {
             var AllProblems = _problemManager.GetAllProblems();
             return Ok(AllProblems);
+        }
+
+
+
+
+        [HttpGet]
+        [Route("Customer/{ProblemId}")]                               //return Coustomer for sidebar
+        public IActionResult GetCoustomerByProblemId(int ProblemId)
+        {
+            var problemDto = _problemManager.GetCoustomerByProblemID(ProblemId);
+            if (problemDto != null)
+            {
+                return Ok(problemDto);
+            }
+            return NotFound();
         }
     }
 }

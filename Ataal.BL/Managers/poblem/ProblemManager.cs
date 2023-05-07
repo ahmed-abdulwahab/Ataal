@@ -1,7 +1,9 @@
-﻿using Ataal.BL.DTO.problem;
+﻿using Ataal.BL.DTO.Customer;
+using Ataal.BL.DTO.problem;
 using Ataal.BL.DTO.Review;
 using Ataal.DAL.Data.Models;
 using Ataal.DAL.Data.Repos.Technical_Repo;
+using Ataal.DAL.Repos.customer;
 using Ataal.DAL.Repos.problem;
 using Stripe;
 using System;
@@ -18,10 +20,13 @@ namespace Ataal.BL.Managers.problem
     {
         private readonly IProblemRepo _problemRepo;
         private readonly ITechnicalRepo _technicalRepo;
-        public ProblemManager(IProblemRepo problemRepo, ITechnicalRepo technicalRepo)
+        private readonly ICustomerRepo customerRepo;
+
+        public ProblemManager(IProblemRepo problemRepo, ITechnicalRepo technicalRepo, ICustomerRepo customerRepo)
         {
             _problemRepo= problemRepo;
             _technicalRepo= technicalRepo;
+            this.customerRepo = customerRepo;
         }
         public List<ProblemReturnDto>? GetProblemsForTechnical(GetProblemsPagingDto GetProblemsPaging)
         {
@@ -32,6 +37,8 @@ namespace Ataal.BL.Managers.problem
                 var problems = ProblemList.Select(P =>
                               new ProblemReturnDto(
                                   id:P.Problem_ID,
+                                   TechnicanName: P.Technical?.Frist_Name + "" + P.Technical?.Last_Name,
+                                  TechId:P.Technical_ID,
                                   Title: P.Problem_Title,
                                                     Description: P.Description,
                                                     Date:P.dateTime,
@@ -75,6 +82,8 @@ namespace Ataal.BL.Managers.problem
             var ProblemReturnDto = new ProblemReturnDto
                  (
                                                    id:P.Problem_ID,
+                                                    TechnicanName: P.Technical?.Frist_Name + "" + P.Technical?.Last_Name,
+                                                   TechId:P.Technical_ID,
                                                    Title: P.Problem_Title,
                                                     Description: P.Description,
                                                     Date:P.dateTime,
@@ -130,19 +139,35 @@ namespace Ataal.BL.Managers.problem
 
             return AllSolvedProblems.Select(P => new ProblemReturnDto(
                         id: P.Problem_ID,
+                         TechnicanName: P.Technical?.Frist_Name +""+ P.Technical?.Last_Name,
+                        TechId:P.Technical_ID,
                         Title: P.Problem_Title,
                         Description: P.Description,
                         IsSolved: P.Solved,   
                         Date:P.dateTime,
                         IsVIP: P.VIP,
-                        Key_WordId:P.KeyWord?.KeyWord_ID,
-                        Section_id: P.Section.Section_ID,
-                        Key_Word: P.KeyWord?.KeyWord_Name,
-                        PhotoPath1: P.PhotoPath1,
-                        PhotoPath2: P.PhotoPath2,
-                        PhotoPath3: P.PhotoPath3,
-                        PhotoPath4: P.PhotoPath4
+                        Key_WordId:P.KeyWord?.KeyWord_ID ?? -1,
+                        Section_id: P.Section?.Section_ID ?? -1,
+                        Key_Word: P.KeyWord?.KeyWord_Name ?? "error",
+                        PhotoPath1: P.PhotoPath1 ?? "error",
+                        PhotoPath2: P.PhotoPath2 ?? "error" ,
+                        PhotoPath3: P.PhotoPath3 ?? "error",
+                        PhotoPath4: P.PhotoPath4 ?? "error"
 
+                )).ToList();
+        }
+
+        public List<ProblemInfoForTechnical> Search(string query, int TechnicalId)
+        {
+            var allProblemsThatAppearedInSearch = _problemRepo.get_All_Problems_for_Search(query, TechnicalId);
+
+            return allProblemsThatAppearedInSearch.Select(P => new ProblemInfoForTechnical(
+                     id: P.Problem_ID,
+                    Title: P.Problem_Title,
+                    Date: P.dateTime,
+                    Description: P.Description,
+                    IsVIP: P.VIP,
+                    Key_Word: P.KeyWord?.KeyWord_Name
                 )).ToList();
         }
 
@@ -151,6 +176,54 @@ namespace Ataal.BL.Managers.problem
             try
             {
                 var allProblems = _problemRepo.get_All_Problems_forTechincal(SectionID, TechnicalId);
+
+                var all_Problems_info_DTO = allProblems.Select(P => new ProblemInfoForTechnical
+                (
+                    id: P.Problem_ID,
+                    Title: P.Problem_Title,
+                    Date: P.dateTime,
+                    Description: P.Description,
+                    IsVIP: P.VIP,
+                    Key_Word: P.KeyWord?.KeyWord_Name
+                )).ToList();
+
+                return all_Problems_info_DTO;
+            }
+            catch
+            {
+                return null!;
+            }
+
+        }
+
+        public Sidebar_Customer GetCoustomerByProblemID(int ProblemId)
+
+        {
+            Problem problem = _problemRepo.GetProblemById(ProblemId)!;
+            var coustomer = customerRepo.GetNormalCustomerById(problem.Customer_ID);
+
+            var customerSideBarDto = new Sidebar_Customer
+            (
+                                       id: coustomer!.Id,
+                                       firstName: coustomer.Frist_Name,
+                                       lastName: coustomer.Last_Name,
+                                       Photo: coustomer.Photo,
+                                       address: coustomer.Address!,
+
+                                       numOfProblems: coustomer.Problems!.Count()
+
+                                     
+
+
+            ); ;
+            return customerSideBarDto;
+        }
+
+        public List<ProblemInfoForTechnical> ProblemInfoForTechnical(int TechnicalId)
+        {
+            try
+            {
+                var allProblems = _problemRepo.get_All_Problems_forTechincal(TechnicalId);
 
                 var all_Problems_info_DTO = allProblems.Select(P => new ProblemInfoForTechnical
                 (

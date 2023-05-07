@@ -15,11 +15,17 @@ namespace Ataal.BL.Mangers.technical
         public Task<DetailedTechnicalDTO> GetTechnical_Profile(int id);
         public Task<SideBarTechnicalDto> GetTechnical_SomeInfo(int id);
         public List<ReturnTechnicalWithNameandIdDto>? getAllTechnicalForSectionId(int SectionId);
+
+
         public int deleteTechnical(int id);
 
         public Task<int> updateTechnical(int id, TechnicalUpdateDto technical);
 
         public Task<RegisterUserDto> addTechnical(RegisterUserDto technical);
+
+        public int? getPoints(int id);
+
+        public bool decreasePoints(int technicalID);
 
     }
 }

@@ -28,7 +28,15 @@ public static class Constants
             if (File != null)
             {
                 var fileName = $"{Guid.NewGuid()}{Path.GetExtension(File.FileName)}";
+                //if (string.IsNullOrWhiteSpace(_env.WebRootPath))
+                //{
+                //    _env.WebRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+
+                //}
+
                 var filePath = Path.Combine(_env.WebRootPath, fileName);
+             
+             
 
                 // Save the image to disk
                 using (var stream = new FileStream(filePath, FileMode.Create))

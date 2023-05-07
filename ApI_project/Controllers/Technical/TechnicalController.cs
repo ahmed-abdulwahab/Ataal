@@ -5,6 +5,8 @@ using Ataal.BL.Managers.Offer;
 using Ataal.BL.Managers.Section;
 using Ataal.BL.Mangers.technical;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Stripe_Payments_Web_Api.Controllers;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -95,6 +97,19 @@ namespace Ataal.Controllers.Technical
 
             return Ok();
 
+        }
+
+
+        [HttpGet("GetPoints/{id}")]
+        public ActionResult GetPoints(int id)
+        {
+            return Ok(ITechnicalManger.getPoints(id));
+        }
+
+        [HttpGet("decrese/{technicalID}")]
+        public ActionResult decreasePoints(int technicalID)
+        {
+            return Ok(ITechnicalManger.decreasePoints(technicalID));
         }
 
     }
