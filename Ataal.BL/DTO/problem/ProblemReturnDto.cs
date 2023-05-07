@@ -8,6 +8,7 @@ namespace Ataal.BL.DTO.problem
 {
     public record ProblemReturnDto(
         int id,
+        string?CustomerName,
         string?TechnicanName,
         int ?TechId,
         string Title,
@@ -18,6 +19,7 @@ namespace Ataal.BL.DTO.problem
         int Section_id,
         int? Key_WordId,
         string? Key_Word,
+        string?CustomerPhoto,
         string? PhotoPath1,
         string? PhotoPath2,
         string? PhotoPath3,

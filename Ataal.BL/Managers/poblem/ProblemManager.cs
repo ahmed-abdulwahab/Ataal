@@ -37,7 +37,8 @@ namespace Ataal.BL.Managers.problem
                 var problems = ProblemList.Select(P =>
                               new ProblemReturnDto(
                                   id:P.Problem_ID,
-                                   TechnicanName: P.Technical?.Frist_Name + "" + P.Technical?.Last_Name,
+                                  CustomerName: $"{P.Customer.Frist_Name} {P.Customer.Last_Name}",
+                                  TechnicanName: P.Technical?.Frist_Name + "" + P.Technical?.Last_Name,
                                   TechId:P.Technical_ID,
                                   Title: P.Problem_Title,
                                                     Description: P.Description,
@@ -47,6 +48,7 @@ namespace Ataal.BL.Managers.problem
                                                     Section_id:P.Section.Section_ID,
                                                     Key_WordId: P.KeyWord?.KeyWord_ID,
                                                     Key_Word: P.KeyWord?.KeyWord_Name,
+                                                    CustomerPhoto:P.Customer.Photo,
                                                     PhotoPath1: P.PhotoPath1,
                                                     PhotoPath2: P.PhotoPath2,
                                                     PhotoPath3: P.PhotoPath3,
@@ -82,7 +84,8 @@ namespace Ataal.BL.Managers.problem
             var ProblemReturnDto = new ProblemReturnDto
                  (
                                                    id:P.Problem_ID,
-                                                    TechnicanName: P.Technical?.Frist_Name + "" + P.Technical?.Last_Name,
+                                                   CustomerName:$"{P.Customer.Frist_Name} {P.Customer.Last_Name}",
+                                                   TechnicanName: P.Technical?.Frist_Name + "" + P.Technical?.Last_Name,
                                                    TechId:P.Technical_ID,
                                                    Title: P.Problem_Title,
                                                     Description: P.Description,
@@ -92,6 +95,7 @@ namespace Ataal.BL.Managers.problem
                                                     Section_id: P.Section.Section_ID,
                                                     Key_WordId:P.KeyWord?.KeyWord_ID,
                                                     Key_Word: P.KeyWord?.KeyWord_Name,
+                                                    CustomerPhoto:P.Customer.Photo,
                                                     PhotoPath1: P.PhotoPath1,
                                                     PhotoPath2: P.PhotoPath2,
                                                     PhotoPath3: P.PhotoPath3,
@@ -139,6 +143,7 @@ namespace Ataal.BL.Managers.problem
 
             return AllSolvedProblems.Select(P => new ProblemReturnDto(
                         id: P.Problem_ID,
+                        CustomerName: $"{P.Customer.Frist_Name} {P.Customer.Last_Name}",
                          TechnicanName: P.Technical?.Frist_Name +""+ P.Technical?.Last_Name,
                         TechId:P.Technical_ID,
                         Title: P.Problem_Title,
@@ -149,6 +154,7 @@ namespace Ataal.BL.Managers.problem
                         Key_WordId:P.KeyWord?.KeyWord_ID ?? -1,
                         Section_id: P.Section?.Section_ID ?? -1,
                         Key_Word: P.KeyWord?.KeyWord_Name ?? "error",
+                        CustomerPhoto:P.Customer.Photo,
                         PhotoPath1: P.PhotoPath1 ?? "error",
                         PhotoPath2: P.PhotoPath2 ?? "error" ,
                         PhotoPath3: P.PhotoPath3 ?? "error",
