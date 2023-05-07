@@ -202,7 +202,7 @@ namespace Ataal.BL.Managers.problem
                                        lastName: coustomer.Last_Name,
                                        Photo: coustomer.Photo,
                                        address: coustomer.Address!,
-                                       numOfProblems: coustomer.Reviews!.Count!
+                                       numOfProblems: coustomer.Problems.Count!
 
             );
             return customerSideBarDto;
