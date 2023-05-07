@@ -209,7 +209,11 @@ namespace Ataal.BL.Managers.problem
                                        lastName: coustomer.Last_Name,
                                        Photo: coustomer.Photo,
                                        address: coustomer.Address!,
+
                                        numOfProblems: coustomer.Problems!.Count()
+
+                                     
+
 
             ); ;
             return customerSideBarDto;

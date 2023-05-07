@@ -63,8 +63,8 @@ namespace Ataal.DAL.Data.Repos.Technical_Repo
 
         public Technical? getTechnicalByID(int id)
         {
-            return ataalContext.Set<Technical>()?.Where(t => t.Id==id)?
-                .Include("AppUser")?.Include(t => t.Problems_Solved)?.Include(T=>T.Sections)?.Include(t=>t.Reviews)!.ThenInclude(r => r.Customer)
+            return ataalContext.Set<Technical>().Where(t => t.Id==id)
+                .Include(t => t.AppUser).Include(t => t.Problems_Solved).Include(T=>T.Sections).Include(t=>t.Reviews)!.ThenInclude(r => r.Customer)
                 .FirstOrDefault();
         }
         public Technical? getNormalTechnicalById(int TechnicalId)

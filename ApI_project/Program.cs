@@ -206,8 +206,9 @@ namespace ApI_project
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
+
             app.UseStaticFiles();
-          
+
             app.MapControllers();
             //using (var scope = app.Services.CreateScope())
             //{
