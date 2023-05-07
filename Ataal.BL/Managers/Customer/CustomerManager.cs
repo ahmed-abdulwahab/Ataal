@@ -543,7 +543,21 @@ namespace Ataal.BL.Managers.Customer
             else { return null; }
           
         }
+
+        public LoginCustomerDto? GetTechByAppUser(string Appuser)
+        {
+            var cust = customerRepo.GetTechByAppUser(Appuser);
+            if (cust != null)
+            {
+                return new LoginCustomerDto(id: cust.Id, name: $"{cust.Frist_Name} {cust.Last_Name}", photo: cust.Photo);
+            }
+            else { return null; }
+
+        }
     }
+
+
+
 }
 
 
