@@ -197,6 +197,7 @@ namespace Ataal.BL.Managers.problem
         }
 
         public Sidebar_Customer GetCoustomerByProblemID(int ProblemId)
+
         {
             Problem problem = _problemRepo.GetProblemById(ProblemId)!;
             var coustomer = customerRepo.GetNormalCustomerById(problem.Customer_ID);
@@ -208,9 +209,13 @@ namespace Ataal.BL.Managers.problem
                                        lastName: coustomer.Last_Name,
                                        Photo: coustomer.Photo,
                                        address: coustomer.Address!,
-                                       numOfProblems: coustomer.Problems.Count!
 
-            );
+                                       numOfProblems: coustomer.Problems!.Count()
+
+                                     
+
+
+            ); ;
             return customerSideBarDto;
         }
 

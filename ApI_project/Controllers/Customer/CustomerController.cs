@@ -151,6 +151,20 @@ namespace Ataal.Controllers.Customer
             return BadRequest();
         }
 
+        [HttpGet]
+        [Route("/Techappuser/{AppUserId}")]
+        public IActionResult GetTechnByAppUser(string AppUserId)
+        {
+
+            var customer = _customerManager.GetTechByAppUser(AppUserId);
+            if (customer != null)
+            {
+                return Ok(customer);
+
+            }
+            return BadRequest();
+        }
+
         //GetCustomerByAppUser
 
 
