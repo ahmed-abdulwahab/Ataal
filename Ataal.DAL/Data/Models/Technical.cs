@@ -39,7 +39,7 @@ namespace Ataal.DAL.Data.Models
 
         public string? Brief { get; set; }
         public int NotificationCounter { get; set; } = 0;
-        public Offer? offer { get; set; }
+        public ICollection<Offer>? offers { get; set; }
 
 
         public int? Points { get; set; } = 0;
