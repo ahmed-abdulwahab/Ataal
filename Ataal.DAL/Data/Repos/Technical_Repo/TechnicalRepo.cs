@@ -45,6 +45,25 @@ namespace Ataal.DAL.Data.Repos.Technical_Repo
 
             return technical;
         }
+
+
+
+        public bool AddSectionsToTechnical(int[] SectionIds, int TechnicalId)
+        {
+            var Technical = ataalContext.Technicals
+                                        .Include(S => S.Sections)
+                                        .FirstOrDefault(T => T.Id == TechnicalId);
+
+            for(int i=0;i<SectionIds.Length;i++)
+            {
+                Technical.Sections.Add(ataalContext.Sections.Find(SectionIds[i]));
+            }
+            saveChanges();
+            return true;
+        }
+
+
+
         public List<Technical> getAllTechnical()  ///check the null after build the controller
         {
             return ataalContext.Set<Technical>().ToList();
@@ -67,6 +86,14 @@ namespace Ataal.DAL.Data.Repos.Technical_Repo
                 .Include(t => t.AppUser).Include(t => t.Problems_Solved).Include(T=>T.Sections).Include(t=>t.Reviews)!.ThenInclude(r => r.Customer)
                 .FirstOrDefault();
         }
+
+
+        public Technical GetTechnicalIncludeSections(int TechnicalId)
+        {
+            return ataalContext.Technicals.Include(S => S.Sections).FirstOrDefault(T=>T.Id==TechnicalId);
+        }
+
+
         public Technical? getNormalTechnicalById(int TechnicalId)
         {
             var technical= ataalContext.Technicals.Find(TechnicalId);

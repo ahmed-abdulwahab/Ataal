@@ -4,6 +4,7 @@ using Ataal.BL.DTO.Technical;
 using Ataal.BL.Managers.Offer;
 using Ataal.BL.Managers.Section;
 using Ataal.BL.Mangers.technical;
+using Ataal.BL.Mangers.Technical;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Stripe_Payments_Web_Api.Controllers;
@@ -36,6 +37,17 @@ namespace Ataal.Controllers.Technical
             return AllTechnicals;
 
         }
+
+        [HttpPost]
+        [Route("AddSectionstoTechnican")]
+        public IActionResult AddSectionstoTechnican(AddSectionstoTechnicalDto Dto)
+        {
+            var Result = ITechnicalManger.AddSectionsToTechnical(Dto);
+            if (Result == false)
+                return NotFound();
+            return Ok(Result);
+        }
+
         [HttpGet]
         [Route("GetAllTechnicalsForSectionId/{SectionId}")]
         public ActionResult<List<ReturnTechnicalWithNameandIdDto>> GetAllTechnicalsForSectionId(int SectionId)

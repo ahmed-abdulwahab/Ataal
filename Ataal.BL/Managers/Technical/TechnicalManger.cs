@@ -76,7 +76,20 @@ namespace Ataal.BL.Mangers.Technical
                 ))
             );
         }
-   
+
+
+        public bool AddSectionsToTechnical(AddSectionstoTechnicalDto Dto)
+        {
+            var Technical = technicalRepo.GetTechnicalIncludeSections(Dto.TechnicanId);
+            if(Technical==null|| Dto.SectionIds.Length==0)
+            {
+                return false;
+            }
+            technicalRepo.AddSectionsToTechnical(Dto.SectionIds, Dto.TechnicanId);
+            return true;
+        }
+
+
         public List<Technical_Name_Photo_Address_Rate> GetAllTechnicals()
         {
             var AllTechnicals = technicalRepo.getAllTechnical();
