@@ -87,7 +87,7 @@ namespace Ataal.Controllers.Identity
 
             await IdentityManger.AddClaims(UserToAdd, claims);
 
-            return NoContent();
+            return Ok(technical);
         }
 
         [HttpPost]
@@ -132,7 +132,7 @@ namespace Ataal.Controllers.Identity
 
             await IdentityManger.AddClaims(UserToAdd, claims);
 
-            return NoContent();
+            return Ok(technical);
         }
 
     }
