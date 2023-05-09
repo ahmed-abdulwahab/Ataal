@@ -173,7 +173,7 @@ namespace Ataal.BL.Managers.Customer
                 return null;
             var Problems = Problemslist.Select(P => new ProblemReturnDto(
                                                   id:P.Problem_ID,
-                                                  CustomerName: $"{P.Customer.Frist_Name} {P.Customer.Last_Name}",
+                                                  CustomerName: $"{P.Customer?.Frist_Name} {P.Customer?.Last_Name}",
                                                   TechnicanName: $"{P.Technical?.Frist_Name} {P.Technical?.Last_Name}",
                                                   TechId:P.Technical_ID,
                                                    Title: P.Problem_Title,
@@ -184,7 +184,10 @@ namespace Ataal.BL.Managers.Customer
                                                     Section_id: P.Section_ID,
                                                     Key_WordId: P.KeyWord?.KeyWord_ID,
                                                     Key_Word: P.KeyWord?.KeyWord_Name,
-                                                    CustomerPhoto:P.Customer.Photo, 
+
+                                                    CustomerPhoto:P.Customer?.Photo,
+
+
                                                     PhotoPath1: P.PhotoPath1,
                                                     PhotoPath2: P.PhotoPath2,
                                                     PhotoPath3: P.PhotoPath3,
@@ -575,8 +578,7 @@ namespace Ataal.BL.Managers.Customer
 
             var Admin = new DAL.Data.Models.Admin()
             {
-                Frist_Name = admin.firstName,
-                Last_Name = admin.lastName,
+             
                 AppUser = AppUser!,
                 AppUserId = admin.AppUserId
             };
