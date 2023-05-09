@@ -184,7 +184,7 @@ namespace Ataal.BL.Managers.Customer
                                                     Section_id: P.Section_ID,
                                                     Key_WordId: P.KeyWord?.KeyWord_ID,
                                                     Key_Word: P.KeyWord?.KeyWord_Name,
-                                                    CustomerPhoto:P.Customer.Photo,
+                                                    CustomerPhoto:P.Customer.Photo, 
                                                     PhotoPath1: P.PhotoPath1,
                                                     PhotoPath2: P.PhotoPath2,
                                                     PhotoPath3: P.PhotoPath3,
@@ -414,7 +414,8 @@ namespace Ataal.BL.Managers.Customer
             {
                 if (!CustomerWithBlockedList.Blocked_Technicals_Id.Contains(Technical))
                 {
-                    CustomerWithBlockedList.Blocked_Technicals_Id.Add(Technical);
+                    //CustomerWithBlockedList.Blocked_Technicals_Id.Add(Technical);
+                    customerRepo.BlockTechnical(CustomerWithBlockedList, Technical);
                     return true;
                 }
                 
