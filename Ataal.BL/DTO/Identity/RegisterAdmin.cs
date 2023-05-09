@@ -7,8 +7,6 @@ namespace Ataal.BL.DtO.Identity
     public record RegisterAdmin(
         string Email,
         string Password,
-        string firstName,
-        string lastName,
         string userName
         );
 }
