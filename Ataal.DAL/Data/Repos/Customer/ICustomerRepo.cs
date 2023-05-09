@@ -12,6 +12,8 @@ namespace Ataal.DAL.Repos.customer
     {
         public Technical? GetTechByAppUser(string Appuser);
         public Customer? GetCustomerByAppUser(string Appuser);
+        public Admin? GetaDMINByAppUser(string Appuser);
+
         public Customer? GetRecommenditionForCustomerById(int CustomerId);
         public Customer? GetOffersForCustomerById(int CustomerId);
         public int GetNotificationCount(int CustomerId);

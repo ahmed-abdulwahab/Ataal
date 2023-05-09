@@ -552,7 +552,15 @@ namespace Ataal.BL.Managers.Customer
             else { return null; }
           
         }
-
+        public LoginCustomerDto? GetAdminByAppUser(string Appuser)
+        {
+            var Admin = customerRepo.GetCustomerByAppUser(Appuser);
+            if (Admin != null)
+            {
+                return new LoginCustomerDto(id: Admin.Id, name: $"{Admin.Frist_Name} {Admin.Last_Name}", photo: Admin.Photo);
+            }
+            else { return null; }
+        }
         public LoginCustomerDto? GetTechByAppUser(string Appuser)
         {
             var cust = customerRepo.GetTechByAppUser(Appuser);

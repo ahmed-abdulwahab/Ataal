@@ -36,8 +36,14 @@ namespace Ataal.DAL.Repos.customer
                 .FirstOrDefault(C => C.AppUserId == Appuser);
 
         }
+        public Admin? GetaDMINByAppUser(string Appuser)
+        {
+            return _ataalContext.Admins
+                .FirstOrDefault(C => C.AppUserId == Appuser);
+        }
 
-        
+
+
 
         public Technical? GetTechByAppUser(string Appuser)
         {
