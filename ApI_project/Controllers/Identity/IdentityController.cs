@@ -146,6 +146,7 @@ namespace Ataal.Controllers.Identity
             {
                 userName = registerDto.userName,
                 Email = registerDto.Email,
+                PhoneNumber = ""
             };
 
 
@@ -159,9 +160,8 @@ namespace Ataal.Controllers.Identity
             var admin = new RegisterAdminDto
             {
                 AppUserId = UserToAdd.Id,
-                firstName = registerDto.firstName,
-                lastName  = registerDto.lastName,
-                AppUser   = UserToAdd
+                AppUser   = UserToAdd,
+                
             };
 
             //Add Customer

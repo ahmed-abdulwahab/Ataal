@@ -13,10 +13,12 @@ namespace Ataal.DAL.Data.Models
    public class Admin 
     {
         [Key]
-        public string Frist_Name { get; set; } = string.Empty;
-        public string Last_Name { get; set; } = string.Empty;
-
         public int Id { get; set; }
+
+
+        public string? PhoneNumber { get; set; }
+
+
 
         [ForeignKey("AppUser")]
         public string AppUserId { get; set; }

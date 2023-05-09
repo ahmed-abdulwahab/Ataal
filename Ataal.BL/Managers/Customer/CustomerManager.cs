@@ -570,8 +570,7 @@ namespace Ataal.BL.Managers.Customer
 
             var Admin = new DAL.Data.Models.Admin()
             {
-                Frist_Name = admin.firstName,
-                Last_Name = admin.lastName,
+             
                 AppUser = AppUser!,
                 AppUserId = admin.AppUserId
             };
