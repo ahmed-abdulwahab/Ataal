@@ -10,6 +10,7 @@ namespace Ataal.DAL.Repos.Reviews
     public interface IReviewRepo
     {
 
+        public void AddReview(Review review);
         public Review? GetReviewById(int ReviewId);
         public List<Review> GetAllReviews();
         public List<Review> GetReviewsByCustomerId(int CustomerId);

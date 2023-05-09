@@ -30,6 +30,7 @@ namespace Ataal.DAL.Repos.customer
         public Technical? GetTechnicalById(int TechnicalId);
         public int assignCustomerPayemntId(int CustomerId,string PayemntId);
         public Customer CreateCustomer(Customer customer);
+        public Admin CreateAdmin(Admin admin);
         public int? UpdateReview(int id, string Desc);
         public int? DeleteReview(int ReviewId);
         public int AddTechnicalReview(Review Review);

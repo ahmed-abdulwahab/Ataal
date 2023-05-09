@@ -25,6 +25,7 @@ using Ataal.BL.DTO.recommendation;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using static Ataal.BL.Constants;
 using Ataal.BL.DtO.Section;
+using Ataal.BL.DtO.Identity;
 
 namespace Ataal.BL.Managers.Customer
 {
@@ -37,7 +38,9 @@ namespace Ataal.BL.Managers.Customer
 
         public CustomerManager(IReviewRepo reviewRepo, 
             UserManager<AppUser> userManager,
-            IWebHostEnvironment env, ICustomerRepo customerRepo)
+            IWebHostEnvironment env, 
+            ICustomerRepo customerRepo
+            )
         {
             _reviewRepo = reviewRepo;
             this.userManager = userManager;
@@ -181,7 +184,10 @@ namespace Ataal.BL.Managers.Customer
                                                     Section_id: P.Section_ID,
                                                     Key_WordId: P.KeyWord?.KeyWord_ID,
                                                     Key_Word: P.KeyWord?.KeyWord_Name,
+
                                                     CustomerPhoto:P.Customer?.Photo,
+
+
                                                     PhotoPath1: P.PhotoPath1,
                                                     PhotoPath2: P.PhotoPath2,
                                                     PhotoPath3: P.PhotoPath3,
@@ -411,7 +417,8 @@ namespace Ataal.BL.Managers.Customer
             {
                 if (!CustomerWithBlockedList.Blocked_Technicals_Id.Contains(Technical))
                 {
-                    CustomerWithBlockedList.Blocked_Technicals_Id.Add(Technical);
+                    //CustomerWithBlockedList.Blocked_Technicals_Id.Add(Technical);
+                    customerRepo.BlockTechnical(CustomerWithBlockedList, Technical);
                     return true;
                 }
                 
@@ -555,6 +562,25 @@ namespace Ataal.BL.Managers.Customer
             }
             else { return null; }
 
+        }
+
+        public async Task<RegisterAdminDto> CreateAdmin(RegisterAdminDto admin)
+        {
+            var AppUser = await userManager.FindByIdAsync(admin.AppUser.Id);
+
+            var Admin = new DAL.Data.Models.Admin()
+            {
+                Frist_Name = admin.firstName,
+                Last_Name = admin.lastName,
+                AppUser = AppUser!,
+                AppUserId = admin.AppUserId
+            };
+
+            var result = customerRepo.CreateAdmin(Admin);
+
+            if (result == null) return null;
+
+            return admin;
         }
     }
 

@@ -135,5 +135,53 @@ namespace Ataal.Controllers.Identity
             return Ok(technical);
         }
 
+
+        [HttpPost]
+        [Route("AdminRegister")]
+        public async Task<ActionResult> AdminRegister(RegisterAdmin registerDto)
+        {
+
+
+            var UserToAdd = new AppUserDto()
+            {
+                userName = registerDto.userName,
+                Email = registerDto.Email,
+            };
+
+
+            var result = await IdentityManger.CreateUser(UserToAdd, registerDto.Password);
+
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
+
+            var admin = new RegisterAdminDto
+            {
+                AppUserId = UserToAdd.Id,
+                firstName = registerDto.firstName,
+                lastName  = registerDto.lastName,
+                AppUser   = UserToAdd
+            };
+
+            //Add Customer
+            await customerManager.CreateAdmin(admin);
+
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, UserToAdd.Id),
+                new Claim(ClaimTypes.Role, Constants.Roles.Admin)
+            };
+
+            await IdentityManger.AddClaims(UserToAdd, claims);
+
+            return Ok(admin);
+        }
+
+
+
+
+
     }
 }
