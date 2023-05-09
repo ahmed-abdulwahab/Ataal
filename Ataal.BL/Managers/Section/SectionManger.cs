@@ -179,6 +179,8 @@ namespace Ataal.BL.Managers.Section
 												phone: S.AppUser.PhoneNumber,
 												Brief: S.Brief,
 												Rate: S.Rate,
+												AllProblemsCount:S.Problems_Solved.Count,
+												AllSolvedProblemsCount:S.Problems_Solved.Where(P=>P.Solved==true).Count(),
 												address: S.Address,
 												photo:S.Photo
 												)).ToList();
