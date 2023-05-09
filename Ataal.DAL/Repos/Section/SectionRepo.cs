@@ -34,18 +34,10 @@ namespace Ataal.DAL.Repos.Section
 		{
 			return ataalContext
 				.Set<Data.Models.Section>()
-				.Include(t=>t.Technicals)
+				.Include(t=>t.Technicals)	
 				.Include(k=>k.KeyWords)
-				.Include(p=>p.Problems).ThenInclude(k=>k.KeyWord).ToList();
+				.Include(p=>p.Problems).ToList();
 		}
-        public List<Data.Models.Section> GetAllSectionsforCustomerneed()
-        {
-            return ataalContext
-                .Set<Data.Models.Section>()
-                .Include(t => t.Technicals)
-                .Include(k => k.KeyWords)
-                .Include(p => p.Problems.Where(s=>s.Solved!=true)).ThenInclude(k => k.KeyWord).ToList();
-        }
 
         public List<Data.Models.Section> GetAllSections_Customer()
         {
@@ -96,5 +88,16 @@ namespace Ataal.DAL.Repos.Section
 			return ChosenSection;
 			
 		}
-	}
+
+        public List<Data.Models.Section> GetAllSectionsforCustomerneed()
+        {
+            return ataalContext
+                .Set<Data.Models.Section>()
+                .Include(t => t.Technicals)
+                .Include(k => k.KeyWords)
+                .Include(p => p.Problems.Where(s => s.Solved != true))
+                .ThenInclude(C => C.Customer).ToList();
+
+        }
+    }
 }
