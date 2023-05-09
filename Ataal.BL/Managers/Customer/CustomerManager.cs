@@ -25,6 +25,7 @@ using Ataal.BL.DTO.recommendation;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using static Ataal.BL.Constants;
 using Ataal.BL.DtO.Section;
+using Ataal.BL.DtO.Identity;
 
 namespace Ataal.BL.Managers.Customer
 {
@@ -37,7 +38,9 @@ namespace Ataal.BL.Managers.Customer
 
         public CustomerManager(IReviewRepo reviewRepo, 
             UserManager<AppUser> userManager,
-            IWebHostEnvironment env, ICustomerRepo customerRepo)
+            IWebHostEnvironment env, 
+            ICustomerRepo customerRepo
+            )
         {
             _reviewRepo = reviewRepo;
             this.userManager = userManager;
@@ -555,6 +558,25 @@ namespace Ataal.BL.Managers.Customer
             }
             else { return null; }
 
+        }
+
+        public async Task<RegisterAdminDto> CreateAdmin(RegisterAdminDto admin)
+        {
+            var AppUser = await userManager.FindByIdAsync(admin.AppUser.Id);
+
+            var Admin = new DAL.Data.Models.Admin()
+            {
+                Frist_Name = admin.firstName,
+                Last_Name = admin.lastName,
+                AppUser = AppUser!,
+                AppUserId = admin.AppUserId
+            };
+
+            var result = customerRepo.CreateAdmin(Admin);
+
+            if (result == null) return null;
+
+            return admin;
         }
     }
 

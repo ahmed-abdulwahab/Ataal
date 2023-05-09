@@ -68,7 +68,7 @@ namespace Ataal.DAL.Data.Repos.OfferRepo
             try
             {
                var offer= ataalContext.Offers.FirstOrDefault(o=>o.Id==id);
-                if (offer.Accepted == false)
+                if (offer.Accepted != true)
                 {
                     offer.Accepted = true;
                     ataalContext.SaveChanges();
