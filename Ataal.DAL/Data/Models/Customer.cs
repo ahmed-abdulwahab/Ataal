@@ -15,6 +15,7 @@ namespace Ataal.DAL.Data.Models
         [Key]
         public int Id { get; set; }
 
+        //public DateTime RegisterDate { get; set; }= DateTime.Now;
         public string Frist_Name { get; set; } = string.Empty;
         public string Last_Name { get; set; } = string.Empty;
         public int NotificationCounter { get; set; } = 0;
