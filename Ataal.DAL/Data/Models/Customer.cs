@@ -26,7 +26,7 @@ namespace Ataal.DAL.Data.Models
         public string? Email { get; set; }
         public string? CreatedPayemntId { get; set; }
 
-        public DateTime RegisterDate { get; set; } = DateTime.Now;
+        //public DateTime RegisterDate { get; set; } = DateTime.Now;
 
         [ForeignKey("AppUser")]
         public string AppUserId { get; set; }
