@@ -23,8 +23,12 @@ namespace Ataal.DAL.Data.Repos.Technical_Repo
         public Technical CreateTechnical(Technical technical);
         public int saveChanges();
         public int? getPoints(int TechnicalID);
-
+        public int getTechnicalNotification(int TechnicalID);
+        
         public bool decreasePoints(int technicalID);
+
+        public bool setTechnicalNotificationZero(int TechnicalID);
+
 
     }
 }

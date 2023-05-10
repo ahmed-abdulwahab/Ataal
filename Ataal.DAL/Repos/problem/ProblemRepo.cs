@@ -120,34 +120,76 @@ namespace Ataal.DAL.Repos.problem
 
         public List<Problem> GetAllSolvedProblems(int TechnicalId)
         {
-             var AllProblemsForSpecificTechnical = _ataalContext.Problems.Include(p=>p.KeyWord).Where(p => p.Technical_ID == TechnicalId);
+             var AllProblemsForSpecificTechnical = _ataalContext.Problems.Include(p=>p.KeyWord).Where(p => p.Technical_ID == TechnicalId && p.Solved==true);
 
              if (AllProblemsForSpecificTechnical == null) return null;
 
              return AllProblemsForSpecificTechnical.ToList();
         }
 
+        public List<Offer> GetAllofferdProblems(int TechnicalId)
+        {
+            var technical = _ataalContext.Technicals.Include(t=>t.offers).ThenInclude(o=>o.problem).ThenInclude(p => p.KeyWord).FirstOrDefault(t=>t.Id==TechnicalId);
+
+
+            var offers = technical?.offers;
+            return offers!.ToList();
+
+            //var problemsID = technical?.offers.Select(o=>o.problemId);
+
+
+
+            //var AllProblemsForSpecificTechnical = _ataalContext.Problems.Include(p => p.KeyWord).Where(p => problemsID!.Contains(p.Problem_ID));
+
+            //if (AllProblemsForSpecificTechnical == null) return null;
+
+            //return AllProblemsForSpecificTechnical.ToList();
+        }
+        
+
         public List<Problem> get_All_Problems_forTechincal(int SectionId,int TechnicalId)
         {
-            Technical technical = _ataalContext.Technicals
-                .Include(T=>T.Blocked_Customers_Id)?.FirstOrDefault(T=>T.Id == TechnicalId) ?? null!;    //I will replace 1 with that come from identity      
+            try
+            {
 
-            var Blocked_Customers_ID = technical?.Blocked_Customers_Id?.Select(C=>C.Id).ToList() ?? new List<int>();
+                Technical technical = _ataalContext.Technicals.Include(T => T.Sections)
+                    .Include(T=>T.Blocked_Customers_Id)?.FirstOrDefault(T=>T.Id == TechnicalId) ?? null!;    //I will replace 1 with that come from identity      
 
-            return _ataalContext.Problems.Include(P=>P.KeyWord)
-                .Where(p =>  !(Blocked_Customers_ID.Contains(p.Customer_ID)) && p.Section_ID==SectionId && p.Solved==false ).ToList();
+                var all_Sections = technical?.Sections.Select(S => S.Section_ID).ToList();
+
+                var Blocked_Customers_ID = technical?.Blocked_Customers_Id?.Select(C=>C.Id).ToList() ?? new List<int>();
+
+                if (SectionId == 0)
+                {
+                    return _ataalContext.Problems.Include(P => P.KeyWord)
+                                .Where(p => !(Blocked_Customers_ID.Contains(p.Customer_ID))
+                                    && all_Sections!.Contains(p.Section_ID) && p.Solved == false
+                                            && p.Technical_ID == null).ToList();
+                }
+                return _ataalContext.Problems.Include(P=>P.KeyWord)
+                    .Where(p => !(Blocked_Customers_ID.Contains(p.Customer_ID))&& all_Sections!.Contains(p.Section_ID) && p.Section_ID==SectionId && p.Solved==false  && p.Technical_ID== null).ToList();
+        
+            }
+            catch
+            {
+                return null!;
+            }
         }
 
 
         public List<Problem> get_All_Problems_forTechincal(int TechnicalId)
         {
-            Technical technical = _ataalContext.Technicals
+            Technical technical = _ataalContext.Technicals.Include(T => T.Sections)
                 .Include(T => T.Blocked_Customers_Id)?.FirstOrDefault(T => T.Id == TechnicalId) ?? null!;    //I will replace 1 with that come from identity      
 
             var Blocked_Customers_ID = technical?.Blocked_Customers_Id?.Select(C => C.Id).ToList() ?? new List<int>();
 
+            var all_Sections = technical?.Sections.Select(S => S.Section_ID).ToList(); 
+
             return _ataalContext.Problems.Include(P => P.KeyWord)
-                .Where(p => !(Blocked_Customers_ID.Contains(p.Customer_ID))  && p.Solved == false).ToList();
+                .Where(p => !(Blocked_Customers_ID.Contains(p.Customer_ID)) 
+                        && all_Sections.Contains(p.Section_ID) && p.Solved == false 
+                                && p.Technical_ID==null).ToList();
         }
 
 

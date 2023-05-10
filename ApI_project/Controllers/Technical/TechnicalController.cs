@@ -124,5 +124,28 @@ namespace Ataal.Controllers.Technical
             return Ok(ITechnicalManger.decreasePoints(technicalID));
         }
 
+
+
+        [HttpGet]
+        [Route("getTechnicalNotification/{TechnicalID}")]
+        public ActionResult<int> getTechnicalNotification(int TechnicalID)
+        {
+            var Notification = ITechnicalManger.getTechnicalNotification(TechnicalID);
+
+            return Ok(Notification);
+
+        }
+
+        [HttpGet]
+        [Route("setTechnicalNotificationZero/{TechnicalID}")]
+        public ActionResult<int> setTechnicalNotificationZero(int TechnicalID)
+        {
+            var Notification = ITechnicalManger.setTechnicalNotificationZero(TechnicalID);
+
+            return Ok(Notification);
+
+        }
+
+
     }
 }

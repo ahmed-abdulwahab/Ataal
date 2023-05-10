@@ -1,5 +1,6 @@
 ﻿using Ataal.DAL.Data.Context;
 using Ataal.DAL.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,6 +55,7 @@ namespace Ataal.DAL.Data.Repos.OfferRepo
         {
             try
             {
+                offer.AcceptedDate = DateTime.Now;
                 ataalContext.Offers.Add(offer);
                 ataalContext.SaveChanges();
                 return true;
@@ -67,11 +69,17 @@ namespace Ataal.DAL.Data.Repos.OfferRepo
         {
             try
             {
-               var offer= ataalContext.Offers.FirstOrDefault(o=>o.Id==id);
-                if (offer.Accepted != true)
+               var offer= ataalContext.Offers.Include(O=>O.problem).Include(O => O.technical).FirstOrDefault(O=>O.Id == id);
+
+                var technical = offer?.technical;
+                if (offer.Accepted == false)
                 {
                     offer.Accepted = true;
+                    offer.AcceptedDate = DateTime.Now;
+                    offer.problem.AcceptedOfferID = offer.Id;
+                    technical.NotificationCounter = technical.NotificationCounter + 1;
                     ataalContext.SaveChanges();
+
                     return true;
                 }
                 else

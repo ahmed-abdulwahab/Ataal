@@ -23,7 +23,9 @@ namespace Ataal.DAL.Repos.problem
 
 
         public List<Problem> GetAllSolvedProblems(int TechnicalId);
+        public List<Offer> GetAllofferdProblems(int TechnicalId);
 
+        
 
         //get all problems that in the same sections of tecknical and not in blocked customers
         public List<Problem> get_All_Problems_forTechincal(int technicalID, int TechnicalId);

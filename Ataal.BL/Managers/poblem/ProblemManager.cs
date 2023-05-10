@@ -52,7 +52,10 @@ namespace Ataal.BL.Managers.problem
                                                     PhotoPath1: P.PhotoPath1,
                                                     PhotoPath2: P.PhotoPath2,
                                                     PhotoPath3: P.PhotoPath3,
-                                                    PhotoPath4: P.PhotoPath4)).ToList();
+                                                    PhotoPath4: P.PhotoPath4,
+                                                    AcceptedOfferID: null,
+                                                    AcceptDate : null,
+                                                    OfferID:null)).ToList();
                 return problems;
             }
             return null;
@@ -99,7 +102,10 @@ namespace Ataal.BL.Managers.problem
                                                     PhotoPath1: P.PhotoPath1,
                                                     PhotoPath2: P.PhotoPath2,
                                                     PhotoPath3: P.PhotoPath3,
-                                                    PhotoPath4: P.PhotoPath4
+                                                    PhotoPath4: P.PhotoPath4,
+                                                    AcceptedOfferID:null,
+                                                    AcceptDate: null,
+                                                    OfferID:null
                 );
             return ProblemReturnDto;
            
@@ -110,7 +116,6 @@ namespace Ataal.BL.Managers.problem
             var technical = _technicalRepo.getNormalTechnicalById(CAPDto.TechnicalId);
             if (technical != null)
             {
-                technical.NotificationCounter=technical.NotificationCounter+1;
                 return _problemRepo.CustomerAcceptedProblem_Offer(CAPDto.TechnicalId, CAPDto.ProblemId, CAPDto.OfferId);
             }
             return 0;
@@ -158,7 +163,10 @@ namespace Ataal.BL.Managers.problem
                         PhotoPath1: P.PhotoPath1 ?? "error",
                         PhotoPath2: P.PhotoPath2 ?? "error" ,
                         PhotoPath3: P.PhotoPath3 ?? "error",
-                        PhotoPath4: P.PhotoPath4 ?? "error"
+                        PhotoPath4: P.PhotoPath4 ?? "error",
+                        AcceptedOfferID: null,
+                        AcceptDate: null,
+                        OfferID:null
 
                 )).ToList();
         }
@@ -203,7 +211,6 @@ namespace Ataal.BL.Managers.problem
         }
 
         public Sidebar_Customer GetCoustomerByProblemID(int ProblemId)
-
         {
             Problem problem = _problemRepo.GetProblemById(ProblemId)!;
             var coustomer = customerRepo.GetNormalCustomerById(problem.Customer_ID);
@@ -218,8 +225,7 @@ namespace Ataal.BL.Managers.problem
 
                                        numOfProblems: coustomer.Problems!.Count()
 
-                                     
-
+                                 
 
             ); ;
             return customerSideBarDto;
@@ -259,5 +265,40 @@ namespace Ataal.BL.Managers.problem
             else
                 return ProblemList;
         }
+
+
+
+        public List<ProblemReturnDto> GetAllofferdProblems(int TechnicalId)
+        {
+            //var AllSolvedProblems = _problemRepo.GetAllofferdProblems(TechnicalId);
+
+            var allOffers = _problemRepo.GetAllofferdProblems(TechnicalId);
+
+            if (allOffers == null) return null;
+
+            return allOffers.Select(o => new ProblemReturnDto(
+                        id: o.problem.Problem_ID,
+                         TechnicanName: o.problem.Technical?.Frist_Name + "" + o.problem.Technical?.Last_Name,
+                        TechId: o.problem.Technical_ID,
+                        Title: o.problem.Problem_Title,
+                        Description: o.problem.Description,
+                        IsSolved: o.problem.Solved,
+                        Date: o.problem.dateTime,
+                        IsVIP: o.problem.VIP,
+                        Key_WordId: o.problem.KeyWord?.KeyWord_ID ?? -1,
+                        Section_id: o.problem.Section?.Section_ID ?? -1,
+                        Key_Word: o.problem.KeyWord?.KeyWord_Name ?? "error",
+                        PhotoPath1: o.problem.PhotoPath1 ?? "error",
+                        PhotoPath2: o.problem.PhotoPath2 ?? "error",
+                        PhotoPath3: o.problem.PhotoPath3 ?? "error",
+                        PhotoPath4: o.problem.PhotoPath4 ?? "error",
+                        AcceptedOfferID : o.problem.AcceptedOfferID,
+                        AcceptDate: o.AcceptedDate,
+                        OfferID:o.Id
+
+                )).OrderByDescending(p => p.AcceptDate).ToList();
+
+        }
+
     }
 }

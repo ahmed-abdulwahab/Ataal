@@ -51,5 +51,7 @@ namespace Ataal.DAL.Data.Models
         [ForeignKey("KeyWord")]
         public int? KeyWord_ID { get; set; }
         public KeyWords? KeyWord { get; set; }
+
+
     }
 }

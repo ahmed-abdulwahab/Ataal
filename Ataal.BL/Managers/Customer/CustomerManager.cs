@@ -191,7 +191,11 @@ namespace Ataal.BL.Managers.Customer
                                                     PhotoPath1: P.PhotoPath1,
                                                     PhotoPath2: P.PhotoPath2,
                                                     PhotoPath3: P.PhotoPath3,
-                                                    PhotoPath4: P.PhotoPath4)).ToList();
+                                                    PhotoPath4: P.PhotoPath4,
+                                                    AcceptDate: null,
+                                                    AcceptedOfferID:null,
+                                                    OfferID:null
+                                                    )).ToList();
             return Problems;
         }
         public async Task<int?> UpdatedProblem( updatedProblemDto CustDto)

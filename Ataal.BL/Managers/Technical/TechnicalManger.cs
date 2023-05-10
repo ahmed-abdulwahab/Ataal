@@ -210,5 +210,16 @@ namespace Ataal.BL.Mangers.Technical
             return technicalRepo.decreasePoints(technicalID);
 
         }
+
+        public int getTechnicalNotification(int id)
+        {
+            return technicalRepo.getTechnicalNotification(id);
+        }
+
+        public bool setTechnicalNotificationZero(int id)
+        {
+            return technicalRepo.setTechnicalNotificationZero(id);
+        }
+
     }
 }

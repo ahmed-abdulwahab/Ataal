@@ -58,6 +58,20 @@ namespace Ataal.Controllers.problem
                 return BadRequest();
         }
 
+        [HttpGet]
+        [Route("GetAllofferdProblems/{TechnicalId}")]
+        public IActionResult GetAllofferdProblems(int TechnicalId)
+        {
+
+            var AllSolvedProblems = _problemManager.GetAllofferdProblems(TechnicalId);
+
+            if (AllSolvedProblems == null) return NotFound();
+
+            return Ok(AllSolvedProblems);
+
+
+        }
+
 
         [HttpGet]
         [Route("GetAllSolvedProblem/{TechnicalId}")]
@@ -84,17 +98,17 @@ namespace Ataal.Controllers.problem
             return Ok(AllSolvedProblems);
         }
 
-        [HttpGet]
-        [Route("GetAllProblemsInfoForTechnical/{TechnicalId}")]
-        public IActionResult GetProblemsInfoForTechnical(int TechnicalId)
-        {
+        //[HttpGet]
+        //[Route("GetAllProblemsInfoForTechnical/{TechnicalId}")]
+        //public IActionResult GetProblemsInfoForTechnical(int TechnicalId)
+        //{
 
-            var AllSolvedProblems = _problemManager.ProblemInfoForTechnical(TechnicalId);
+        //    var AllSolvedProblems = _problemManager.ProblemInfoForTechnical(TechnicalId);
 
-            if (AllSolvedProblems == null) return NotFound();
+        //    if (AllSolvedProblems == null) return NotFound();
 
-            return Ok(AllSolvedProblems);
-        }
+        //    return Ok(AllSolvedProblems);
+        //}
 
         [HttpGet]
         [Route("GetAllProblem")]

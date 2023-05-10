@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ataal.DAL.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,7 +24,10 @@ namespace Ataal.BL.DTO.problem
         string? PhotoPath1,
         string? PhotoPath2,
         string? PhotoPath3,
-        string? PhotoPath4
+        string? PhotoPath4,
+        int? AcceptedOfferID,
+        DateTime? AcceptDate,
+        int? OfferID
         );
     
 }
