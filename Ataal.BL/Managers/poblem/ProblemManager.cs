@@ -148,22 +148,22 @@ namespace Ataal.BL.Managers.problem
 
             return AllSolvedProblems.Select(P => new ProblemReturnDto(
                         id: P.Problem_ID,
-                        CustomerName: $"{P.Customer.Frist_Name} {P.Customer.Last_Name}",
-                         TechnicanName: P.Technical?.Frist_Name +""+ P.Technical?.Last_Name,
-                        TechId:P.Technical_ID,
-                        Title: P.Problem_Title,
-                        Description: P.Description,
+                        CustomerName: P.Customer?.Frist_Name + " " +P?.Customer?.Last_Name,
+                         TechnicanName: P.Technical?.Frist_Name +""+ P?.Technical?.Last_Name,
+                        TechId:P?.Technical_ID,
+                        Title: P?.Problem_Title,
+                        Description: P?.Description,
                         IsSolved: P.Solved,   
-                        Date:P.dateTime,
-                        IsVIP: P.VIP,
-                        Key_WordId:P.KeyWord?.KeyWord_ID ?? -1,
-                        Section_id: P.Section?.Section_ID ?? -1,
-                        Key_Word: P.KeyWord?.KeyWord_Name ?? "error",
-                        CustomerPhoto:P.Customer.Photo,
-                        PhotoPath1: P.PhotoPath1 ?? "error",
-                        PhotoPath2: P.PhotoPath2 ?? "error" ,
-                        PhotoPath3: P.PhotoPath3 ?? "error",
-                        PhotoPath4: P.PhotoPath4 ?? "error",
+                        Date:P?.dateTime,
+                        IsVIP: P?.VIP,
+                        Key_WordId:P?.KeyWord?.KeyWord_ID ?? -1,
+                        Section_id: P?.Section?.Section_ID ?? -1,
+                        Key_Word: P?.KeyWord?.KeyWord_Name ?? "error",
+                        CustomerPhoto:P?.Customer?.Photo,
+                        PhotoPath1: P?.PhotoPath1 ?? "error",
+                        PhotoPath2: P?.PhotoPath2 ?? "error" ,
+                        PhotoPath3: P?.PhotoPath3 ?? "error",
+                        PhotoPath4: P?.PhotoPath4 ?? "error",
                         AcceptedOfferID: null,
                         AcceptDate: null,
                         OfferID:null
@@ -278,7 +278,7 @@ namespace Ataal.BL.Managers.problem
 
             return allOffers.Select(o => new ProblemReturnDto(
                                         id: o.problem.Problem_ID,
-                                        CustomerName: $"{o.problem.Customer.Frist_Name} {o.problem.Customer.Last_Name}",
+                                        CustomerName: $"{o.problem.Customer?.Frist_Name} {o.problem.Customer?.Last_Name}",
                                         TechnicanName: o.problem.Technical?.Frist_Name + "" + o.problem.Technical?.Last_Name,
                                         TechId: o.problem.Technical_ID,
                                         Title: o.problem.Problem_Title,
@@ -289,7 +289,7 @@ namespace Ataal.BL.Managers.problem
                                         Section_id: o.problem.Section?.Section_ID ?? -1,
                                         Key_WordId: o.problem.KeyWord?.KeyWord_ID ?? -1,
                                         Key_Word: o.problem.KeyWord?.KeyWord_Name ?? "error",
-                                        CustomerPhoto:o.problem.Customer.Photo,
+                                        CustomerPhoto:o.problem.Customer?.Photo,
                                         PhotoPath1: o.problem.PhotoPath1 ?? "error",
                                         PhotoPath2: o.problem.PhotoPath2 ?? "error",
                                         PhotoPath3: o.problem.PhotoPath3 ?? "error",
@@ -298,11 +298,6 @@ namespace Ataal.BL.Managers.problem
                                         AcceptDate: o.AcceptedDate,
                                         OfferID: o.Id
                                         )).OrderByDescending(p => p.AcceptDate).ToList();
-
         }
-                        
-
-
-
     }
 }
