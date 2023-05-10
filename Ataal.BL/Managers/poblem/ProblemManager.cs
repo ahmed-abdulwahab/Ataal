@@ -277,28 +277,32 @@ namespace Ataal.BL.Managers.problem
             if (allOffers == null) return null;
 
             return allOffers.Select(o => new ProblemReturnDto(
-                        id: o.problem.Problem_ID,
-                         TechnicanName: o.problem.Technical?.Frist_Name + "" + o.problem.Technical?.Last_Name,
-                        TechId: o.problem.Technical_ID,
-                        Title: o.problem.Problem_Title,
-                        Description: o.problem.Description,
-                        IsSolved: o.problem.Solved,
-                        Date: o.problem.dateTime,
-                        IsVIP: o.problem.VIP,
-                        Key_WordId: o.problem.KeyWord?.KeyWord_ID ?? -1,
-                        Section_id: o.problem.Section?.Section_ID ?? -1,
-                        Key_Word: o.problem.KeyWord?.KeyWord_Name ?? "error",
-                        PhotoPath1: o.problem.PhotoPath1 ?? "error",
-                        PhotoPath2: o.problem.PhotoPath2 ?? "error",
-                        PhotoPath3: o.problem.PhotoPath3 ?? "error",
-                        PhotoPath4: o.problem.PhotoPath4 ?? "error",
-                        AcceptedOfferID : o.problem.AcceptedOfferID,
-                        AcceptDate: o.AcceptedDate,
-                        OfferID:o.Id
-
-                )).OrderByDescending(p => p.AcceptDate).ToList();
+                                        id: o.problem.Problem_ID,
+                                        CustomerName: $"{o.problem.Customer.Frist_Name} {o.problem.Customer.Last_Name}",
+                                        TechnicanName: o.problem.Technical?.Frist_Name + "" + o.problem.Technical?.Last_Name,
+                                        TechId: o.problem.Technical_ID,
+                                        Title: o.problem.Problem_Title,
+                                        Description: o.problem.Description,
+                                        Date: o.problem.dateTime,
+                                        IsSolved: o.problem.Solved,
+                                        IsVIP: o.problem.VIP,
+                                        Section_id: o.problem.Section?.Section_ID ?? -1,
+                                        Key_WordId: o.problem.KeyWord?.KeyWord_ID ?? -1,
+                                        Key_Word: o.problem.KeyWord?.KeyWord_Name ?? "error",
+                                        CustomerPhoto:o.problem.Customer.Photo,
+                                        PhotoPath1: o.problem.PhotoPath1 ?? "error",
+                                        PhotoPath2: o.problem.PhotoPath2 ?? "error",
+                                        PhotoPath3: o.problem.PhotoPath3 ?? "error",
+                                        PhotoPath4: o.problem.PhotoPath4 ?? "error",
+                                        AcceptedOfferID: o.problem.AcceptedOfferID,
+                                        AcceptDate: o.AcceptedDate,
+                                        OfferID: o.Id
+                                        )).OrderByDescending(p => p.AcceptDate).ToList();
 
         }
+                        
+
+
 
     }
 }
