@@ -138,5 +138,30 @@ namespace Ataal.DAL.Data.Repos.Technical_Repo
                 return false;
             }
         }
+
+        public int getTechnicalNotification(int TechnicalID)
+        {
+            var technical = ataalContext.Technicals.FirstOrDefault(T => T.Id == TechnicalID);
+
+            if (technical == null || technical.Points == null)
+                return 0;
+            return technical.NotificationCounter;
+        }
+
+        public bool setTechnicalNotificationZero(int TechnicalID)
+        {
+            try
+            {
+                var technical = ataalContext.Technicals.FirstOrDefault(T => T.Id == TechnicalID);
+                technical.NotificationCounter = 0;
+                ataalContext.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
     }
 }

@@ -27,5 +27,9 @@ namespace Ataal.BL.Mangers.technical
 
         public bool decreasePoints(int technicalID);
 
+        public int getTechnicalNotification(int id);
+
+        public bool setTechnicalNotificationZero(int id);
+
     }
 }

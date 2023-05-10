@@ -26,6 +26,9 @@ namespace Ataal.DAL.Data.Models
 
         public bool Accepted { get; set; } = false;
 
-        
+
+        public DateTime? AcceptedDate { set; get; } = DateTime.Now;
+
+
     }
 }
