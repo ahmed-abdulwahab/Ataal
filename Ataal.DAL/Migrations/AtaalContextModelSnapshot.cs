@@ -105,7 +105,7 @@ namespace Ataal.DAL.Migrations
                     b.HasIndex("AppUserId")
                         .IsUnique();
 
-                    b.ToTable("Admins");
+                    b.ToTable("Admins", (string)null);
                 });
 
             modelBuilder.Entity("Ataal.DAL.Data.Models.Customer", b =>
@@ -164,7 +164,7 @@ namespace Ataal.DAL.Migrations
                     b.HasIndex("AppUserId")
                         .IsUnique();
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customers", (string)null);
                 });
 
             modelBuilder.Entity("Ataal.DAL.Data.Models.KeyWords", b =>
@@ -186,7 +186,7 @@ namespace Ataal.DAL.Migrations
 
                     b.HasIndex("Section_ID");
 
-                    b.ToTable("KeyWords");
+                    b.ToTable("KeyWords", (string)null);
                 });
 
             modelBuilder.Entity("Ataal.DAL.Data.Models.Offer", b =>
@@ -224,7 +224,7 @@ namespace Ataal.DAL.Migrations
 
                     b.HasIndex("technicalId");
 
-                    b.ToTable("Offers");
+                    b.ToTable("Offers", (string)null);
                 });
 
             modelBuilder.Entity("Ataal.DAL.Data.Models.Problem", b =>
@@ -291,7 +291,7 @@ namespace Ataal.DAL.Migrations
 
                     b.HasIndex("Technical_ID");
 
-                    b.ToTable("Problems");
+                    b.ToTable("Problems", (string)null);
                 });
 
             modelBuilder.Entity("Ataal.DAL.Data.Models.Rate", b =>
@@ -317,7 +317,7 @@ namespace Ataal.DAL.Migrations
 
                     b.HasIndex("Technical_ID");
 
-                    b.ToTable("Rates");
+                    b.ToTable("Rates", (string)null);
                 });
 
             modelBuilder.Entity("Ataal.DAL.Data.Models.Recommendation", b =>
@@ -346,7 +346,7 @@ namespace Ataal.DAL.Migrations
 
                     b.HasIndex("Technical_ID");
 
-                    b.ToTable("Recommendations");
+                    b.ToTable("Recommendations", (string)null);
                 });
 
             modelBuilder.Entity("Ataal.DAL.Data.Models.Report", b =>
@@ -378,7 +378,7 @@ namespace Ataal.DAL.Migrations
 
                     b.HasIndex("TechnicalId");
 
-                    b.ToTable("Reports");
+                    b.ToTable("Reports", (string)null);
                 });
 
             modelBuilder.Entity("Ataal.DAL.Data.Models.Review", b =>
@@ -413,7 +413,7 @@ namespace Ataal.DAL.Migrations
 
                     b.HasIndex("Technical_ID");
 
-                    b.ToTable("Reviews");
+                    b.ToTable("Reviews", (string)null);
                 });
 
             modelBuilder.Entity("Ataal.DAL.Data.Models.Section", b =>
@@ -439,7 +439,7 @@ namespace Ataal.DAL.Migrations
 
                     b.HasKey("Section_ID");
 
-                    b.ToTable("Sections");
+                    b.ToTable("Sections", (string)null);
                 });
 
             modelBuilder.Entity("Ataal.DAL.Data.Models.Technical", b =>
@@ -489,7 +489,7 @@ namespace Ataal.DAL.Migrations
                     b.HasIndex("AppUserId")
                         .IsUnique();
 
-                    b.ToTable("Technicals");
+                    b.ToTable("Technicals", (string)null);
                 });
 
             modelBuilder.Entity("CustomerTechnical", b =>
@@ -504,7 +504,7 @@ namespace Ataal.DAL.Migrations
 
                     b.HasIndex("Blocked_Technicals_IdId");
 
-                    b.ToTable("CustomerTechnical");
+                    b.ToTable("CustomerTechnical", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -652,7 +652,7 @@ namespace Ataal.DAL.Migrations
 
                     b.HasIndex("TechnicalsId");
 
-                    b.ToTable("SectionTechnical");
+                    b.ToTable("SectionTechnical", (string)null);
                 });
 
             modelBuilder.Entity("Ataal.DAL.Data.Models.Admin", b =>

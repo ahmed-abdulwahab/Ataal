@@ -12,6 +12,8 @@ namespace Ataal.DAL.Repos.customer
     {
         public Technical? GetTechByAppUser(string Appuser);
         public Customer? GetCustomerByAppUser(string Appuser);
+        public Admin? GetaDMINByAppUser(string Appuser);
+
         public Customer? GetRecommenditionForCustomerById(int CustomerId);
         public Customer? GetOffersForCustomerById(int CustomerId);
         public int GetNotificationCount(int CustomerId);
@@ -30,6 +32,7 @@ namespace Ataal.DAL.Repos.customer
         public Technical? GetTechnicalById(int TechnicalId);
         public int assignCustomerPayemntId(int CustomerId,string PayemntId);
         public Customer CreateCustomer(Customer customer);
+        public Admin CreateAdmin(Admin admin);
         public int? UpdateReview(int id, string Desc);
         public int? DeleteReview(int ReviewId);
         public int AddTechnicalReview(Review Review);

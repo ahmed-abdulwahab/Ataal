@@ -31,7 +31,7 @@ namespace Ataal.DAL.Data.Models
         public string  Description { get; set; }
 
         [DataType(DataType.Date)]
-        public DateTime date { get; set; }
+        public DateTime date { get; set; } = DateTime.Now;
 
 
         [ForeignKey("Report")]

@@ -94,6 +94,8 @@ namespace Ataal.BL.Managers.Offer
             else
             {
                 Customer_Problem.Customer.NotificationCounter = Customer_Problem.Customer.NotificationCounter + 1;
+                _problemRepo.SaveChanges();
+                customerRepo.SaveChanges();
 
                 return true;
             }

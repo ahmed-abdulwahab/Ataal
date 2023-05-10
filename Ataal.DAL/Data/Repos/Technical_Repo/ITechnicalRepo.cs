@@ -12,10 +12,11 @@ namespace Ataal.DAL.Data.Repos.Technical_Repo
     {
         public List<Technical> getAllTechnical();
         public List<Technical> getAllTechnicalForSectionId(int SectionId);
-        
 
+        public bool AddSectionsToTechnical(int[]SectionIds,int TechnicalId);
 
         public Technical getTechnicalByID(int id);
+        public Technical GetTechnicalIncludeSections(int TechnicalId);
         public Technical? getNormalTechnicalById(int TechnicalId);
         public Task<Technical> deleteTechnical(int id);
         public Technical updateTechnical(int id, Technical technical);

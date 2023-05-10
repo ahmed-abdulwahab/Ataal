@@ -12,6 +12,7 @@ namespace Ataal.BL.DTO.problem
                                          string Description,
                                          DateTime Date,
                                          int CustomerId,
+                                         int CustnumProblem,
                                          string CustomerName,
                                          string? CustomerPhoto,
                                          string? keyword,

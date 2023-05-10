@@ -1,4 +1,5 @@
-﻿using Ataal.BL.DtO.technical;
+﻿using Ataal.BL.DtO.Identity;
+using Ataal.BL.DtO.technical;
 using Ataal.BL.DTO.Customer;
 using Ataal.BL.DTO.Identity;
 using Ataal.BL.DTO.problem;
@@ -19,6 +20,8 @@ namespace Ataal.BL.Managers.Customer
     public interface ICustomerManager
     {
         public LoginCustomerDto? GetCustomerByAppUser(string Appuser);
+        public LoginCustomerDto? GetAdminByAppUser(string Appuser);
+
         public LoginCustomerDto? GetTechByAppUser(string Appuser);
         public NotificationDto GetAllNotification(int CustomerId);
         public int GetNotificationCount(int CustomerId);
@@ -47,6 +50,7 @@ namespace Ataal.BL.Managers.Customer
         public bool UnBlockCustomer(BlockAndUnblockTechnicalAndCustomersDto BDto);
 
         public Task<RegisterUserDto> CreateCustomer(RegisterUserDto customer);
+        public Task<RegisterAdminDto> CreateAdmin(RegisterAdminDto customer);
 
         public ICollection<UnBlocked_BlockedCustomersDto> GetBlockedCustomers(int TechnicalId);
         public ICollection<UnBlocked_BlockedCustomersDto> GetUnBlockedCustomers(int TechnicalId);

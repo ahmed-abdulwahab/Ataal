@@ -107,6 +107,7 @@ namespace Ataal.BL.Managers.Section
                                                    Name: t.Section_Name,
                                                    Description: t.Description,
                                                    Photo: t.Photo,
+												   
                                                    SectionProblemReadDtos: t.Problems?.Select(p => new ProblemWithCustomerDetails(id: p.Problem_ID,
                                                                                                                              title: p.Problem_Title,
                                                                                                                              Description: p.Description,
@@ -114,6 +115,7 @@ namespace Ataal.BL.Managers.Section
 																															 CustomerId:p.Customer_ID,
 																															 CustomerName:$"{p.Customer.Frist_Name} {p.Customer.Last_Name}",
 																															 CustomerPhoto:p.Customer.Photo,
+                                                                                                                             CustnumProblem: p.Customer.Problems.Count(),
                                                                                                                              keyword:
 																															_problemRepo.GetKeywordByProblemId(p.Problem_ID)?.KeyWord_Name,
                                                                                                                              Photo1: p.PhotoPath1,
@@ -179,6 +181,8 @@ namespace Ataal.BL.Managers.Section
 												phone: S.AppUser.PhoneNumber,
 												Brief: S.Brief,
 												Rate: S.Rate,
+												AllProblemsCount:S.Problems_Solved.Count,
+												AllSolvedProblemsCount:S.Problems_Solved.Where(P=>P.Solved==true).Count(),
 												address: S.Address,
 												photo:S.Photo
 												)).ToList();

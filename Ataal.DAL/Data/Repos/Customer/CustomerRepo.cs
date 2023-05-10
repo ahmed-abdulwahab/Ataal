@@ -20,6 +20,8 @@ namespace Ataal.DAL.Repos.customer
             _ataalContext = ataalContext;
         }
 
+    
+
         public Customer? GetNormalCustomer(int CustomerId)
         {
             return _ataalContext.Customers.Include(c=>c.Problems)
@@ -34,6 +36,14 @@ namespace Ataal.DAL.Repos.customer
                 .FirstOrDefault(C => C.AppUserId == Appuser);
 
         }
+        public Admin? GetaDMINByAppUser(string Appuser)
+        {
+            return _ataalContext.Admins
+                .FirstOrDefault(C => C.AppUserId == Appuser);
+        }
+
+
+
 
         public Technical? GetTechByAppUser(string Appuser)
         {
@@ -367,6 +377,20 @@ namespace Ataal.DAL.Repos.customer
         public int GetNotificationCount(int CustomerId)
         {
             return _ataalContext.Customers.FirstOrDefault(c => c.Id == CustomerId).NotificationCounter;
+        }
+
+        public Admin CreateAdmin(Admin admin)
+        {
+            try
+            {
+                _ataalContext.Admins.Add(admin);
+                _ataalContext.SaveChanges();
+                return admin;             
+            }
+            catch
+            {
+                return null!;
+            }
         }
     }
 }

@@ -15,6 +15,7 @@ namespace Ataal.DAL.Data.Models
         [Key]
         public int Id { get; set; }
 
+        //public DateTime RegisterDate { get; set; }= DateTime.Now;
         public string Frist_Name { get; set; } = string.Empty;
         public string Last_Name { get; set; } = string.Empty;
         public int NotificationCounter { get; set; } = 0;
@@ -24,6 +25,8 @@ namespace Ataal.DAL.Data.Models
         public string? Cvc { get; set; }
         public string? Email { get; set; }
         public string? CreatedPayemntId { get; set; }
+
+        //public DateTime RegisterDate { get; set; } = DateTime.Now;
 
         [ForeignKey("AppUser")]
         public string AppUserId { get; set; }

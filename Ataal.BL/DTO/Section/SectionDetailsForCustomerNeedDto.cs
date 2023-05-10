@@ -12,6 +12,7 @@ namespace Ataal.BL.DTO.Section
                                      string Name,
                                      string Description,
                                      string? Photo,
+                                   
                                      ICollection<ProblemWithCustomerDetails>? SectionProblemReadDtos,
                                      ICollection<SectionTecnicalReadDto>? SectionTecnicalReadDtos,
                                      ICollection<SectionKeyWordReadDto>? SectionKeyWordReadDtos

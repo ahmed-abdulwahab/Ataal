@@ -15,6 +15,12 @@ namespace Ataal.DAL.Repos.Reviews
         {
             _ataalContext = ataalContext;
         }
+        public void AddReview(Review review)
+        {
+            _ataalContext.Reviews.Add(review);
+            SaveChanges();
+            
+        }
         public Review? GetReviewById(int ReviewId)
         {
           return  _ataalContext.Reviews.FirstOrDefault(r=>r.ID== ReviewId);
