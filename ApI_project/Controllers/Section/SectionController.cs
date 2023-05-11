@@ -40,6 +40,14 @@ namespace Ataal.Controllers.Section
             return Ok(AllSections);
         }
 
+        [HttpGet]
+        [Route("GetaAllSectionsForTechnical/{TechnicalID}")]
+        public IActionResult GetaAllSectionsForTechnical(int TechnicalID)
+        {
+            var AllSections = sectionManger.GetaAllSectionsForTechnical(TechnicalID);
+            return Ok(AllSections);
+        }
+
         [HttpDelete]
 		[Route("DeleteSection")]
 		public IActionResult DeleteSection(int id)

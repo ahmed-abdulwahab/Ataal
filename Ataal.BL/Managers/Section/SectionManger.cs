@@ -254,6 +254,16 @@ namespace Ataal.BL.Managers.Section
 			return sectionRepo.DeleteSection(id);
 		}
 
+        public List<SectionKeyWordReadDto> GetaAllSectionsForTechnical(int technicalID)
+        {
+            var sectionList = sectionRepo.GetaAllSectionsForTechnical(technicalID);
+			if (sectionList == null) return null!;
 
+			var sectionListDTO = sectionList.Select(S => new SectionKeyWordReadDto(
+                Id:S.Section_ID,
+                Name:S.Section_Name
+                ));
+			return sectionListDTO.ToList();
+        }
     }
 }

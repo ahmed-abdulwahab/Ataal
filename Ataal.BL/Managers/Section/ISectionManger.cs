@@ -16,7 +16,7 @@ namespace Ataal.BL.Managers.Section
 	{
 		public List<Section_Name_And_Id_DtO> getAllSectionsNames();
 
-
+		public List<SectionKeyWordReadDto> GetaAllSectionsForTechnical(int technicalID);
         public List<SectionDetailsDto> getAllSSsectionWithDeatailsDtos();
 		public List<SectionDetailsForCustomerNeedDto> getAllSSsectionforCustomerNeed();
         public SectionDetailsForCustomerNeedDto GetSectionByIDforCustomerNeed(int id);

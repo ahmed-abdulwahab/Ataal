@@ -55,9 +55,10 @@ namespace ApI_project
             builder.Services.AddSwaggerGen();
            
             #region Cros
+
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy("AllowAnyOrigin",
+                options.AddPolicy("AllowAllOrigins",
                     builder => builder.AllowAnyOrigin()
                         .AllowAnyHeader()
                         .AllowAnyMethod());
@@ -65,21 +66,10 @@ namespace ApI_project
 
             #endregion
 
-            
+
 
             builder.Services.AddStripeInfrastructure(builder.Configuration);
 
-            #region Cors
-
-            var corsPolicy = "AllowAll";
-            builder.Services.AddCors(options =>
-            {
-                options.AddPolicy(corsPolicy, p => p.AllowAnyOrigin()
-                .AllowAnyHeader()
-                .AllowAnyMethod());
-            });
-
-            #endregion
 
             #region DB
             var connectionString = builder.Configuration.GetConnectionString("connection");
@@ -200,9 +190,8 @@ namespace ApI_project
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-            app.UseCors("AllowAnyOrigin");
+            app.UseCors("AllowAllOrigins");
 
-            app.UseCors(corsPolicy);
             app.UseHttpsRedirection();
 
             app.UseAuthorization();

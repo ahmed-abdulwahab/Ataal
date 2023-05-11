@@ -6,6 +6,5 @@ using System.Threading.Tasks;
 
 namespace Ataal.BL.DTO.Section
 {
-	public record SectionKeyWordReadDto( int Id,
-										 string Name);
+	public record SectionKeyWordReadDto( int Id, string Name);
 }

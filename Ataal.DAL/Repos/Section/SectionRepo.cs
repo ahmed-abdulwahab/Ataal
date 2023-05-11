@@ -100,5 +100,13 @@ namespace Ataal.DAL.Repos.Section
 			return ChosenSection;
 			
 		}
-	}
+
+        public List<Data.Models.Section> GetaAllSectionsForTechnical(int technicalID)
+        {
+            var technical = ataalContext.Technicals.Include(T=>T.Sections).FirstOrDefault(T=>T.Id == technicalID);
+
+			var sections = technical?.Sections?.ToList() ?? null;
+			return sections!;
+        }
+    }
 }

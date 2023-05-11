@@ -17,5 +17,7 @@ namespace Ataal.DAL.Repos.Section
         public int DeleteSection(int id);
 		public int SaveChanges();
 
-	}
+        public List<Data.Models.Section> GetaAllSectionsForTechnical(int technicalID);
+
+    }
 }

@@ -145,7 +145,5 @@ namespace Ataal.Controllers.Technical
             return Ok(Notification);
 
         }
-
-
     }
 }
